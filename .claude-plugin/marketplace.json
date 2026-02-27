@@ -9,5 +9,11 @@
     "version": "0.1.0",
     "pluginRoot": "./plugins"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "content-studio",
+      "path": "./plugins/content-studio",
+      "description": "Content studio for managing thought leadership content with a visual editor, Claude Code skills, and utility scripts."
+    }
+  ]
 }

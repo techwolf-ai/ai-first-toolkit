@@ -8,7 +8,7 @@ This repository is a **plugin marketplace** for [Claude Code](https://docs.anthr
 
 | Plugin | Description | Status |
 |--------|-------------|--------|
-| *Coming soon* | | |
+| [content-studio](plugins/content-studio/) | Content studio for thought leadership (LinkedIn, blog, opinion) with visual editor and Claude Code skills | Available |
 
 ## Installation
 
