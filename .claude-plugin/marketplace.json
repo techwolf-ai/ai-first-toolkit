@@ -1,0 +1,13 @@
+{
+  "name": "techwolf-ai-first",
+  "owner": {
+    "name": "TechWolf",
+    "email": "opensource@techwolf.com"
+  },
+  "metadata": {
+    "description": "AI-first skills and tools from TechWolf's ai-first.techwolf.ai training program",
+    "version": "0.1.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": []
+}
