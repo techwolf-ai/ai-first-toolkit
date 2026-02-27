@@ -4,6 +4,7 @@ Thumbs.db
 
 # Dependencies
 node_modules/
+package-lock.json
 
 # Next.js
 content-studio/.next/

@@ -1,132 +1,106 @@
-import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import fs from 'fs/promises';
-import path from 'path';
 import {
-  getContentByStage,
-  getAllContent,
-  getContentBySlug,
+  slugifyTitle,
+  generateFilename,
+  isValidContentType,
   saveContent,
   createContent,
 } from '../content';
-import { ContentStage, ContentMetadata } from '@/types/content';
+import { ContentMetadata } from '@/types/content';
 
-// Mock fs module
 jest.mock('fs/promises');
 
 const mockFs = fs as jest.Mocked<typeof fs>;
 
 describe('Content Library', () => {
-  const testContentDir = '/test/content';
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('getContentByStage', () => {
-    it('should return empty array when directory is empty', async () => {
-      mockFs.readdir.mockResolvedValue([]);
-
-      const result = await getContentByStage('01-ideas');
-
-      expect(result).toEqual([]);
+  describe('slugifyTitle', () => {
+    it('should convert title to URL-safe slug', () => {
+      expect(slugifyTitle('Hello World')).toBe('hello-world');
+      expect(slugifyTitle('AI & Machine Learning!')).toBe('ai-machine-learning');
+      expect(slugifyTitle('  spaces  ')).toBe('spaces');
     });
 
-    it('should filter out non-markdown files', async () => {
-      mockFs.readdir.mockResolvedValue([
-        'test.md',
-        'test.txt',
-        'test.suggestions.json',
-      ] as any);
+    it('should truncate long titles to 50 characters', () => {
+      const long = 'a'.repeat(100);
+      expect(slugifyTitle(long).length).toBeLessThanOrEqual(50);
+    });
+  });
 
-      mockFs.readFile.mockResolvedValue('---\ntitle: Test\n---\nContent');
-
-      const result = await getContentByStage('01-ideas');
-
-      expect(result).toHaveLength(1);
-      expect(result[0].filename).toBe('test.md');
+  describe('generateFilename', () => {
+    it('should combine slug and slugified title with .yaml extension', () => {
+      expect(generateFilename('20260115-100000', 'My Test Post')).toBe(
+        '20260115-100000-my-test-post.yaml'
+      );
     });
 
-    it('should parse frontmatter correctly', async () => {
-      const fileContent = `---
-stage: idea
-type: linkedin-post
-title: Test Post
-slug: test-post
-created: 2025-12-27
-lastUpdated: 2025-12-27
-status: concept
-tags: [test]
-feedbackLog: []
----
+    it('should handle empty title', () => {
+      expect(generateFilename('20260115-100000', '')).toBe('20260115-100000.yaml');
+    });
+  });
 
-# Test Content`;
-
-      mockFs.readdir.mockResolvedValue(['test.md'] as any);
-      mockFs.readFile.mockResolvedValue(fileContent);
-      mockFs.access.mockRejectedValue(new Error('No suggestions'));
-
-      const result = await getContentByStage('01-ideas');
-
-      expect(result).toHaveLength(1);
-      expect(result[0].metadata.title).toBe('Test Post');
-      expect(result[0].metadata.type).toBe('linkedin-post');
-      expect(result[0].content).toContain('# Test Content');
+  describe('isValidContentType', () => {
+    it('should accept valid content types', () => {
+      expect(isValidContentType('linkedin-post')).toBe(true);
+      expect(isValidContentType('opinion')).toBe(true);
+      expect(isValidContentType('blog-post')).toBe(true);
     });
 
-    it('should detect suggestions file', async () => {
-      mockFs.readdir.mockResolvedValue(['test.md'] as any);
-      mockFs.readFile.mockResolvedValue('---\ntitle: Test\n---\nContent');
-      mockFs.access.mockResolvedValue(undefined);
-
-      const result = await getContentByStage('01-ideas');
-
-      expect(result[0].hasSuggestions).toBe(true);
+    it('should reject invalid content types', () => {
+      expect(isValidContentType('invalid')).toBe(false);
+      expect(isValidContentType('')).toBe(false);
     });
   });
 
   describe('saveContent', () => {
-    it('should update lastUpdated field', async () => {
+    it('should write YAML file and update lastUpdated', async () => {
+      mockFs.mkdir.mockResolvedValue(undefined);
+      mockFs.writeFile.mockResolvedValue(undefined);
+
       const metadata: ContentMetadata = {
         stage: '01-ideas',
         type: 'linkedin-post',
         title: 'Test',
-        slug: 'test',
-        created: '2025-12-27',
-        lastUpdated: '2025-12-27',
+        slug: '20260115-100000',
+        created: '2026-01-15',
+        lastUpdated: '2026-01-15',
         status: 'concept',
         tags: [],
         feedbackLog: [],
       };
 
-      mockFs.writeFile.mockResolvedValue(undefined);
-
-      await saveContent('01-ideas', 'test.md', metadata, 'Content');
+      const result = await saveContent('linkedin-post', '20260115-100000', metadata, 'Content');
 
       expect(mockFs.writeFile).toHaveBeenCalled();
-      const writtenContent = (mockFs.writeFile as any).mock.calls[0][1];
-      expect(writtenContent).toContain('lastUpdated:');
+      expect(result.lastUpdated).toBeDefined();
+      expect(new Date(result.lastUpdated).getTime()).toBeGreaterThan(0);
     });
   });
 
   describe('createContent', () => {
-    it('should generate filename with date and slug', async () => {
+    it('should generate YAML filename with slug and title', async () => {
+      mockFs.mkdir.mockResolvedValue(undefined);
+      mockFs.writeFile.mockResolvedValue(undefined);
+
       const metadata: ContentMetadata = {
         stage: '01-ideas',
         type: 'linkedin-post',
         title: 'Test Post',
-        slug: 'test-post',
-        created: '2025-12-27',
-        lastUpdated: '2025-12-27',
+        slug: '20260115-100000',
+        created: '2026-01-15',
+        lastUpdated: '2026-01-15',
         status: 'concept',
         tags: [],
         feedbackLog: [],
       };
 
-      mockFs.writeFile.mockResolvedValue(undefined);
+      const filename = await createContent('linkedin-post', metadata, 'Content');
 
-      const filename = await createContent('01-ideas', metadata, 'Content');
-
-      expect(filename).toMatch(/^\d{4}-\d{2}-\d{2}-test-post\.md$/);
+      expect(filename).toBe('20260115-100000-test-post.yaml');
     });
   });
 });

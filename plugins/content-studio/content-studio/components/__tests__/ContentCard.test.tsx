@@ -6,16 +6,16 @@ import { ContentFile } from '@/types/content';
 
 describe('ContentCard', () => {
   const mockContent: ContentFile = {
-    path: '/test/content.md',
-    filename: '2025-12-27-test-post.md',
+    path: '/test/content.yaml',
+    filename: '20260115-100000-test-post.yaml',
     stage: '01-ideas',
     metadata: {
       stage: '01-ideas',
       type: 'linkedin-post',
       title: 'Test Post',
-      slug: 'test-post',
-      created: '2025-12-27',
-      lastUpdated: '2025-12-27',
+      slug: '20260115-100000',
+      created: '2026-01-15T10:00:00.000Z',
+      lastUpdated: '2026-01-15T10:00:00.000Z',
       status: 'concept',
       audience: 'Test audience',
       coreInsight: 'This is a test insight',
@@ -32,11 +32,11 @@ describe('ContentCard', () => {
     expect(screen.getByText('Test Post')).toBeInTheDocument();
   });
 
-  it('should display type and status badges', () => {
+  it('should display type badge with friendly label', () => {
     render(<ContentCard content={mockContent} color="#8b5cf6" onRefresh={() => {}} />);
 
-    expect(screen.getByText('linkedin-post')).toBeInTheDocument();
-    expect(screen.getByText('concept')).toBeInTheDocument();
+    // ContentCard maps 'linkedin-post' to 'LinkedIn'
+    expect(screen.getByText('LinkedIn')).toBeInTheDocument();
   });
 
   it('should show core insight', () => {
@@ -45,27 +45,38 @@ describe('ContentCard', () => {
     expect(screen.getByText('This is a test insight')).toBeInTheDocument();
   });
 
-  it('should display tags', () => {
+  it('should show relative time', () => {
     render(<ContentCard content={mockContent} color="#8b5cf6" onRefresh={() => {}} />);
 
-    expect(screen.getByText('test')).toBeInTheDocument();
-    expect(screen.getByText('example')).toBeInTheDocument();
+    // Should show some form of relative time (e.g., "X months ago")
+    const timeElement = screen.getByText(/ago/);
+    expect(timeElement).toBeInTheDocument();
   });
 
-  it('should show suggestions indicator when present', () => {
-    const contentWithSuggestions = {
+  it('should show engagement badge for published posts with reactions', () => {
+    const publishedContent: ContentFile = {
       ...mockContent,
-      hasSuggestions: true,
+      stage: '03-published',
+      metadata: {
+        ...mockContent.metadata,
+        stage: '03-published',
+        engagement: {
+          reactions: 145,
+          comments: 23,
+          reposts: 8,
+        },
+      },
     };
 
-    render(<ContentCard content={contentWithSuggestions} color="#8b5cf6" onRefresh={() => {}} />);
+    render(<ContentCard content={publishedContent} color="#8b5cf6" onRefresh={() => {}} />);
 
-    expect(screen.getByText('📝 Has suggestions')).toBeInTheDocument();
+    expect(screen.getByText('145')).toBeInTheDocument();
   });
 
-  it('should show audience when provided', () => {
+  it('should not show engagement badge for draft posts', () => {
     render(<ContentCard content={mockContent} color="#8b5cf6" onRefresh={() => {}} />);
 
-    expect(screen.getByText('Test audience')).toBeInTheDocument();
+    // No reaction count should be visible
+    expect(screen.queryByText('145')).not.toBeInTheDocument();
   });
 });
