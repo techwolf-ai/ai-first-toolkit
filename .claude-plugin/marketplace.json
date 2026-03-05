@@ -1,5 +1,4 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "techwolf-ai-first",
   "owner": {
     "name": "TechWolf",
@@ -11,35 +10,13 @@
   "plugins": [
     {
       "name": "content-studio",
-      "description": "Content studio for managing thought leadership content with a visual editor, Claude Code skills, and utility scripts.",
       "source": "./plugins/content-studio",
-      "category": "productivity",
-      "skills": [
-        "./plugins/content-studio/skills/setup-content-studio",
-        "./plugins/content-studio/skills/write-opinion",
-        "./plugins/content-studio/skills/write-blog-post",
-        "./plugins/content-studio/skills/write-linkedin-post",
-        "./plugins/content-studio/skills/brainstorm-opinion",
-        "./plugins/content-studio/skills/brainstorm-linkedin",
-        "./plugins/content-studio/skills/analyze-performance"
-      ],
-      "author": {
-        "name": "TechWolf",
-        "url": "https://techwolf.ai"
-      }
+      "description": "Content studio for managing thought leadership content with a visual editor, Claude Code skills, and utility scripts."
     },
     {
       "name": "ai-firstify",
-      "description": "AI-first project auditor and re-engineer based on the 9 design principles and 7 design patterns from the TechWolf AI-First Bootcamp",
       "source": "./plugins/ai-firstify",
-      "category": "productivity",
-      "skills": [
-        "./plugins/ai-firstify/skills/ai-firstify"
-      ],
-      "author": {
-        "name": "Jeroen Van Hautte",
-        "url": "https://techwolf.ai"
-      }
+      "description": "AI-first project auditor and re-engineer based on the 9 design principles and 7 design patterns from the TechWolf AI-First Bootcamp"
     }
   ]
 }
