@@ -1,0 +1,10 @@
+{
+  "name": "content-studio",
+  "description": "Content studio for managing thought leadership content (LinkedIn posts, blog posts, opinion pieces) with a visual editor, Claude Code skills, and utility scripts.",
+  "version": "0.1.0",
+  "author": {
+    "name": "TechWolf",
+    "email": "lennert.demey@techwolf.ai",
+    "url": "https://techwolf.com"
+  }
+}

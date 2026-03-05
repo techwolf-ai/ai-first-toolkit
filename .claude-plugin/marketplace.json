@@ -1,13 +1,23 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "techwolf-ai-first",
   "owner": {
     "name": "TechWolf",
     "email": "lennert.demey@techwolf.ai"
   },
   "metadata": {
-    "description": "AI-first skills and tools from TechWolf's ai-first.techwolf.ai training program",
-    "version": "0.1.0",
-    "pluginRoot": "./plugins"
+    "description": "AI-first skills and tools from TechWolf's ai-first.techwolf.ai training program"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "content-studio",
+      "description": "Content studio for managing thought leadership content with a visual editor, Claude Code skills, and utility scripts.",
+      "source": "./plugins/content-studio",
+      "category": "productivity",
+      "author": {
+        "name": "TechWolf",
+        "url": "https://techwolf.ai"
+      }
+    }
+  ]
 }
