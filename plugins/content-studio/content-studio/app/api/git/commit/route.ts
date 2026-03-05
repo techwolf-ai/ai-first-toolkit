@@ -8,9 +8,16 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { files, message } = body;
 
-    if (!message || typeof message !== 'string') {
+    if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return NextResponse.json(
         { success: false, error: 'Commit message is required' },
+        { status: 400 }
+      );
+    }
+
+    if (message.length > 5000) {
+      return NextResponse.json(
+        { success: false, error: 'Commit message too long (max 5000 characters)' },
         { status: 400 }
       );
     }

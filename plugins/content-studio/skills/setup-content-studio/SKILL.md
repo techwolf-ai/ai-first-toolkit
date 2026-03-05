@@ -36,7 +36,7 @@ Ask the user to provide example content. This is critical for voice/style analys
 >
 > The more examples, the better I can capture their voice. Include engagement metrics (reactions, comments, reposts) if you have them - this helps identify what resonates with their audience."
 
-**Do not proceed until you have at least 10 substantive example posts.** Shares/reposts with minimal commentary don't count.
+**Do not proceed until you have at least 10 substantive example posts.** Shares/reposts with minimal commentary don't count. Unless the person does not have at least 10 posts.
 
 ## Step 3: Research the Person Online
 
@@ -88,6 +88,8 @@ If not clear from examples, ask:
 If not clear from examples:
 > "What language(s) should the content be in?"
 > Options: English only / English + Dutch / English + [other] / Multiple
+
+If opinion pieces are a content type, also ask which language the opinion pieces should be written in (it may differ from LinkedIn post language). Use this to set `{{OPINION_LANGUAGE}}` in `guidelines/opinion.md`.
 
 ### Target Length
 If the examples show a consistent pattern, confirm it. If not, ask:
@@ -152,7 +154,9 @@ Use the templates in the plugin's `templates/` directory as starting points:
    - Length guidelines (based on their actual post lengths)
    - Hook strategies (based on their actual high-performing hooks)
 
-4. **Additional style guides** if needed (e.g., `guidelines/opinie.md` for Dutch opinion pieces)
+4. **`guidelines/opinion.md`** if opinion pieces are a content type -- adapt from `templates/guidelines/opinie.md`:
+   - Replace `{{OPINION_LANGUAGE}}` with the chosen language (e.g., "Dutch (Nederlands)", "English", "French")
+   - Adapt language-specific examples and vocabulary to match
 
 ### 6c. Create Skills
 

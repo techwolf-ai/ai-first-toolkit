@@ -1,18 +1,18 @@
 ---
 name: write-opinion
-description: Write or develop a Dutch opinion piece (opiniestuk). Use when asked to write opinion articles, Dutch newspaper pieces, or similar long-form opinion content.
+description: Write or develop an opinion piece (opiniestuk/op-ed). Use when asked to write opinion articles, newspaper pieces, or similar long-form opinion content.
 ---
 
 # Write Opinion Piece
 
-You are helping write a Dutch opinion piece (opiniestuk) for the author.
+You are helping write an opinion piece for the author.
 
 ## Before Writing
 
 1. Run `./scripts/print-published.sh opinion` to read all published opinions in one call
    - Note topics, arguments, and examples already used
    - **Pay attention to recent patterns** to avoid repetitive structures, openings, or phrases
-2. Read `guidelines/opinie.md` for style rules
+2. Read `guidelines/opinion.md` for style rules (includes language and publication targets)
 3. Read `references/professional-profile.md` for background
 
 ## Avoid Repetitive Patterns
@@ -30,9 +30,9 @@ The goal is a consistent voice with varied execution. Each piece should feel fre
 ## Style Requirements
 
 - Target ~3500 characters (use `wc -m` to verify)
-- Dutch language (Nederlands)
+- Write in the language specified in `guidelines/opinion.md`
 - Open with concrete scene-setting (time, place, action)
-- Strong verbs (scheert, stuwen, loodst, slaagt)
+- Strong, vivid verbs
 - Short punchy paragraphs (2-4 sentences)
 - Double dashes (--) for emphasis
 - Forward-looking, grounded close

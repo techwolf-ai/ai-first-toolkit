@@ -29,9 +29,9 @@ All use the same Content Studio and workflow:
 - **Style guide:** `guidelines/linkedin.md` (same voice and style) -->
 
 <!-- ### Opinion Pieces (`type: opinion`)
-- **Language:** Dutch (Nederlands)
+- **Language:** {{OPINION_LANGUAGE}}
 - **Target:** ~3500 characters
-- **Style guide:** `guidelines/opinie.md` -->
+- **Style guide:** `guidelines/opinion.md` -->
 
 ---
 

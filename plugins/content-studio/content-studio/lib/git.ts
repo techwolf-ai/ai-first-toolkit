@@ -1,10 +1,9 @@
 // Git operations using simple-git
 
 import simpleGit, { SimpleGit } from 'simple-git';
-import path from 'path';
 import { GitStatus, GitChange, GitCommit } from '@/types/content';
+import { REPO_DIR } from '@/lib/paths';
 
-const REPO_DIR = path.join(process.cwd(), '..');
 const git: SimpleGit = simpleGit(REPO_DIR);
 
 export async function getGitStatus(): Promise<GitStatus> {

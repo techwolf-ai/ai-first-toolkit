@@ -1,4 +1,4 @@
-# Style Guide for Dutch Opinion Pieces (Opiniestukken)
+# Style Guide for Opinion Pieces
 
 *For {{AUTHOR_NAME}}'s opinion articles*
 
@@ -13,7 +13,7 @@
 ## Length & Format
 
 - **Target: ~3500 characters** (use `wc -m` to verify)
-- **Language: Dutch (Nederlands)**
+- **Language: {{OPINION_LANGUAGE}}**
 - Simple, descriptive headline - questions work when they frame the core idea
 
 ---
@@ -26,8 +26,7 @@
 
 ## Writing Style
 
-- **Conversational yet authoritative tone** - using "we", "ons", direct address
-- **Mix of Dutch and English terms** naturally integrated
+- **Conversational yet authoritative tone** - using first-person plural, direct address
 - **Short, punchy paragraphs** (2-4 sentences typical)
 - **Concrete examples over abstractions** - specific companies, numbers, scenarios
 - **Personal experiences** woven throughout to add credibility
@@ -45,8 +44,8 @@
 - **Active voice** predominantly
 - **Direct, clear sentences** avoiding academic jargon
 - **Metaphors and analogies** to explain complex concepts
-- **Strong verbs** (scheert, stuwen, loodst, slaagt)
-- **Temporal markers** (vandaag, vorig jaar, binnenkort) to ground in time
+- **Strong, vivid verbs**
+- **Temporal markers** to ground in time
 - **Double dashes** (--) for emphasis instead of commas
 
 ## Closing Style

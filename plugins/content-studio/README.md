@@ -16,7 +16,7 @@ A complete content studio for managing thought leadership content (LinkedIn post
 | `/content-studio:setup-content-studio` | Set up a new content studio for a person (interactive) |
 | `/content-studio:write-linkedin-post` | Write or develop LinkedIn posts |
 | `/content-studio:write-blog-post` | Write or develop blog posts (800-1200 words) |
-| `/content-studio:write-opinion` | Write Dutch opinion pieces |
+| `/content-studio:write-opinion` | Write opinion pieces (language configured per author) |
 | `/content-studio:brainstorm-linkedin` | Generate LinkedIn ideas from source material |
 | `/content-studio:brainstorm-opinion` | Generate opinion ideas from recent LinkedIn posts |
 | `/content-studio:analyze-performance` | Analyze engagement patterns across published posts |
@@ -25,8 +25,10 @@ A complete content studio for managing thought leadership content (LinkedIn post
 
 ### 1. Install the Plugin
 
-```bash
-# In Claude Code
+Add the marketplace and install:
+
+```
+/plugin marketplace add techwolf/ai-first-open-source
 /plugin install content-studio@techwolf-ai-first
 ```
 
@@ -86,7 +88,7 @@ The `templates/` directory contains starter files for personalizing the studio:
 |----------|---------|
 | `templates/CLAUDE.md` | System documentation with `{{AUTHOR_NAME}}` placeholders |
 | `templates/guidelines/linkedin.md` | LinkedIn style guide template with theme placeholders |
-| `templates/guidelines/opinie.md` | Dutch opinion piece style guide template |
+| `templates/guidelines/opinie.md` | Opinion piece style guide template (language-configurable) |
 | `templates/references/professional-profile.md` | Author profile skeleton |
 
 ## Scripts

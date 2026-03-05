@@ -5,10 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import yaml from 'js-yaml';
 import { ContentFile, ContentStage, ContentMetadata, ContentType, SuggestionFile } from '@/types/content';
-
-const CONTENT_DIR = path.join(process.cwd(), '../content');
-const POSTS_DIR = path.join(CONTENT_DIR, 'posts');
-const IMAGES_DIR = path.join(CONTENT_DIR, 'images');
+import { POSTS_DIR, IMAGES_DIR } from '@/lib/paths';
 
 // All valid content types
 const CONTENT_TYPES: ContentType[] = ['linkedin-post', 'opinion', 'article', 'blog-post', 'thread', 'newsletter'];
@@ -479,4 +476,4 @@ export function isValidContentType(type: string): type is ContentType {
   return CONTENT_TYPES.includes(type as ContentType);
 }
 
-export { CONTENT_DIR, POSTS_DIR, IMAGES_DIR, CONTENT_TYPES, slugifyTitle, generateFilename };
+export { CONTENT_TYPES, slugifyTitle, generateFilename };

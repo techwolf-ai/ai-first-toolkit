@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import path from 'path';
-
-const CONTENT_DIR = path.join(process.cwd(), '..', 'content');
+import { CONTENT_DIR, isPathWithin } from '@/lib/paths';
 
 const MIME_TYPES: Record<string, string> = {
   'jpg': 'image/jpeg',
@@ -22,8 +21,7 @@ export async function GET(
     const imagePath = path.join(CONTENT_DIR, ...pathParts);
 
     // Security: ensure path is within content directory
-    const resolvedPath = path.resolve(imagePath);
-    if (!resolvedPath.startsWith(path.resolve(CONTENT_DIR))) {
+    if (!isPathWithin(imagePath, CONTENT_DIR)) {
       return NextResponse.json(
         { error: 'Access denied' },
         { status: 403 }
