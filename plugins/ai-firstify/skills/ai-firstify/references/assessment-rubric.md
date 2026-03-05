@@ -93,6 +93,10 @@ find .claude/skills -name "SKILL.md" 2>/dev/null
 ls -R .claude/skills/ 2>/dev/null
 # Check skill length
 wc -l .claude/skills/*/SKILL.md 2>/dev/null
+# Check skill prescriptiveness (should have numbered steps)
+grep -c "^[0-9]" .claude/skills/*/SKILL.md 2>/dev/null
+# Check for progressive disclosure (references/ dirs)
+find .claude/skills -name "references" -type d 2>/dev/null
 ```
 
 ---
@@ -225,7 +229,7 @@ git log --oneline --since="1 week ago" 2>/dev/null | wc -l
 ## Report Template
 
 ```markdown
-# Jeroenify Assessment Report
+# AI-Firstify Assessment Report
 
 **Project:** [project name]
 **Date:** [date]

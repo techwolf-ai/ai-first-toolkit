@@ -20,7 +20,7 @@ Step-by-step prescriptive workflow:
 4. Run scripts/validate.sh to check the output
 5. Save the result to [specific location]
 
-## References
+## References (example -- adapt to your skill)
 - references/style-guide.md -- detailed style rules
 - references/examples.md -- example outputs
 
@@ -55,6 +55,8 @@ SKILL.md (lean, ~50-100 lines)
        └── references/examples.md (detailed, with full examples)
 ```
 
+> **Note:** The file names above (style-guide.md, examples.md) are illustrative. Name your reference files to match your skill's domain -- e.g., references/assessment-rubric.md, references/api-docs.md, etc.
+
 The agent loads SKILL.md first (cheap). Only loads reference files when needed for the current step (on-demand). This saves tokens and keeps context focused.
 
 ---
@@ -65,7 +67,7 @@ The agent loads SKILL.md first (cheap). Only loads reference files when needed f
 |--------|----------------------------------|-------------------------------|
 | Scope | One specific project | All your projects |
 | Sharing | Shared via git repo | Personal only |
-| Examples | Content studio writer, project-specific validator | Memo writer, jeroenify, code review |
+| Examples | Content studio writer, project-specific validator | Memo writer, ai-firstify, code review |
 | When to promote | After proving useful across 3+ projects | -- |
 
 **Start project-level.** Promote to user-level when the skill is proven useful across multiple projects.

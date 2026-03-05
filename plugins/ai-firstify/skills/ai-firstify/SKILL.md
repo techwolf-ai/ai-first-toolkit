@@ -11,7 +11,7 @@ Analyze and re-engineer projects to align with AI-first design principles.
 
 Use this skill when asked to:
 - **Audit mode** (read-only): "review", "audit", "analyze", "check", "assess"
-- **Re-engineer mode** (active changes): "ai-firstify", "fix", "improve", "re-engineer", "transform"
+- **Re-Engineer mode** (active changes): "ai-firstify", "fix", "improve", "re-engineer", "transform"
 - **Bootstrap mode** (new project): "start", "new project", "bootstrap", "set up", "build from scratch"
 
 ## Mode 1: Audit (Read-Only Analysis)

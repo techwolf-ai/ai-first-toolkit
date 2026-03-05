@@ -114,7 +114,9 @@
 
 **Summary:** Use Claude Code. It improves automatically. Your custom agent won't.
 
-**Description:** You already have an agent with tools, research, and coding abilities. Building agent infrastructure in your applications is almost never the right choice. Your custom agent will never be as smart, bulletproof, or flexible as maintained agents like Claude Code. As models improve, Claude Code improves automatically -- your custom agent stays stuck in time. Important clarification: sub-agents WITHIN Claude Code are fine and encouraged. "When we say don't build your own agent, we mean don't build a web app with an agent in it."
+**Description:** You already have an agent with tools, research, and coding abilities. Building agent infrastructure in your applications is almost never the right choice. Your custom agent will never be as smart, bulletproof, or flexible as maintained agents like Claude Code. As models improve, Claude Code improves automatically -- your custom agent stays stuck in time.
+
+> **Important:** Sub-agents WITHIN Claude Code (e.g., using the Agent tool, TeamCreate, or sub-agent patterns in skills) are fine and encouraged. "Don't build your own agent" means don't build a web app or deployed service with an embedded LLM agent. Using Claude Code's built-in multi-agent capabilities is the recommended approach.
 
 **When it applies:** Whenever you're tempted to add LLM API calls to your application. When designing system architecture. When choosing between skills and deployed agents.
 
@@ -187,7 +189,7 @@
 - No examples provided in skill instructions
 
 **How to fix:**
-- Use Voice Ink for richer, more detailed prompts
+- Use VoiceInk for richer, more detailed prompts
 - Add reference files with examples and style guides
 - Include step-by-step procedures in skills
 - Provide context about why, not just what
