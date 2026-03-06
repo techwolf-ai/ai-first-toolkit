@@ -55,3 +55,15 @@ Read references/assessment-rubric.md for scoring criteria and report template. O
 - Overall score (green/yellow/red for each dimension)
 - Priority-ordered recommendations
 - Specific files/patterns that need attention
+
+## Step 4: Validate the report
+Run `scripts/validate-report.sh` on the generated report to verify it follows the expected format (all sections present, all 7 dimensions scored, priority tags used).
+
+## Step 5: Sub-agent review
+Spawn a sub-agent to review the audit report with fresh eyes. The reviewer should:
+- Check scoring consistency (does the evidence support each GREEN/YELLOW/RED?)
+- Flag any dimensions where the score seems too generous or too harsh
+- Verify recommendations are actionable and priority-ordered correctly
+- Return a brief list of adjustments
+
+Incorporate the reviewer's feedback before presenting the final report.

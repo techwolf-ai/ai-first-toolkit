@@ -44,3 +44,7 @@ Domain knowledge (load on demand per dimension):
 - **references/assessment-rubric.md** -- Scoring criteria and report template
 
 Load the relevant reference file for the dimension you are currently analyzing. Do not load all references at once -- use progressive disclosure.
+
+## Tools
+
+- **scripts/validate-report.sh** -- Validates that a generated assessment report has all required sections, dimensions, and scores
