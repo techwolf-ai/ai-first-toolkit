@@ -31,3 +31,7 @@ Or invoke directly:
 1. **Audit** -- Read-only analysis across 7 dimensions with a scored report
 2. **Re-Engineer** -- Full audit followed by active fixes in 7 phases
 3. **Bootstrap** -- Interactive new project setup with discovery questions
+
+## License
+
+This project is licensed under the [MIT License](../../LICENSE).

@@ -72,6 +72,10 @@ npm install  # first time only
 npm run dev
 ```
 
+## Hooks
+
+The plugin includes a **session-start hook** (`hooks/ensure-content-studio.sh`) that automatically detects whether the Content Studio UI is running when you start a Claude Code session. If it's not running, it starts the Next.js app in the background and opens it in your browser.
+
 ## Content Workflow
 
 ```
@@ -100,6 +104,10 @@ The `templates/` directory contains starter files for personalizing the studio:
 | `scripts/search-posts.sh "<term>"` | Search posts by keyword |
 | `scripts/list-by-type.sh <type>` | List all posts of a type |
 
+## Background
+
+This plugin was built as part of [Part 3 of the TechWolf AI-First Bootcamp](https://ai-first.techwolf.ai), which covers building AI-first tools and workflows with Claude Code plugins.
+
 ## License
 
-[MIT](../../LICENSE)
+This project is licensed under the [MIT License](../../LICENSE).
