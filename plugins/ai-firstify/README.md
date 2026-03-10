@@ -12,6 +12,26 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 claude plugin install ai-firstify@techwolf-ai-first
 ```
 
+### Codex
+
+```bash
+./install.sh ai-firstify
+```
+
+Update, uninstall, or verify:
+
+```bash
+./install.sh update ai-firstify
+./install.sh uninstall ai-firstify
+./install.sh verify ai-firstify
+```
+
+For Codex, this plugin installs:
+
+- `ai-firstify`
+
+The installer also writes plugin metadata into the installed skill directory and copies a Codex guidance file into `~/.codex/skills/.techwolf-ai-first/plugins/ai-firstify/`.
+
 ## Usage
 
 The skill triggers automatically when you ask Claude Code to:

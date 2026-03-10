@@ -57,6 +57,42 @@ claude plugin update ai-firstify@techwolf-ai-first
 claude plugin update content-studio@techwolf-ai-first
 ```
 
+### Codex
+
+The skills in this repo follow the [agentskills.io](https://agentskills.io) spec, so they work with any compatible agent, including [Codex](https://github.com/openai/codex).
+
+Install plugins into Codex's skill directory:
+
+```bash
+./install.sh                         # install all plugins
+./install.sh ai-firstify            # install one plugin
+./install.sh content-studio
+./install.sh --target ~/custom/     # install to a custom directory
+```
+
+Manage the install lifecycle:
+
+```bash
+./install.sh list
+./install.sh verify
+./install.sh update content-studio
+./install.sh uninstall ai-firstify
+```
+
+What the Codex installer does:
+
+- Installs each skill under `~/.codex/skills/<skill-name>/`
+- Adds per-skill metadata so installs can be traced back to the source plugin and version
+- Verifies that required files are present after install
+- Copies plugin guidance into `~/.codex/skills/.techwolf-ai-first/plugins/<plugin>/AGENTS.md`
+
+Codex-specific plugin entry points:
+
+- `ai-firstify` installs as the `ai-firstify` skill
+- `content-studio` installs a plugin-level `content-studio` skill plus the specialized writing, brainstorming, setup, and analysis skills
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.

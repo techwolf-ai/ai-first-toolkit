@@ -32,6 +32,35 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 claude plugin install content-studio@techwolf-ai-first
 ```
 
+### Codex
+
+From the repository root:
+
+```bash
+./install.sh content-studio
+```
+
+Update, uninstall, or verify:
+
+```bash
+./install.sh update content-studio
+./install.sh uninstall content-studio
+./install.sh verify content-studio
+```
+
+For Codex, this plugin installs:
+
+- `content-studio` as the plugin-level entry point
+- `setup-content-studio`
+- `write-linkedin-post`
+- `write-blog-post`
+- `write-opinion`
+- `brainstorm-linkedin`
+- `brainstorm-opinion`
+- `analyze-performance`
+
+The installer also writes plugin metadata into each installed skill directory and copies a Codex guidance file into `~/.codex/skills/.techwolf-ai-first/plugins/content-studio/`.
+
 ### 2. Set Up for a Person
 
 Run the setup skill to create a personalized content studio:
