@@ -1,53 +1,46 @@
 # Management Framework
 
-A framework for evaluating and developing people managers. Two dimensions, six sub-dimensions.
+How your organization evaluates and develops managers. Discovered during `/setup` and stored in `manager-context/management-framework.md`.
 
-## Dimension 1: Deliver Excellence
+If no org-specific framework is configured, skills fall back to two universal management dimensions.
 
-How the manager drives results through their team.
+## Default Dimensions
 
-### Delegation
-- Sets clear expectations and ownership
-- Delegates appropriately — doesn't micromanage or under-delegate
-- Protects team's focus time
+### Results
+How the manager drives outcomes through their team.
 
-### Execution
-- Removes blockers, unblocks the team
-- Drives accountability and follow-through
-- Manages cross-functional dependencies
+- **Delegation** -- sets clear expectations, delegates appropriately, protects focus time
+- **Execution** -- removes blockers, drives accountability, manages dependencies
+- **Communication** -- keeps stakeholders informed, creates clarity, manages upward
 
-### Communication
-- Keeps stakeholders informed without over-communicating
-- Creates clarity from ambiguity
-- Manages upward effectively
-
-## Dimension 2: Develop People
-
+### People
 How the manager grows and retains their team.
 
-### Team Development & Engagement
-- Invests in each person's growth
-- Creates psychological safety
-- Builds team identity and belonging
+- **Development & Engagement** -- invests in growth, creates psychological safety, builds belonging
+- **Performance Management** -- gives timely feedback, has honest conversations, manages underperformance
+- **Hiring** -- maintains a strong bar, builds diverse teams, invests in onboarding
 
-### Performance Management
-- Gives timely, specific feedback
-- Has honest performance conversations
-- Manages underperformance with care and clarity
+These defaults work for most organizations. During setup, the manager can replace or extend them with their org's actual management competencies.
 
-### Hiring
-- Maintains a strong hiring bar
-- Builds diverse teams
-- Invests in onboarding
+## Org-Specific Configuration
 
-## How Skills Map to This Framework
+During `/setup`, the plugin discovers:
+- **Management competency model** -- what your org expects from managers
+- **How managers are evaluated** -- separate track, same framework as ICs, or informal
+- **Level expectations** -- if management levels exist with different expectations
 
-| Skill | Primary dimension |
-|-------|------------------|
-| Triage Messages | Deliver Excellence — Communication |
-| Meeting Prep | Deliver Excellence — Execution |
-| Priority Planner | Deliver Excellence — Execution + Develop People |
-| 1:1 Prep | Develop People — Team Development |
-| Team Health | Develop People — Team Development & Engagement |
-| Performance Cycle | Develop People — Performance Management |
-| Customer Status | Deliver Excellence — Execution |
+This is stored in `manager-context/management-framework.md` and loaded by skills that reference management dimensions.
+
+## How Skills Map to Management Dimensions
+
+Skills naturally support different management areas. When an org-specific framework is configured, this mapping is updated to use the org's dimension names.
+
+| Skill | Default mapping |
+|-------|----------------|
+| Triage Messages | Results -- Communication |
+| Meeting Prep | Results -- Execution |
+| Priority Planner | Results -- Execution + People |
+| 1:1 Prep | People -- Development |
+| Team Health | People -- Development & Engagement |
+| Performance Cycle | People -- Performance Management |
+| Customer Status | Results -- Execution |

@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Interactive onboarding that discovers team structure, terminology, development goals, organizational values, and ways of working by crawling Slack, Notion, Google Drive, Gmail, and Calendar. Validates everything with the manager before persisting. Run this first before using any other skill. Also handles periodic context refreshes via /setup --refresh. Triggers on "setup", "configure", "onboard", "get started", "refresh context".
+description: "Interactive onboarding that discovers team structure, terminology, development goals, performance and management frameworks, organizational values, and ways of working by crawling Slack, Notion, Google Drive, Gmail, and Calendar. Validates everything with the manager before persisting. Run this first before using any other skill. Also handles periodic context refreshes via /setup --refresh."
 ---
 
 # Setup
@@ -31,40 +31,45 @@ Identify the manager (name, role, teams), crawl sources for direct reports, vali
 
 Persist: `manager-context/manager-profile.md`, `manager-context/team/[name].md` per report, `manager-context/terminology.md`, `manager-context/sources.md`
 
-### Phase 2: Organizational Values
+### Phase 2: Performance & Management Frameworks
+Discover how the org evaluates performance and managers. Present the defaults from `../../references/performance-framework.md` and `../../references/management-framework.md`, then ask the manager to confirm, adjust, or replace with their org's framework. Key things to discover: framework dimensions, rating scale, promotion readiness labels, review cadence, goal cadence, and management competencies.
+
+Persist: `manager-context/performance-framework.md`, `manager-context/management-framework.md`
+
+### Phase 3: Organizational Values
 Ask if the org has defined values. If yes, search for documentation, extract value names and behaviours, ask what signals to look for per value. If no, skip the values lens.
 
 Persist: `manager-context/values.md`
 
-### Phase 3: Output Preferences
+### Phase 4: Output Preferences
 Present defaults (language, tone, file format, folder structure) and let the manager adjust.
 
 Persist: `manager-context/output-preferences.md`
 
-### Phase 4: Manager's Own Context
+### Phase 5: Manager's Own Context
 Capture upward context — OKRs, who they report to, key deadlines.
 
 Persist: `manager-context/manager-goals.md`
 
-### Phase 5: Triage Rules
+### Phase 6: Triage Rules
 Capture VIP people, hot channels, deprioritise list, privacy boundaries.
 
 Persist: `manager-context/triage-rules.md`
 
-### Phase 6: Review Calendar
+### Phase 7: Review Calendar
 Capture review cycle dates, calibration sessions, promotion windows, goal cadence.
 
 Persist: `manager-context/review-calendar.md`
 
-### Phase 7: Skill Preferences
+### Phase 8: Skill Preferences
 Capture 1:1 style and suggest a skill rhythm (daily triage, weekly health check, etc.).
 
 Persist: `manager-context/skill-preferences.md`
 
-### Phase 8: Staleness Check
+### Phase 9: Staleness Check
 Flag any discovered data older than ~2 months. Ask the manager to confirm or update.
 
-### Phase 9: Persist & Wrap Up
+### Phase 10: Persist & Wrap Up
 Save all validated context. Read `references/context-templates.md` for file templates. Present a summary of what was captured, flag gaps, and suggest first skills to try.
 
 ## Refresh Mode

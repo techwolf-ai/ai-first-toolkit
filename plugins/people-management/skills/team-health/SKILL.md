@@ -1,6 +1,6 @@
 ---
 name: team-health
-description: Periodic check on team dynamics, engagement signals, and development trajectory for all direct reports. Surfaces patterns across the team — who might need more challenge, who might need more support, who hasn't had a 1:1 recently. Uses two universal lenses: performance & growth, and wellbeing & connection. Outputs are prompts for reflection, not diagnoses.
+description: "Periodic check on team dynamics, engagement signals, and development trajectory for all direct reports. Surfaces patterns across the team — who might need more challenge, who might need more support, who hasn't had a 1:1 recently. Uses two universal lenses: performance & growth, and wellbeing & connection. Outputs are prompts for reflection, not diagnoses."
 ---
 
 # Team Health Check

@@ -2,16 +2,16 @@
 📅 [Day, Date] at [Time]
 🔄 Last 1:1: [date]
 
-## Recent Wins 🎉
+## Recent Wins
 - [Win 1 with source link]
 - [Win 2 with source link]
 (Recognition to give: these are great conversation openers)
 
 ## What They've Been Working On
-- [Project/activity 1] — [brief context]
-- [Project/activity 2] — [brief context]
+- [Project/activity 1] -- [brief context]
+- [Project/activity 2] -- [brief context]
 
-## Topics to Explore 💬
+## Topics to Explore
 Based on signals from the past [N] days:
 - [Topic 1: what was observed, framed as a question not a conclusion]
 - [Topic 2]
@@ -19,29 +19,26 @@ Based on signals from the past [N] days:
 ## Values Snapshot
 | Value / Dimension | Signal | Conversation thread |
 |-------------------|--------|-------------------|
-| [Value 1 from manager-context/values.md] | [observation] | [question if relevant] |
-| [Value 2] | [observation] | [question if relevant] |
-| ... | ... | ... |
+| [Value from manager-context/values.md] | [observation] | [question if relevant] |
 
-_Only include values where there's a meaningful signal — don't force all every time._
+_Only include values where there's a meaningful signal -- don't force all every time. Skip this section entirely if no values were configured._
 
 ## Development Goals
 | Goal | Status | Last Updated | Framework Dimension |
 |------|--------|-------------|-------------------|
-| [goal] | [on track / needs attention] | [date] | Impact: Goal Achievement |
-| [goal] | [status] | [date] | Growth: Skill Development |
+| [goal] | [on track / needs attention] | [date] | [dimension from org's framework] |
 
 ## Open Items from Last 1:1
-- [ ] [item] — [who owns it, status]
+- [ ] [item] -- [who owns it, status]
 
 ## Suggested Questions
-Aligned with the performance framework and organizational values:
+Aligned with the org's performance framework dimensions and organizational values:
 
-**Impact:**
+**[Framework Dimension 1]:**
 - How are you feeling about progress on [goal]? Any blockers I can help with?
 - [Question based on observed activity]
 
-**Growth:**
+**[Framework Dimension 2]:**
 - [Question about development area, based on goals]
 - What's been the most challenging thing this [week/sprint]? What did you learn from it?
 

@@ -1,13 +1,13 @@
 ---
 name: one-on-one-prep
-description: Deep-dive preparation for 1:1 meetings with direct reports. Surfaces recent work, wins, friction, wellbeing signals, and development goal progress — anchored in the performance framework (Impact + Growth), organizational values, and management best practices. Produces a prep sheet with suggested conversation topics, not a script.
+description: "Deep-dive preparation for 1:1 meetings with direct reports. Surfaces recent work, wins, friction, wellbeing signals, and development goal progress — anchored in the org's performance framework, organizational values, and management best practices. Produces a prep sheet with suggested conversation topics, not a script."
 ---
 
 # 1:1 Prep
 
 > **Great 1:1s live at the intersection of performance and care.** Development keeps growth alive. Wellbeing makes sure the person behind the work is seen. Both matter every time.
 
-Deep-dive preparation for 1:1 meetings with a specific direct report, anchored in the performance framework and your organization's values.
+Deep-dive preparation for 1:1 meetings with a specific direct report, anchored in the org's performance framework (from `manager-context/performance-framework.md`) and organizational values.
 
 ## When to Use
 
@@ -136,9 +136,12 @@ Using the goals location from the team member's profile:
 - Pull the 1:1 document for this person
 - Check the most recent entries for open action items and commitments
 
-**Reference the performance framework dimensions:**
-- **Impact:** Goal achievement, quality of outcomes, business & team impact
-- **Growth:** Skill development, behavioral growth, scope expansion
+**Reference the org's performance framework dimensions** (from `manager-context/performance-framework.md`). Use the org's dimension names and sub-dimensions when checking goal progress. If no org framework was configured, fall back to the defaults in `../../references/performance-framework.md`.
+
+See the "Evidence Gathering Guidelines" section in `../../references/performance-framework.md` for what to look for per dimension type:
+- **Results/delivery dimensions:** goal completion, shipped work, quality feedback, business outcomes
+- **Growth/development dimensions:** learning activities, new skills applied, scope expansion, behavioural changes
+- **Collaboration/leadership dimensions:** cross-team activity, mentoring, influence in discussions
 
 ```
 📋 Development Goal Status:
@@ -172,7 +175,18 @@ Parked topics: [if any]
 
 Read `references/output-template.md` for the full output template structure.
 
-### 8. Present and Offer Follow-Up
+### 8. Sub-Agent Review
+
+Spawn a sub-agent to review the prep sheet with fresh eyes. The reviewer should:
+- Check that **wellbeing signals are framed as conversation starters**, not assessments or diagnoses.
+- Check that the **values snapshot** only includes values with meaningful signals -- not forcing all values every time.
+- Verify that **wins lead the document** and the tone is constructive, not surveillance-like.
+- Flag any phrasing that crosses from observation ("posted after 22:00 three times") into interpretation ("seems burned out").
+- Check that evidence gaps are noted where data is thin, rather than padded with weak signals.
+
+Incorporate the reviewer's feedback before presenting the final prep sheet.
+
+### 9. Present and Offer Follow-Up
 
 ```
 Here's your prep for your 1:1 with [name]. Anything you'd like me to dig deeper on?
@@ -185,6 +199,6 @@ Read `../../references/operating-principles.md` for shared operating principles 
 Additional notes specific to this skill:
 - **Wins first.** Always lead with recognition opportunities — this sets the tone.
 - **Goals are the backbone.** If goals are missing or stale, flag it prominently. Great 1:1s keep development goals alive.
-- **Framework + values alignment.** Suggested questions should map to Impact/Growth dimensions or your organization's values. Don't force all values every time — only surface values where there's a real signal.
+- **Framework + values alignment.** Suggested questions should map to the org's performance framework dimensions or organizational values. Don't force all values every time — only surface values where there's a real signal.
 - **Values are conversation threads, not checklists.** The values snapshot helps managers notice things beyond deliverables. A 1:1 that only covers goals misses the human. A 1:1 that only covers feelings misses the growth. Both.
 - **Don't script the conversation.** Provide prompts and context, not a talk track.

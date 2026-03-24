@@ -39,15 +39,32 @@ For each person, gather: full name, Slack handle, role/title, how they were disc
 
 ### 1.3 Validate Team
 
-Present findings:
+Present findings. If connectors were available, show how each person was discovered. If connectors were unavailable, ask the manager to provide the team list directly.
+
+For each team member, also ask for their **Slack handle** — this is needed for searching messages and mapping activity later.
+
 ```
 I found these people who appear to be your direct reports:
 
-1. [Name] — [role], found via [1:1 calendar + Slack #team-channel]
-2. [Name] — [role], found via [Slack DMs + Notion team page]
-3. [Name] — [role], found via [Slack channel only — unsure if direct report]
+1. [Name] — @[slack-handle], [role], found via [1:1 calendar + Slack #team-channel]
+2. [Name] — @[slack-handle], [role], found via [Slack DMs + Notion team page]
+3. [Name] — @[slack-handle], [role], found via [Slack channel only — unsure if direct report]
 
 Are these correct? Anyone missing? Anyone who shouldn't be on this list?
+For anyone I'm missing a Slack handle, what is it?
+```
+
+If connectors were unavailable, use this format instead:
+```
+Since I couldn't crawl your tools, I'll need you to provide your team list:
+
+For each direct report, please share:
+- Full name
+- Slack handle (e.g., @alex-rivera)
+- Role/title
+- What they're currently working on
+
+Also, what's your own Slack handle?
 ```
 
 Wait for confirmation. Adjust based on feedback.
@@ -85,6 +102,19 @@ Report per person:
 
 If goals are missing, explicitly ask where they're documented.
 
+**If connectors are unavailable**, ask the manager directly:
+```
+I couldn't search your tools, so I need a few things to make the skills useful:
+
+1. **Where do you keep 1:1 notes?** (Google Docs, Notion, somewhere else?)
+2. **Where are goals tracked?** (Notion OKR page, spreadsheet, goal-setting tool?)
+3. **Where are performance reviews stored?** (Notion, Google Drive folder, HR tool?)
+4. **For each team member, do you know their current development areas or goals?**
+   - [Name]: [goals / development focus / "will gather in 1:1"]
+
+Even rough answers help — I'll fill in the details when connectors become available.
+```
+
 ### 1.6 Discover Ways of Working
 
 **Calendar:** 1:1 cadence per report, team sync frequency, skip-level meetings, cross-functional meetings.
@@ -101,11 +131,27 @@ Your rhythm looks like this:
 Anything I should know about how you prefer to work?
 ```
 
-### 1.7 Customer & Project Context (if applicable)
+### 1.7 Channels & Project Context
 
-For customer-facing teams:
+Map team members to their primary Slack channels. This is used by triage, team health, and 1:1 prep to know where to look for each person's activity.
 
-**Slack:** Identify project/customer channels (#proj-*, #customer-*, #account-*). Map team members to channels.
+**If connectors are available:**
+
+**Slack:** Identify project/customer channels (#proj-*, #customer-*, #account-*, #team-*). Map team members to channels based on membership and activity.
+
+**If connectors are unavailable**, ask:
+```
+Which Slack channels is each team member most active in?
+
+| Team member | Primary channels |
+|-------------|-----------------|
+| [Name] | #[channel], #[channel] |
+
+Also, are there any project or customer channels I should monitor?
+```
+
+For customer-facing teams, also discover:
+
 **Notion:** Project pages, customer status docs, delivery trackers.
 
 Present:
@@ -119,42 +165,224 @@ Any accounts I'm missing?
 
 ---
 
-## Phase 2: Organizational Values
+## Phase 2: Performance & Management Frameworks
 
-Ask:
+Discover how the org evaluates individual performance and management effectiveness. This is critical — the performance framework shapes how 1:1 prep, team health, and performance cycle skills organise their output.
+
+### 2.1 Crawl for Existing Framework Docs
+
+Before asking the manager, search for existing documentation:
+
+**Notion:** Search for pages matching: "performance framework", "performance review", "review process", "career framework", "career ladder", "leveling", "competency", "rating", "promotion", "management competencies", "people manager expectations".
+
+**Google Drive:** Search for docs matching: "performance review template", "review guide", "career framework", "leveling guide", "management expectations".
+
+**Slack:** Search for recent messages mentioning: "review cycle", "calibration", "promotion", "performance review" — these often link to framework docs.
+
+For each document found, extract:
+- Framework dimension names and descriptions
+- Rating scale labels and descriptions
+- Promotion readiness labels (if any)
+- Review cadence and timeline
+- Management-specific competencies or expectations
+
+### 2.2 Present Findings & Fill Gaps
+
+If framework docs were found, present what was extracted:
 ```
-Does your organization have defined core values?
+I found your org's performance framework! Here's what I extracted:
 
-If yes:
-1. What are they? (list the names)
-2. Where are they documented? (Notion page, handbook, etc.)
-3. How are they used in performance reviews or feedback?
+**Performance dimensions:**
+1. [Dimension name] — [description, sub-dimensions]
+2. [Dimension name] — [description, sub-dimensions]
 
-If no:
-That's fine — we can skip the values lens in skills, or you can define informal values later.
+**Rating scale:** [extracted labels]
+**Promotion tracking:** [extracted labels / not found]
+**Review cadence:** [extracted timeline]
+
+Is this accurate? Anything missing or outdated?
 ```
 
-If documented, search Notion and Drive for the values page. Extract value names and associated behaviours.
-
-For each value, ask:
-- What does this value look like in practice for your team?
-- What signals might I find in Slack, docs, or meetings?
-
-Present:
+If NO framework docs were found, walk through building it:
 ```
-Here's my understanding of your values:
+I couldn't find a documented performance framework. Let's set one up — I'll ask a few questions and you can tell me what your org uses. If you're unsure on anything, I have sensible defaults.
 
-1. [Value Name] — [description]. Signals: [what to look for]
-2. [Value Name] — [description]. Signals: [what to look for]
+**1. How does your org evaluate performance?**
+Most orgs use 2-3 dimensions. Common patterns:
+- **Results + Growth** — what someone delivered AND how they're developing
+- **What + How** — outcomes AND behaviours/values
+- **Single dimension** — just overall performance rating
 
-Correct? Any values I should weigh more heavily in 1:1 prep or team health?
+What dimensions does your org use? (If unsure, I'll use "Impact" and "Growth" as defaults — you can change these anytime.)
 ```
 
-Persist to `manager-context/values.md`. Read `references/context-templates.md` for template.
+Wait for the manager's answer. Then continue:
+
+```
+**2. Rating scale** — how are people rated in reviews?
+Common patterns:
+- Descriptive labels (e.g., "Exceeds Expectations / Meets / Below")
+- Numbered scale (e.g., 1-5)
+- Custom labels (e.g., "Outstanding / Strong / Developing")
+- No formal ratings
+
+What does your org use?
+```
+
+```
+**3. Promotion readiness** — does your org track this separately?
+Common patterns:
+- Labels like "Ready Now / Ready Soon / Not Yet"
+- Integrated into the rating (e.g., top rating = promotion-ready)
+- Not formally tracked
+
+What does your org use? (Fine to skip if not applicable.)
+```
+
+```
+**4. Review cadence** — when do formal reviews happen?
+- Annual (once a year)
+- Bi-annual (twice a year, e.g., summer + winter)
+- Quarterly
+- Something else?
+
+And are there lighter check-ins between full reviews?
+```
+
+```
+**5. Goal cadence** — how often are goals set and reviewed?
+- Quarterly (OKRs or similar)
+- Half-yearly
+- Annually
+- Continuous / no fixed cadence
+```
+
+For each answer, confirm understanding and note any sub-dimensions or nuances the manager mentions.
+
+### 2.3 Management Framework
+
+If management-specific docs were found in 2.1, present them. Otherwise:
+
+```
+**6. Management expectations** — does your org have a formal model for what makes a good manager?
+
+Common patterns:
+- **Two-dimensional:** driving results AND developing people
+- **Competency model:** specific skills like delegation, communication, hiring, coaching
+- **No formal model** — that's fine, we'll use sensible defaults (Results + People)
+
+What does your org expect from managers? Are managers evaluated separately or on the same framework as ICs?
+```
+
+If the manager describes specific competencies, capture each one with a brief description.
+
+### 2.4 Validate & Persist
+
+Present the complete framework for confirmation:
+```
+Here's your complete framework configuration:
+
+**Performance Framework:**
+- Dimensions: [list with sub-dimensions]
+- Rating scale: [labels]
+- Promotion tracking: [labels / not tracked]
+- Review cadence: [cadence with dates if known]
+- Goal cadence: [cadence]
+
+**Management Framework:**
+- Dimensions: [list with competencies]
+- How managers are evaluated: [separate track / same as ICs / informal]
+
+These will shape how 1:1 prep, team health, and performance cycle skills organise their output. Anything to adjust?
+```
+
+Wait for confirmation. Then persist to `manager-context/performance-framework.md` and `manager-context/management-framework.md`. Read `references/context-templates.md` for file templates.
 
 ---
 
-## Phase 3: Output Preferences
+## Phase 3: Organizational Values
+
+Values tell skills *how* results should be delivered. They provide conversation threads beyond goals and deliverables — especially valuable in 1:1 prep, team health, and performance reviews.
+
+### 3.1 Crawl for Values Documentation
+
+Search for existing values documentation before asking:
+
+**Notion:** Search for pages matching: "values", "core values", "company values", "culture", "handbook", "how we work", "principles".
+
+**Google Drive:** Search for docs matching: "values", "culture deck", "handbook", "ways of working".
+
+**Slack:** Search for pinned messages or channels like #values, #culture, #handbook that may link to values docs.
+
+### 3.2 Present Findings or Ask
+
+If values docs were found, extract value names, descriptions, and any associated behaviours:
+```
+I found your org's values! Here's what I extracted:
+
+1. **[Value Name]** — [description from doc]
+2. **[Value Name]** — [description from doc]
+3. **[Value Name]** — [description from doc]
+
+Is this the current list? Any that are missing or outdated?
+```
+
+If NO values docs were found:
+```
+I couldn't find documented company values. Does your organization have defined core values?
+
+If yes:
+1. What are they? (just list the names — I'll help flesh them out)
+2. Where are they documented? (Notion page, handbook, website, etc.)
+
+If no — that's fine. We can skip the values lens in skills, or you can define informal team values. You can always add values later by running /setup --refresh.
+```
+
+### 3.3 Define Signals Per Value
+
+For each value, help the manager define what to look for. This is the key step — generic value names are useless without signals.
+
+For each value, ask:
+```
+Let's make "[Value Name]" actionable for the skills. For each question, give me examples or say "skip" if unsure:
+
+1. **What does this value look like in Slack?**
+   (e.g., for a "Collaboration" value: helping others in channels, cross-team threads, sharing context proactively)
+
+2. **What does it look like in work output?**
+   (e.g., for a "Quality" value: iteration on docs, peer feedback, attention to detail)
+
+3. **How is it used in performance reviews?**
+   (e.g., "we ask for examples of each value" or "it's part of the 'How' rating")
+
+4. **What's hard to see digitally?**
+   (e.g., empathy in person, trust-building, tone of voice — these I'll flag for your own observation)
+```
+
+If the manager has many values (5+), offer to batch:
+```
+You have [N] values — want me to go through each one, or would you rather give me a quick summary of what signals matter most and I'll fill in the rest?
+```
+
+### 3.4 Validate & Persist
+
+Present the complete values configuration:
+```
+Here's your values configuration:
+
+| Value | Description | Signals to look for | Hard to see digitally |
+|-------|-------------|--------------------|-----------------------|
+| [name] | [description] | [signals] | [what needs manager's own observation] |
+
+These will be used as a lens in 1:1 prep, team health, and performance reviews.
+Any values I should weigh more heavily? Any to skip in certain skills?
+```
+
+Persist to `manager-context/values.md`. Read `references/context-templates.md` for the template. See `../../references/values-guide.md` for how skills use values.
+
+---
+
+## Phase 4: Output Preferences
 
 Present defaults and let the manager adjust:
 ```
@@ -172,7 +400,7 @@ Persist to `manager-context/output-preferences.md`. All other skills must read t
 
 ---
 
-## Phase 4: Manager's Own Context
+## Phase 5: Manager's Own Context
 
 ```
 A few questions about your own context:
@@ -189,7 +417,7 @@ Persist to `manager-context/manager-goals.md`.
 
 ---
 
-## Phase 5: Triage Rules
+## Phase 6: Triage Rules
 
 ```
 Let's set up your triage rules:
@@ -204,14 +432,15 @@ Persist to `manager-context/triage-rules.md`. The triage-messages and priority-p
 
 ---
 
-## Phase 6: Review Calendar
+## Phase 7: Review Calendar
 
 ```
 When are your review cycles?
 
 Common patterns:
-- Winter & Summer: Full bi-annual reviews (Impact + Growth ratings)
-- Spring & Fall: Lighter check-ins
+- Bi-annual: full reviews twice a year with lighter check-ins in between
+- Annual: one big review per year
+- Quarterly: lighter but more frequent
 
 For your team:
 1. When is the next review cycle?
@@ -224,7 +453,7 @@ Persist to `manager-context/review-calendar.md`.
 
 ---
 
-## Phase 7: Skill Preferences
+## Phase 8: Skill Preferences
 
 ```
 A couple more things:
@@ -233,11 +462,11 @@ A couple more things:
 Topics you always want included? Share prep with the report beforehand?
 
 **Suggested skill rhythm:**
-- Daily: /triage-messages (morning), /plan-priorities (after triage)
-- Day before 1:1s: /prep-one-on-one [name]
-- Before meetings: /prep-meeting (as needed)
-- Weekly or biweekly: /check-team-health
-- Before review cycles: /prep-performance
+- Daily: /triage-messages (morning), /priority-planner (after triage)
+- Day before 1:1s: /one-on-one-prep [name]
+- Before meetings: /meeting-prep (as needed)
+- Weekly or biweekly: /team-health
+- Before review cycles: /performance-cycle
 
 Does this rhythm work?
 ```
@@ -246,7 +475,7 @@ Persist to `manager-context/skill-preferences.md`.
 
 ---
 
-## Phase 8: Staleness Check
+## Phase 9: Staleness Check
 
 Flag anything stale:
 ```
@@ -262,7 +491,7 @@ Ask the manager to confirm or update each flagged item.
 
 ---
 
-## Phase 9: Persist & Wrap Up
+## Phase 10: Persist & Wrap Up
 
 Save all validated context. Read `references/context-templates.md` for file templates.
 
@@ -287,7 +516,7 @@ Data gaps to fill later: [list any]
 
 You're ready to go! Try:
 - /triage-messages to catch up on what needs attention
-- /plan-priorities to plan your day
-- /prep-one-on-one [name] before your next 1:1
-- /prep-meeting for your next meeting
+- /priority-planner to plan your day
+- /one-on-one-prep [name] before your next 1:1
+- /meeting-prep for your next meeting
 ```

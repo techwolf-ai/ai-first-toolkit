@@ -33,6 +33,83 @@ Templates for all files persisted during manager setup. Each template shows the 
 - [Any custom preferences noted during setup]
 ```
 
+## `manager-context/performance-framework.md`
+
+> **Fallback:** If this file is absent, skills fall back to the defaults in `../../references/performance-framework.md`.
+
+```markdown
+# Performance Framework
+
+**Last updated:** [date]
+
+## Dimensions
+
+### [Dimension 1 Name, e.g., Impact]
+[Description]
+
+| Sub-dimension | What it means |
+|--------------|---------------|
+| [sub-dimension] | [description] |
+
+### [Dimension 2 Name, e.g., Growth]
+[Description]
+
+| Sub-dimension | What it means |
+|--------------|---------------|
+| [sub-dimension] | [description] |
+
+## Rating Scale
+| Rating | Description |
+|--------|-------------|
+| [rating] | [description] |
+
+## Promotion Readiness
+| Label | Meaning |
+|-------|---------|
+| [label] | [meaning] |
+
+(If not tracked, note: "Not formally tracked")
+
+## Review Cadence
+| Cycle | Type | When |
+|-------|------|------|
+| [cycle name] | [full review / light check-in] | [period] |
+
+## Goal Cadence
+- Cycle: [quarterly / half-yearly / annual]
+- Current period: [period]
+```
+
+## `manager-context/management-framework.md`
+
+> **Fallback:** If this file is absent, skills fall back to the defaults in `../../references/management-framework.md`.
+
+```markdown
+# Management Framework
+
+**Last updated:** [date]
+
+## Dimensions
+
+### [Dimension 1 Name, e.g., Results]
+[Description]
+
+- **[Competency]** -- [what it looks like]
+- **[Competency]** -- [what it looks like]
+
+### [Dimension 2 Name, e.g., People]
+[Description]
+
+- **[Competency]** -- [what it looks like]
+- **[Competency]** -- [what it looks like]
+
+## How Managers Are Evaluated
+- [Separate management track / same framework as ICs / informal]
+
+## Notes
+- [Any org-specific context]
+```
+
 ## `manager-context/manager-goals.md`
 
 ```markdown
@@ -94,12 +171,9 @@ Templates for all files persisted during manager setup. Each template shows the 
 **Last updated:** [date]
 
 ## Cycle Dates
-| Cycle | Period | Self-review Due | Manager Review Due | Calibration |
-|-------|--------|----------------|-------------------|-------------|
-| Winter | [dates] | [date] | [date] | [date] |
-| Summer | [dates] | [date] | [date] | [date] |
-| Spring check-in | [dates] | — | [date] | — |
-| Fall check-in | [dates] | — | [date] | — |
+| Cycle | Period | Type | Self-review Due | Manager Review Due | Calibration |
+|-------|--------|------|----------------|-------------------|-------------|
+| [cycle name] | [dates] | [full review / check-in] | [date] | [date] | [date] |
 
 ## Goal Cadence
 - Cycle: [quarterly / half-yearly]

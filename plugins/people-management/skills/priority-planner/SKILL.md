@@ -118,7 +118,7 @@ Read `../../references/operating-principles.md` for shared operating principles 
 Additional notes specific to this skill:
 - **Never prescribe.** Use "I'd suggest", "Consider". The manager knows context the tool doesn't.
 - **The Invest bucket is crucial.** Don't let it be empty. Great managers always invest time in development, even when busy.
-- **Connect to frameworks.** Note which management framework dimension an action supports.
+- **Connect to frameworks.** Note which management framework dimension (from `manager-context/management-framework.md`) an action supports.
 - **Don't just list everything.** The "What I'd Deprioritise" section is often more valuable than the priority list itself.
 - **Time-box awareness.** If the calendar is packed, don't suggest 8 hours of focus work. Be realistic.
 - **Goal alignment is the core insight.** If there's persistent drift between daily activity and goals, say so clearly.

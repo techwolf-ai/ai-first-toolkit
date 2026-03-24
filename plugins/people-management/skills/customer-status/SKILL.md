@@ -79,49 +79,19 @@ For each account, determine a health signal based on evidence:
 
 ### 5. Produce the Overview
 
-```markdown
-# Customer Status — [Date]
-Team: [Manager's team name]
+Read `references/output-template.md` for the full output template structure.
 
-## Summary
-| Status | Count |
-|--------|-------|
-| 🟢 Healthy | [N] |
-| 🟡 Attention | [N] |
-| 🔴 At Risk | [N] |
+### 6. Sub-Agent Review
 
-## 🔴 Needs Attention
-### [Account Name]
-**Owner:** [team member] | **Channel:** #[channel] | **Phase:** [delivery phase]
-**Signal:** [1-2 sentences explaining why this is flagged — with links]
-**Last activity:** [date/time]
-**Suggested action:** [e.g., "Check in with [name] about the blocker they raised on [date]"]
+Spawn a sub-agent to review the customer status overview with fresh eyes. The reviewer should:
+- Check that **health signal assessments are evidence-based** -- every red/yellow rating should cite specific signals, not just absence of activity.
+- Verify that **silence is not over-interpreted** -- a quiet channel on a stable account is not the same as a quiet channel on an active delivery.
+- Check for **team member workload signals** -- if one person owns many flagged accounts, note it.
+- Flag any accounts where the evidence is thin enough that the health signal might be misleading.
 
-### [Account Name]
-...
+Incorporate the reviewer's feedback before presenting the final overview.
 
-## 🟡 Monitor
-### [Account Name]
-**Owner:** [team member] | **Channel:** #[channel]
-**Signal:** [1-2 sentences]
-**Last activity:** [date/time]
-
-## 🟢 On Track
-| Account | Owner | Last Activity | Notes |
-|---------|-------|--------------|-------|
-| [name] | [team member] | [date] | [1-line summary of recent positive signal] |
-
-## Upcoming Milestones
-| Account | Milestone | Date | Owner |
-|---------|-----------|------|-------|
-| [name] | [milestone] | [date] | [team member] |
-
-## Source Links
-- [link to customer channel]
-- [link to project page]
-```
-
-### 6. Present and Offer Follow-Up
+### 7. Present and Offer Follow-Up
 
 ```
 Here's your customer status overview. Want me to:

@@ -1,40 +1,30 @@
 ---
 name: performance-cycle
-description: Evidence gathering for bi-annual review cycles (winter/summer) and lighter check-ins (spring/fall). Gathers goal completion evidence, peer feedback, development progress, scope changes, and values alignment — organised along the Impact and Growth dimensions of the performance framework, with organizational values as the "how" lens. Surfaces evidence gaps. Never suggests ratings — only organises evidence for the manager's judgment.
+description: "Evidence gathering for performance review cycles. Gathers goal completion evidence, peer feedback, development progress, scope changes, and values alignment — organised along the org's performance framework dimensions, with organizational values as the 'how' lens. Surfaces evidence gaps. Never suggests ratings — only organises evidence for the manager's judgment."
 ---
 
 # Performance Cycle Assistant
 
 > **Principle: "You are responsible."** This skill gathers and organises evidence. Rating decisions and development assessments are the manager's alone.
 
-Helps managers prepare evidence-based assessments for performance review cycles. Impact and Growth measure *what* was achieved and *how the person developed*. Organizational values measure *how they showed up* while doing it.
+Helps managers prepare evidence-based assessments for performance review cycles. The org's performance framework dimensions measure *what* was achieved and *how the person developed*. Organizational values measure *how they showed up* while doing it.
 
 ## When to Use
 
-- During bi-annual review cycles (winter, summer)
-- During lighter check-ins (spring, fall)
+- During full review cycles (per the org's review cadence)
+- During lighter check-ins between full reviews
 - When the manager says "help me prep [name]'s review", "gather evidence for [name]'s performance"
 - Can be run for one team member or all reports in batch
 
 ## Context: Performance Framework
 
-The framework has two dimensions:
+Load the org's performance framework from `manager-context/performance-framework.md` (created during `/setup`). This defines:
+- Framework dimensions and sub-dimensions
+- Rating scale
+- Promotion readiness labels (if tracked)
+- Review cadence
 
-**Impact:**
-- Goal achievement — did they hit their goals?
-- Quality of outcomes — was the work excellent?
-- Business & team impact — did it matter?
-
-**Growth:**
-- Skill development — are they building new capabilities?
-- Behavioral growth — are they growing in how they work with others?
-- Scope expansion — are they taking on more / bigger / different challenges?
-
-**Ratings:** Outstanding, Exceptional, Rising, Strong, Below Expectations
-
-**Promotion readiness:** Ready Now, Ready Soon, Growth Path
-
-See `../../references/performance-framework.md` for full details.
+If no org-specific framework was configured, fall back to the defaults in `../../references/performance-framework.md` (Impact + Growth).
 
 ## Instructions
 
@@ -59,44 +49,28 @@ For the target team member, read from `manager-context/team/[name].md`:
 - Their projects and responsibilities
 
 Also load:
-- `../../references/performance-framework.md` — for framework dimensions and rating descriptors
-- `../../references/management-framework.md` — for management dimensions and level expectations
+- `manager-context/performance-framework.md` — for org-specific framework dimensions and rating descriptors (falls back to `../../references/performance-framework.md` defaults)
+- `manager-context/management-framework.md` — for org-specific management dimensions (falls back to `../../references/management-framework.md` defaults)
 - `../../references/values-guide.md` — for values definitions and signal guidance
 - `manager-context/values.md` — for the organization's specific values
 
 ### 3. Gather Evidence Along Each Dimension
 
-#### Impact: Goal Achievement
-- **Notion:** Pull their goals and check for completion status, progress notes
-- **Slack:** Search for messages about shipping, completing, delivering related to their goals
-- **Google Drive:** Look for deliverables, reports, or outputs tied to goals
-- Compile: which goals were met, exceeded, or missed with evidence
+For each dimension and sub-dimension in the org's performance framework (from `manager-context/performance-framework.md`), gather evidence from connected sources.
 
-#### Impact: Quality of Outcomes
-- **Slack:** Search for feedback on their deliverables — positive and constructive
-- **Notion:** Check for any quality metrics or peer reviews
-- **Google Drive:** Look for iteration history or feedback on their work
-- Compile: evidence of excellence (or gaps in quality)
+For each sub-dimension:
+- **Notion:** Pull goals, project pages, status updates, metrics relevant to this dimension
+- **Slack:** Search for messages showing activity, feedback, recognition, or friction related to this dimension
+- **Google Drive:** Look for deliverables, reports, documents tied to this dimension
+- **Calendar:** Check for activities that signal growth or scope changes (new meetings, new stakeholders)
+- Compile: what evidence was found, with links
 
-#### Impact: Business & Team Impact
-- **Slack:** Search for mentions of business outcomes tied to their work
-- **Notion:** Check for impact metrics, customer feedback, business results
-- Compile: how their work connected to team/business outcomes
+**Common evidence patterns by dimension type:**
+- **Results/delivery dimensions:** goal completion, shipped work, quality feedback, business outcomes
+- **Growth/development dimensions:** learning activities, new skills applied, scope expansion, behavioural changes
+- **Collaboration/leadership dimensions:** cross-team activity, mentoring, influence in discussions
 
-#### Growth: Skill Development
-- **Slack/Notion:** Search for learning activities, workshops, certifications
-- **Google Drive:** Training materials, course completions
-- Compare to development areas from last review: is there visible progress?
-
-#### Growth: Behavioral Growth
-- **Slack:** Look for leadership behaviours, mentoring, cross-functional collaboration
-- Evidence of growing influence or maturity in communication
-- This is the hardest dimension to gather evidence for — flag that the manager likely has better context here
-
-#### Growth: Scope Expansion
-- **Slack/Calendar:** New channels, new meetings, new stakeholders
-- **Notion:** New project pages they're leading
-- Evidence of taking on bigger or different challenges
+For dimensions that are hardest to assess digitally (e.g., behavioural growth, leadership presence), explicitly flag that the manager's direct observations carry more weight.
 
 ### 4. Gather Values Evidence
 
