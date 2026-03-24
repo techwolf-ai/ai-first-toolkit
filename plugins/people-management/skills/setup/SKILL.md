@@ -32,7 +32,7 @@ Identify the manager (name, role, teams), crawl sources for direct reports, vali
 Persist: `manager-context/manager-profile.md`, `manager-context/team/[name].md` per report, `manager-context/terminology.md`, `manager-context/sources.md`
 
 ### Phase 2: Performance & Management Frameworks
-Discover how the org evaluates performance and managers. Present the defaults from `../../references/performance-framework.md` and `../../references/management-framework.md`, then ask the manager to confirm, adjust, or replace with their org's framework. Key things to discover: framework dimensions, rating scale, promotion readiness labels, review cadence, goal cadence, and management competencies.
+Discover how the org evaluates performance and managers. Search for existing framework docs, then walk the manager through defining their dimensions, rating scale, promotion readiness labels, review cadence, goal cadence, and management competencies. See `../../references/performance-framework.md` and `../../references/management-framework.md` for how skills use these frameworks.
 
 Persist: `manager-context/performance-framework.md`, `manager-context/management-framework.md`
 

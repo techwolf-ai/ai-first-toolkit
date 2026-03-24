@@ -35,7 +35,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 
 ## `manager-context/performance-framework.md`
 
-> **Fallback:** If this file is absent, skills fall back to the defaults in `../../references/performance-framework.md`.
+> **Required:** Skills that need the performance framework will ask the manager to run `/setup` if this file is missing.
 
 ```markdown
 # Performance Framework
@@ -82,7 +82,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 
 ## `manager-context/management-framework.md`
 
-> **Fallback:** If this file is absent, skills fall back to the defaults in `../../references/management-framework.md`.
+> **Required:** Skills that need the management framework will ask the manager to run `/setup` if this file is missing.
 
 ```markdown
 # Management Framework

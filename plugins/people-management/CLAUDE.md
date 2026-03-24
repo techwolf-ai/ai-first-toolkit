@@ -18,8 +18,8 @@ AI-augmented management tooling. See `README.md` for philosophy and details.
 ## Key References
 
 - `references/operating-principles.md` -- shared principles all skills follow
-- `references/performance-framework.md` -- default performance dimensions (customised during setup)
-- `references/management-framework.md` -- default management dimensions (customised during setup)
+- `references/performance-framework.md` -- how skills use the performance framework (configured during setup)
+- `references/management-framework.md` -- how skills use the management framework (configured during setup)
 - `references/values-guide.md` -- how org values are used across skills
 
 ## Runtime Data

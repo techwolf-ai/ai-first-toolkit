@@ -24,7 +24,7 @@ Load the org's performance framework from `manager-context/performance-framework
 - Promotion readiness labels (if tracked)
 - Review cadence
 
-If no org-specific framework was configured, fall back to the defaults in `../../references/performance-framework.md` (Impact + Growth).
+If `manager-context/performance-framework.md` doesn't exist, ask the manager to run `/setup` first.
 
 ## Instructions
 

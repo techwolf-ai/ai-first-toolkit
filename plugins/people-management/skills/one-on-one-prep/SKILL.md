@@ -136,7 +136,7 @@ Using the goals location from the team member's profile:
 - Pull the 1:1 document for this person
 - Check the most recent entries for open action items and commitments
 
-**Reference the org's performance framework dimensions** (from `manager-context/performance-framework.md`). Use the org's dimension names and sub-dimensions when checking goal progress. If no org framework was configured, fall back to the defaults in `../../references/performance-framework.md`.
+**Reference the org's performance framework dimensions** (from `manager-context/performance-framework.md`). Use the org's dimension names and sub-dimensions when checking goal progress. If this file doesn't exist, ask the manager to run `/setup` first.
 
 See the "Evidence Gathering Guidelines" section in `../../references/performance-framework.md` for what to look for per dimension type:
 - **Results/delivery dimensions:** goal completion, shipped work, quality feedback, business outcomes
