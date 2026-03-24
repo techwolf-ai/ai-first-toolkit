@@ -1,0 +1,12 @@
+# Runtime context (contains sensitive personal/performance data)
+manager-context/
+
+# Skill outputs (contain personal prep notes, triage, evidence)
+outputs/
+
+# OS and editor noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
