@@ -17,6 +17,11 @@
       "name": "ai-firstify",
       "source": "./plugins/ai-firstify",
       "description": "AI-first project auditor and re-engineer based on the 9 design principles and 7 design patterns from the TechWolf AI-First Bootcamp"
+    },
+    {
+      "name": "people-management",
+      "source": "./plugins/people-management",
+      "description": "AI-augmented management tooling for people managers. Surfaces the right context at the right time. Adapts to your org's performance and management frameworks."
     }
   ]
 }

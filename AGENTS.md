@@ -21,3 +21,4 @@ This repository publishes TechWolf AI-first plugins and skills for both Claude C
 - `./install.sh` installs skills into `~/.codex/skills` by default.
 - The installer also manages plugin metadata, verification, and uninstall state under `~/.codex/skills/.techwolf-ai-first/`.
 - `content-studio` has a plugin-level Codex entry skill in addition to its specialized skills.
+- `people-management` has 8 skills that require `/setup` to be run first to configure org-specific frameworks and context.

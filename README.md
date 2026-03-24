@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.1.0](https://img.shields.io/badge/version-1.1.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.2.0](https://img.shields.io/badge/version-1.2.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai).
 
@@ -8,22 +8,30 @@ Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf
 
 ## What's inside
 
-### ai-firstify — AI-First Skill
+### ai-firstify -- AI-First Skill
 
 Audit, re-engineer, or bootstrap any codebase to align with 9 AI-first design principles and 7 design patterns. Three modes:
 
-- **Audit** — deep analysis across 7 dimensions with a scored report
-- **Re-engineer** — actively restructures your project to be AI-first
-- **Bootstrap** — guides new project setup with discovery questions
+- **Audit** -- deep analysis across 7 dimensions with a scored report
+- **Re-engineer** -- actively restructures your project to be AI-first
+- **Bootstrap** -- guides new project setup with discovery questions
 
-### content-studio — Thought Leadership Pipeline
+### content-studio -- Thought Leadership Pipeline
 
 Full content pipeline for LinkedIn posts, blog posts, and opinion pieces. Includes 8 specialized skills, a visual Kanban editor, and hooks that auto-start the companion app.
 
-- **Write** — LinkedIn posts, blog posts, opinion pieces with voice-matched style
-- **Brainstorm** — generate ideas from URLs, files, or recent posts
-- **Analyze** — engagement pattern analysis across published content
-- **Setup** — interactive onboarding that learns your voice and creates a personalized content repo
+- **Write** -- LinkedIn posts, blog posts, opinion pieces with voice-matched style
+- **Brainstorm** -- generate ideas from URLs, files, or recent posts
+- **Analyze** -- engagement pattern analysis across published content
+- **Setup** -- interactive onboarding that learns your voice and creates a personalized content repo
+
+### people-management -- AI-Augmented Management
+
+AI-augmented tooling for people managers. Surfaces the right context at the right time -- before meetings, during 1:1 prep, when triaging messages, or reviewing performance. Adapts to any org's frameworks and values.
+
+- **Setup** -- interactive onboarding (10 phases) that discovers your team, frameworks, values, and ways of working
+- **8 skills** -- meeting prep, 1:1 prep, triage, customer status, priority planner, team health, performance cycle
+- **Framework-agnostic** -- configures to your org's performance dimensions, rating scale, management competencies, and values
 
 ## Quick start
 
@@ -33,6 +41,7 @@ Full content pipeline for LinkedIn posts, blog posts, and opinion pieces. Includ
 claude plugin marketplace add techwolf-ai/ai-first-toolkit
 claude plugin install ai-firstify@techwolf-ai-first
 claude plugin install content-studio@techwolf-ai-first
+claude plugin install people-management@techwolf-ai-first
 ```
 
 ### Codex
@@ -43,6 +52,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh
 ./install.sh ai-firstify
 ./install.sh content-studio
+./install.sh people-management
 ```
 
 <details>
@@ -72,7 +82,8 @@ ai-first-toolkit/
 │   └── marketplace.json        # Marketplace manifest
 ├── plugins/
 │   ├── ai-firstify/            # Auditor & re-engineer (1 skill, 9 reference docs)
-│   └── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
+│   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
+│   └── people-management/      # Management tooling (8 skills, 5 reference docs)
 ├── install.sh                  # Codex skill installer
 └── README.md
 ```
@@ -81,6 +92,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `sk
 
 - [ai-firstify README](plugins/ai-firstify/README.md)
 - [content-studio README](plugins/content-studio/README.md)
+- [people-management README](plugins/people-management/README.md)
 
 ## Contributing
 
@@ -88,4 +100,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-[MIT](LICENSE) — see [CHANGELOG.md](CHANGELOG.md) for release history.
+[MIT](LICENSE) -- see [CHANGELOG.md](CHANGELOG.md) for release history.
