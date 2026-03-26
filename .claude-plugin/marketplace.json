@@ -22,6 +22,11 @@
       "name": "people-management",
       "source": "./plugins/people-management",
       "description": "AI-augmented management tooling for people managers. Surfaces the right context at the right time. Adapts to your org's performance and management frameworks."
+    },
+    {
+      "name": "brand-kit",
+      "source": "./plugins/brand-kit",
+      "description": "Official TechWolf brand assets for AI-generated outputs. Provides logo files in multiple variants as SVG and PNG."
     }
   ]
 }
