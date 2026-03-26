@@ -33,7 +33,7 @@ AI-augmented tooling for people managers. Surfaces the right context at the righ
 - **8 skills** -- meeting prep, 1:1 prep, triage, customer status, priority planner, team health, performance cycle
 - **Framework-agnostic** -- configures to your org's performance dimensions, rating scale, management competencies, and values
 
-### brand-kit -- Brand Assets
+### techwolf-brand-kit -- Brand Assets
 
 Official TechWolf brand assets for AI-generated outputs. Ensures agents use the correct logo files instead of guessing or approximating.
 
@@ -49,7 +49,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 claude plugin install ai-firstify@techwolf-ai-first
 claude plugin install content-studio@techwolf-ai-first
 claude plugin install people-management@techwolf-ai-first
-claude plugin install brand-kit@techwolf-ai-first
+claude plugin install techwolf-brand-kit@techwolf-ai-first
 ```
 
 ### Codex
@@ -61,7 +61,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh ai-firstify
 ./install.sh content-studio
 ./install.sh people-management
-./install.sh brand-kit
+./install.sh techwolf-brand-kit
 ```
 
 <details>
@@ -93,7 +93,7 @@ ai-first-toolkit/
 │   ├── ai-firstify/            # Auditor & re-engineer (1 skill, 9 reference docs)
 │   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
-│   └── brand-kit/              # Brand assets (logo variants in SVG + PNG)
+│   └── techwolf-brand-kit/              # Brand assets (logo variants in SVG + PNG)
 ├── install.sh                  # Codex skill installer
 └── README.md
 ```
@@ -103,7 +103,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `sk
 - [ai-firstify README](plugins/ai-firstify/README.md)
 - [content-studio README](plugins/content-studio/README.md)
 - [people-management README](plugins/people-management/README.md)
-- [brand-kit README](plugins/brand-kit/README.md)
+- [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 
 ## Contributing
 

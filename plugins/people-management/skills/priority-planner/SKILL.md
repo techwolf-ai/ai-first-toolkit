@@ -1,11 +1,11 @@
 ---
 name: priority-planner
-description: Helps managers cut through noise and identify their highest-leverage actions for the day or week. Aggregates signals from calendar, triage, team context, and OKRs/goals. Presents a suggested focus list grouped by urgency, importance, and investment — the manager reviews and adjusts. Supports effective execution and prioritisation.
+description: Helps managers cut through noise and identify their highest-leverage actions for the day or week. Aggregates signals from calendar, triage, team context, and OKRs/goals. Presents a suggested focus list grouped by urgency, importance, and investment -- the manager reviews and adjusts. Supports effective execution and prioritisation.
 ---
 
 # Priority Planner
 
-> **Principle: "You are responsible."** The skill proposes, the manager decides. This is not a task manager — it's a thinking partner for prioritisation.
+> **Principle: "You are responsible."** The skill proposes, the manager decides. This is not a task manager -- it's a thinking partner for prioritisation.
 
 Aggregates signals from multiple sources to surface the manager's highest-leverage actions.
 
@@ -28,7 +28,7 @@ Ask or infer whether this is a daily or weekly plan:
 
 ### 2. Load Goals
 
-Before gathering signals, load the manager's goals — these are the lens through which everything gets prioritised.
+Before gathering signals, load the manager's goals -- these are the lens through which everything gets prioritised.
 
 **From `manager-context/manager-goals.md`:**
 - The manager's own OKRs and goals
@@ -76,21 +76,21 @@ Pull from multiple sources:
 
 Group everything into three categories (inspired by Eisenhower):
 
-**🔴 Urgent — Time-Sensitive Decisions**
+**🔴 Urgent -- Time-Sensitive Decisions**
 Things where someone is blocked or a deadline is imminent:
 - Decisions only the manager can make
 - Escalations that need resolution today
 - Deadlines within 24-48 hours
 - Framework: Execution
 
-**🟡 Important — High-Impact Work**
+**🟡 Important -- High-Impact Work**
 Things that move OKRs and team goals forward:
 - Strategic work (planning, decision-making, alignment)
 - Cross-functional alignment needed
 - Customer-related actions that affect account health
 - Framework: Delegation & Execution
 
-**🟢 Invest — Development & Strategic Thinking**
+**🟢 Invest -- Development & Strategic Thinking**
 Things that compound over time but rarely feel urgent:
 - 1:1 preparation and development conversations
 - Team health check-ins
@@ -105,7 +105,7 @@ Read `references/output-template.md` for the full output template structure.
 ### 6. Present and Iterate
 
 ```
-Here's a suggested priority plan. This is a starting point — adjust based on your judgment. Want me to:
+Here's a suggested priority plan. This is a starting point -- adjust based on your judgment. Want me to:
 - Move anything between categories?
 - Add something I missed?
 - Prep for any of these items?

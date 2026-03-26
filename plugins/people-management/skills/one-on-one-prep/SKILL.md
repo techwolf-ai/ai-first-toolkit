@@ -1,6 +1,6 @@
 ---
 name: one-on-one-prep
-description: "Deep-dive preparation for 1:1 meetings with direct reports. Surfaces recent work, wins, friction, wellbeing signals, and development goal progress — anchored in the org's performance framework, organizational values, and management best practices. Produces a prep sheet with suggested conversation topics, not a script."
+description: "Deep-dive preparation for 1:1 meetings with direct reports. Surfaces recent work, wins, friction, wellbeing signals, and development goal progress -- anchored in the org's performance framework, organizational values, and management best practices. Produces a prep sheet with suggested conversation topics, not a script."
 ---
 
 # 1:1 Prep
@@ -13,7 +13,7 @@ Deep-dive preparation for 1:1 meetings with a specific direct report, anchored i
 
 - Before any 1:1 meeting with a direct report
 - When the manager says "prep my 1:1 with [name]", "what should I discuss with [name]"
-- Can be invoked with just a name — the skill finds the relevant context
+- Can be invoked with just a name -- the skill finds the relevant context
 
 ## Instructions
 
@@ -28,8 +28,8 @@ If no name is specified, check the calendar for the next upcoming 1:1 meeting an
 If ambiguous:
 ```
 Which team member? Your upcoming 1:1s are:
-- [Name] — [day] at [time]
-- [Name] — [day] at [time]
+- [Name] -- [day] at [time]
+- [Name] -- [day] at [time]
 ```
 
 Load the team member's profile from `manager-context/team/[name].md` for:
@@ -63,7 +63,7 @@ Compile into a "recent activity" summary.
 
 ### 3. Detect Friction or Concerns
 
-Look for signals (NOT diagnoses — signals for the manager to explore):
+Look for signals (NOT diagnoses -- signals for the manager to explore):
 
 **Slack:**
 - Repeated blockers or unanswered questions
@@ -78,20 +78,20 @@ Look for signals (NOT diagnoses — signals for the manager to explore):
 **Important:** Frame these as *conversation starters*, not assessments:
 ```
 💡 Potential topics to explore (signals, not conclusions):
-- [Name] asked about [topic] in #channel 3 times this week without a clear resolution — might be a blocker worth discussing
-- [Name]'s activity in #project-channel has been lower than usual — could be fine, but worth checking in
+- [Name] asked about [topic] in #channel 3 times this week without a clear resolution -- might be a blocker worth discussing
+- [Name]'s activity in #project-channel has been lower than usual -- could be fine, but worth checking in
 ```
 
 ### 4. Values & Wellbeing Check
 
-Scan for signals related to the organization's values (from `manager-context/values.md`) — these give the manager conversation threads beyond just goals and deliverables.
+Scan for signals related to the organization's values (from `manager-context/values.md`) -- these give the manager conversation threads beyond just goals and deliverables.
 
 If no values are configured, focus on these universal management dimensions:
 
 **Wellbeing & Energy:**
 - Late-night or weekend Slack activity (potential overwork)
 - Calendar density (back-to-back days, no focus time)
-- Tone in recent messages — enthusiasm vs. fatigue (soft signal only)
+- Tone in recent messages -- enthusiasm vs. fatigue (soft signal only)
 - Have they taken time off recently?
 
 **Team Connection & Collaboration:**
@@ -112,7 +112,7 @@ If no values are configured, focus on these universal management dimensions:
 
 If organizational values are configured, map these dimensions to the specific values and use value names in the output.
 
-Compile into a brief values snapshot (not a scorecard — conversation prompts):
+Compile into a brief values snapshot (not a scorecard -- conversation prompts):
 
 ```
 Values Snapshot:
@@ -121,7 +121,7 @@ Values Snapshot:
 ...
 ```
 
-_Only include values/dimensions where there's a meaningful signal — don't force all of them every time._
+_Only include values/dimensions where there's a meaningful signal -- don't force all of them every time._
 
 ### 5. Check Development Goals
 
@@ -145,11 +145,11 @@ See the "Evidence Gathering Guidelines" section in `../../references/performance
 
 ```
 📋 Development Goal Status:
-- Goal 1: "[goal text]" — [status: on track / needs attention / no update since [date]]
-- Goal 2: "[goal text]" — [status]
-- Development area: "[area]" — [any evidence of progress or attention]
+- Goal 1: "[goal text]" -- [status: on track / needs attention / no update since [date]]
+- Goal 2: "[goal text]" -- [status]
+- Development area: "[area]" -- [any evidence of progress or attention]
 
-⏰ Last goal update: [date] — [flag if >6 weeks old]
+⏰ Last goal update: [date] -- [flag if >6 weeks old]
 ```
 
 ### 6. Pull Previous 1:1 Notes
@@ -166,8 +166,8 @@ Extract:
 ```
 📝 From last 1:1 ([date]):
 Open items:
-- [ ] [Manager] to [action] — [status: done/pending/unknown]
-- [ ] [Team member] to [action] — [status: done/pending/unknown]
+- [ ] [Manager] to [action] -- [status: done/pending/unknown]
+- [ ] [Team member] to [action] -- [status: done/pending/unknown]
 Parked topics: [if any]
 ```
 
@@ -197,8 +197,8 @@ Here's your prep for your 1:1 with [name]. Anything you'd like me to dig deeper 
 Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
-- **Wins first.** Always lead with recognition opportunities — this sets the tone.
+- **Wins first.** Always lead with recognition opportunities -- this sets the tone.
 - **Goals are the backbone.** If goals are missing or stale, flag it prominently. Great 1:1s keep development goals alive.
-- **Framework + values alignment.** Suggested questions should map to the org's performance framework dimensions or organizational values. Don't force all values every time — only surface values where there's a real signal.
+- **Framework + values alignment.** Suggested questions should map to the org's performance framework dimensions or organizational values. Don't force all values every time -- only surface values where there's a real signal.
 - **Values are conversation threads, not checklists.** The values snapshot helps managers notice things beyond deliverables. A 1:1 that only covers goals misses the human. A 1:1 that only covers feelings misses the growth. Both.
 - **Don't script the conversation.** Provide prompts and context, not a talk track.

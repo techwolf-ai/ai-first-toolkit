@@ -1,6 +1,6 @@
 ---
 name: triage-messages
-description: Batch-processes Slack messages and emails to surface what needs the manager's attention, categorised by urgency and type. Designed for batch-responder managers who do Slack sweeps rather than staying in reactive mode. Supports effective communication and responsiveness. Never drafts replies — only surfaces and prioritises.
+description: Batch-processes Slack messages and emails to surface what needs the manager's attention, categorised by urgency and type. Designed for batch-responder managers who do Slack sweeps rather than staying in reactive mode. Supports effective communication and responsiveness. Never drafts replies -- only surfaces and prioritises.
 ---
 
 # Triage Messages
@@ -11,7 +11,7 @@ Scans unread Slack messages and recent emails, categorises them by urgency and t
 
 ## When to Use
 
-- Morning routine — catch up on what happened overnight
+- Morning routine -- catch up on what happened overnight
 - After a block of focus time or meetings
 - When the manager says "what did I miss?", "catch me up", "triage my messages"
 - Can be scoped to a time window: "triage since yesterday", "triage last 2 hours"
@@ -22,7 +22,7 @@ If any MCP connector is unavailable, follow the connector unavailability protoco
 
 ### 1. Determine Time Window
 
-Default: since the manager's last likely check-in (use calendar to estimate — if they were in back-to-back meetings for 3 hours, scan those 3 hours).
+Default: since the manager's last likely check-in (use calendar to estimate -- if they were in back-to-back meetings for 3 hours, scan those 3 hours).
 
 If specified: use the provided time window.
 
@@ -38,10 +38,10 @@ What time period should I triage? Options:
 ### 2. Load Manager Context
 
 Read from `manager-context/` (if available):
-- `manager-profile.md` — to know who the direct reports are (their messages get higher priority)
-- `terminology.md` — to decode internal shorthand in messages
-- `team/` — to understand team members' projects and responsibilities
-- `sources.md` — to know which customer/project channels to monitor
+- `manager-profile.md` -- to know who the direct reports are (their messages get higher priority)
+- `terminology.md` -- to decode internal shorthand in messages
+- `team/` -- to understand team members' projects and responsibilities
+- `sources.md` -- to know which customer/project channels to monitor
 
 ### 3. Scan Slack
 

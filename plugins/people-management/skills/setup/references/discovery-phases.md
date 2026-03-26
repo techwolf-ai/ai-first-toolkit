@@ -1,4 +1,4 @@
-# Discovery Phases — Detailed Instructions
+# Discovery Phases -- Detailed Instructions
 
 Detailed crawl instructions, conversation prompts, and validation formats for each setup phase.
 
@@ -29,7 +29,7 @@ Search for the manager's team across sources:
 - Pages with the manager's name or team name
 
 **Google Calendar:**
-- Recurring 1:1 meetings — attendees are likely direct reports
+- Recurring 1:1 meetings -- attendees are likely direct reports
 - Team syncs, standups, regular meetings
 
 **Gmail:**
@@ -41,14 +41,14 @@ For each person, gather: full name, Slack handle, role/title, how they were disc
 
 Present findings. If connectors were available, show how each person was discovered. If connectors were unavailable, ask the manager to provide the team list directly.
 
-For each team member, also ask for their **Slack handle** — this is needed for searching messages and mapping activity later.
+For each team member, also ask for their **Slack handle** -- this is needed for searching messages and mapping activity later.
 
 ```
 I found these people who appear to be your direct reports:
 
-1. [Name] — @[slack-handle], [role], found via [1:1 calendar + Slack #team-channel]
-2. [Name] — @[slack-handle], [role], found via [Slack DMs + Notion team page]
-3. [Name] — @[slack-handle], [role], found via [Slack channel only — unsure if direct report]
+1. [Name] -- @[slack-handle], [role], found via [1:1 calendar + Slack #team-channel]
+2. [Name] -- @[slack-handle], [role], found via [Slack DMs + Notion team page]
+3. [Name] -- @[slack-handle], [role], found via [Slack channel only -- unsure if direct report]
 
 Are these correct? Anyone missing? Anyone who shouldn't be on this list?
 For anyone I'm missing a Slack handle, what is it?
@@ -95,9 +95,9 @@ For each team member, search:
 
 Report per person:
 ```
-✅ [Name] — Found goals in Notion, 1:1 doc in Drive, last review [date]
-⚠️ [Name] — Found 1:1 doc but NO goals. Where do you track these?
-❌ [Name] — Couldn't find any performance data. Where should I look?
+✅ [Name] -- Found goals in Notion, 1:1 doc in Drive, last review [date]
+⚠️ [Name] -- Found 1:1 doc but NO goals. Where do you track these?
+❌ [Name] -- Couldn't find any performance data. Where should I look?
 ```
 
 If goals are missing, explicitly ask where they're documented.
@@ -112,7 +112,7 @@ I couldn't search your tools, so I need a few things to make the skills useful:
 4. **For each team member, do you know their current development areas or goals?**
    - [Name]: [goals / development focus / "will gather in 1:1"]
 
-Even rough answers help — I'll fill in the details when connectors become available.
+Even rough answers help -- I'll fill in the details when connectors become available.
 ```
 
 ### 1.6 Discover Ways of Working
@@ -157,8 +157,8 @@ For customer-facing teams, also discover:
 Present:
 ```
 Active accounts/projects:
-- [Customer] — [team member] is primary, channel: #proj-[name]
-- [Project] — Internal, [team member] is leading
+- [Customer] -- [team member] is primary, channel: #proj-[name]
+- [Project] -- Internal, [team member] is leading
 
 Any accounts I'm missing?
 ```
@@ -167,7 +167,7 @@ Any accounts I'm missing?
 
 ## Phase 2: Performance & Management Frameworks
 
-Discover how the org evaluates individual performance and management effectiveness. This is critical — the performance framework shapes how 1:1 prep, team health, and performance cycle skills organise their output.
+Discover how the org evaluates individual performance and management effectiveness. This is critical -- the performance framework shapes how 1:1 prep, team health, and performance cycle skills organise their output.
 
 ### 2.1 Crawl for Existing Framework Docs
 
@@ -177,7 +177,7 @@ Before asking the manager, search for existing documentation:
 
 **Google Drive:** Search for docs matching: "performance review template", "review guide", "career framework", "leveling guide", "management expectations".
 
-**Slack:** Search for recent messages mentioning: "review cycle", "calibration", "promotion", "performance review" — these often link to framework docs.
+**Slack:** Search for recent messages mentioning: "review cycle", "calibration", "promotion", "performance review" -- these often link to framework docs.
 
 For each document found, extract:
 - Framework dimension names and descriptions
@@ -193,8 +193,8 @@ If framework docs were found, present what was extracted:
 I found your org's performance framework! Here's what I extracted:
 
 **Performance dimensions:**
-1. [Dimension name] — [description, sub-dimensions]
-2. [Dimension name] — [description, sub-dimensions]
+1. [Dimension name] -- [description, sub-dimensions]
+2. [Dimension name] -- [description, sub-dimensions]
 
 **Rating scale:** [extracted labels]
 **Promotion tracking:** [extracted labels / not found]
@@ -205,21 +205,21 @@ Is this accurate? Anything missing or outdated?
 
 If NO framework docs were found, walk through building it:
 ```
-I couldn't find a documented performance framework. Let's set one up — I'll ask a few questions and you can tell me what your org uses. If you're unsure on anything, I have sensible defaults.
+I couldn't find a documented performance framework. Let's set one up -- I'll ask a few questions and you can tell me what your org uses. If you're unsure on anything, I have sensible defaults.
 
 **1. How does your org evaluate performance?**
 Most orgs use 2-3 dimensions. Common patterns:
-- **Results + Growth** — what someone delivered AND how they're developing
-- **What + How** — outcomes AND behaviours/values
-- **Single dimension** — just overall performance rating
+- **Results + Growth** -- what someone delivered AND how they're developing
+- **What + How** -- outcomes AND behaviours/values
+- **Single dimension** -- just overall performance rating
 
-What dimensions does your org use? (If unsure, I'll use "Impact" and "Growth" as defaults — you can change these anytime.)
+What dimensions does your org use? (If unsure, I'll use "Impact" and "Growth" as defaults -- you can change these anytime.)
 ```
 
 Wait for the manager's answer. Then continue:
 
 ```
-**2. Rating scale** — how are people rated in reviews?
+**2. Rating scale** -- how are people rated in reviews?
 Common patterns:
 - Descriptive labels (e.g., "Exceeds Expectations / Meets / Below")
 - Numbered scale (e.g., 1-5)
@@ -230,7 +230,7 @@ What does your org use?
 ```
 
 ```
-**3. Promotion readiness** — does your org track this separately?
+**3. Promotion readiness** -- does your org track this separately?
 Common patterns:
 - Labels like "Ready Now / Ready Soon / Not Yet"
 - Integrated into the rating (e.g., top rating = promotion-ready)
@@ -240,7 +240,7 @@ What does your org use? (Fine to skip if not applicable.)
 ```
 
 ```
-**4. Review cadence** — when do formal reviews happen?
+**4. Review cadence** -- when do formal reviews happen?
 - Annual (once a year)
 - Bi-annual (twice a year, e.g., summer + winter)
 - Quarterly
@@ -250,7 +250,7 @@ And are there lighter check-ins between full reviews?
 ```
 
 ```
-**5. Goal cadence** — how often are goals set and reviewed?
+**5. Goal cadence** -- how often are goals set and reviewed?
 - Quarterly (OKRs or similar)
 - Half-yearly
 - Annually
@@ -264,12 +264,12 @@ For each answer, confirm understanding and note any sub-dimensions or nuances th
 If management-specific docs were found in 2.1, present them. Otherwise:
 
 ```
-**6. Management expectations** — does your org have a formal model for what makes a good manager?
+**6. Management expectations** -- does your org have a formal model for what makes a good manager?
 
 Common patterns:
 - **Two-dimensional:** driving results AND developing people
 - **Competency model:** specific skills like delegation, communication, hiring, coaching
-- **No formal model** — that's fine, we'll use sensible defaults (Results + People)
+- **No formal model** -- that's fine, we'll use sensible defaults (Results + People)
 
 What does your org expect from managers? Are managers evaluated separately or on the same framework as ICs?
 ```
@@ -302,7 +302,7 @@ Wait for confirmation. Then persist to `manager-context/performance-framework.md
 
 ## Phase 3: Organizational Values
 
-Values tell skills *how* results should be delivered. They provide conversation threads beyond goals and deliverables — especially valuable in 1:1 prep, team health, and performance reviews.
+Values tell skills *how* results should be delivered. They provide conversation threads beyond goals and deliverables -- especially valuable in 1:1 prep, team health, and performance reviews.
 
 ### 3.1 Crawl for Values Documentation
 
@@ -320,9 +320,9 @@ If values docs were found, extract value names, descriptions, and any associated
 ```
 I found your org's values! Here's what I extracted:
 
-1. **[Value Name]** — [description from doc]
-2. **[Value Name]** — [description from doc]
-3. **[Value Name]** — [description from doc]
+1. **[Value Name]** -- [description from doc]
+2. **[Value Name]** -- [description from doc]
+3. **[Value Name]** -- [description from doc]
 
 Is this the current list? Any that are missing or outdated?
 ```
@@ -332,15 +332,15 @@ If NO values docs were found:
 I couldn't find documented company values. Does your organization have defined core values?
 
 If yes:
-1. What are they? (just list the names — I'll help flesh them out)
+1. What are they? (just list the names -- I'll help flesh them out)
 2. Where are they documented? (Notion page, handbook, website, etc.)
 
-If no — that's fine. We can skip the values lens in skills, or you can define informal team values. You can always add values later by running /setup --refresh.
+If no -- that's fine. We can skip the values lens in skills, or you can define informal team values. You can always add values later by running /setup --refresh.
 ```
 
 ### 3.3 Define Signals Per Value
 
-For each value, help the manager define what to look for. This is the key step — generic value names are useless without signals.
+For each value, help the manager define what to look for. This is the key step -- generic value names are useless without signals.
 
 For each value, ask:
 ```
@@ -356,12 +356,12 @@ Let's make "[Value Name]" actionable for the skills. For each question, give me 
    (e.g., "we ask for examples of each value" or "it's part of the 'How' rating")
 
 4. **What's hard to see digitally?**
-   (e.g., empathy in person, trust-building, tone of voice — these I'll flag for your own observation)
+   (e.g., empathy in person, trust-building, tone of voice -- these I'll flag for your own observation)
 ```
 
 If the manager has many values (5+), offer to batch:
 ```
-You have [N] values — want me to go through each one, or would you rather give me a quick summary of what signals matter most and I'll fill in the rest?
+You have [N] values -- want me to go through each one, or would you rather give me a quick summary of what signals matter most and I'll fill in the rest?
 ```
 
 ### 3.4 Validate & Persist
@@ -386,7 +386,7 @@ Persist to `manager-context/values.md`. Read `references/context-templates.md` f
 
 Present defaults and let the manager adjust:
 ```
-How should I produce and save outputs? Defaults — adjust anything:
+How should I produce and save outputs? Defaults -- adjust anything:
 
 **Style:** English, professional/concise, moderate detail, emoji for visual scanning
 **File format:** Markdown (.md)
@@ -422,10 +422,10 @@ Persist to `manager-context/manager-goals.md`.
 ```
 Let's set up your triage rules:
 
-1. **VIP people** — whose messages always bubble to the top?
-2. **Hot channels or topics** — channels/keywords that always mean urgent?
-3. **Deprioritise** — anything to push to the bottom?
-4. **Privacy boundaries** — channels, people, or topics to skip entirely?
+1. **VIP people** -- whose messages always bubble to the top?
+2. **Hot channels or topics** -- channels/keywords that always mean urgent?
+3. **Deprioritise** -- anything to push to the bottom?
+4. **Privacy boundaries** -- channels, people, or topics to skip entirely?
 ```
 
 Persist to `manager-context/triage-rules.md`. The triage-messages and priority-planner skills must read and apply these rules.
@@ -481,10 +481,10 @@ Flag anything stale:
 ```
 Staleness alerts:
 
-- [Name]'s goals were last updated 4 months ago — still current?
-- The "Q4 OKRs" page hasn't been edited since November — have new OKRs been set?
-- [Name] hasn't been active in #[channel] for 3 weeks — still on the project?
-- Your 1:1 with [Name] was cancelled 3 times in a row — intentional?
+- [Name]'s goals were last updated 4 months ago -- still current?
+- The "Q4 OKRs" page hasn't been edited since November -- have new OKRs been set?
+- [Name] hasn't been active in #[channel] for 3 weeks -- still on the project?
+- Your 1:1 with [Name] was cancelled 3 times in a row -- intentional?
 ```
 
 Ask the manager to confirm or update each flagged item.
