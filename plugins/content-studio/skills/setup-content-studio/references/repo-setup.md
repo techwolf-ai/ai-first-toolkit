@@ -77,8 +77,13 @@ Create `.claude/settings.json`:
   "hooks": {
     "SessionStart": [
       {
-        "type": "command",
-        "command": "bash .claude/hooks/ensure-content-studio.sh"
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/ensure-content-studio.sh"
+          }
+        ]
       }
     ]
   }
