@@ -32,4 +32,6 @@ working/
 temp/
 
 # Content (user-generated, not part of plugin)
-content/
+# Use /content/ (anchored) so it only matches the root content/ dir,
+# not nested paths like content-studio/app/api/content/
+/content/
