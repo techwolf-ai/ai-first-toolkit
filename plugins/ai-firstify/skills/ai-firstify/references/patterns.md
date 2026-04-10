@@ -4,7 +4,7 @@
 
 **Summary:** Minimal prompt, maximum freedom. Good for inspiration and gauging difficulty.
 
-**Description:** Give a minimal prompt and let the AI run freely. No constraints, no detailed specifications -- just an idea and maximum creative freedom. One-shotting also works as a difficulty gauge: if the AI nails it in one shot, the task was straightforward. If it struggles, you need more specificity.
+**Description:** Give a minimal prompt and let the AI run freely. No constraints, no detailed specifications. Just an idea and maximum creative freedom. One-shotting also works as a difficulty gauge: if the AI nails it in one shot, the task was straightforward. If it struggles, you need more specificity.
 
 **When to use:**
 - Inspiration and exploration
@@ -30,7 +30,7 @@
 
 **Summary:** Code + data + skills in one Git repo. The agent sees everything.
 
-**Description:** Keep all related code, data, skills, and configuration in a single Git repository. The AI works best when everything is in one place -- it can see the full picture and make changes that span code and content.
+**Description:** Keep all related code, data, skills, and configuration in a single Git repository. The AI works best when everything is in one place. It can see the full picture and make changes that span code and content.
 
 **When to use:**
 - Any project with code AND content/data
@@ -147,7 +147,7 @@ my-project/
 **Example:**
 ```bash
 #!/bin/bash
-# scripts/validate.sh -- Validates content against rules
+# scripts/validate.sh: Validates content against rules
 FILE="$1"
 if [ -z "$FILE" ]; then echo "Usage: validate.sh <file>"; exit 1; fi
 # Check specific rules...

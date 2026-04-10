@@ -27,7 +27,7 @@ if [ -n "$FOUND_PORT" ]; then
   exit 0
 fi
 
-# Not running — start it in the background
+# Not running, start it in the background
 cd "$CONTENT_STUDIO_DIR" || exit 0
 
 nohup npm run dev > /tmp/content-studio.log 2>&1 &
@@ -43,6 +43,6 @@ for i in $(seq 1 25); do
   sleep 1
 done
 
-# Timed out — don't block the session
+# Timed out, don't block the session
 echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Content Studio startup was attempted but may still be loading. Check http://localhost:3000 or run: cd content-studio && npm run dev"}}'
 exit 0

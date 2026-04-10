@@ -1,6 +1,6 @@
 ---
 name: performance-cycle
-description: "Evidence gathering for performance review cycles. Gathers goal completion evidence, peer feedback, development progress, scope changes, and values alignment -- organised along the org's performance framework dimensions, with organizational values as the 'how' lens. Surfaces evidence gaps. Never suggests ratings -- only organises evidence for the manager's judgment."
+description: "Evidence gathering for performance review cycles. Gathers goal completion evidence, peer feedback, development progress, scope changes, and values alignment, organised along the org's performance framework dimensions, with organizational values as the 'how' lens. Surfaces evidence gaps. Never suggests ratings, only organises evidence for the manager's judgment."
 ---
 
 # Performance Cycle Assistant
@@ -49,10 +49,10 @@ For the target team member, read from `manager-context/team/[name].md`:
 - Their projects and responsibilities
 
 Also load:
-- `manager-context/performance-framework.md` -- for org-specific framework dimensions and rating descriptors (falls back to `../../references/performance-framework.md` defaults)
-- `manager-context/management-framework.md` -- for org-specific management dimensions (falls back to `../../references/management-framework.md` defaults)
-- `../../references/values-guide.md` -- for values definitions and signal guidance
-- `manager-context/values.md` -- for the organization's specific values
+- `manager-context/performance-framework.md`: org-specific framework dimensions and rating descriptors (falls back to `../../references/performance-framework.md` defaults)
+- `manager-context/management-framework.md`: org-specific management dimensions (falls back to `../../references/management-framework.md` defaults)
+- `../../references/values-guide.md`: values definitions and signal guidance
+- `manager-context/values.md`: the organization's specific values
 
 ### 3. Gather Evidence Along Each Dimension
 
@@ -74,7 +74,7 @@ For dimensions that are hardest to assess digitally (e.g., behavioural growth, l
 
 ### 4. Gather Values Evidence
 
-Values are the "how" -- how this person delivered their results and showed up for the team. Search for evidence across the organization's values (from `manager-context/values.md`). See `../../references/values-guide.md` for guidance on finding value signals.
+Values are the "how": how this person delivered their results and showed up for the team. Search for evidence across the organization's values (from `manager-context/values.md`). See `../../references/values-guide.md` for guidance on finding value signals.
 
 For each value defined in `manager-context/values.md`, search for evidence using the signal guidance stored there. Common evidence sources by value type:
 
@@ -115,7 +115,7 @@ Search Slack for recognition this person received during the review period:
 For each dimension, assess evidence strength:
 - **Strong evidence:** Multiple sources corroborate
 - **Some evidence:** 1-2 data points
-- **Gap:** No evidence found -- manager needs to gather this manually
+- **Gap:** No evidence found, manager needs to gather this manually
 
 ### 7. Produce the Evidence Summary
 
@@ -130,15 +130,15 @@ If preparing for the whole team, produce individual evidence summaries for each 
 ```
 Here's the evidence I gathered for [name]'s review. I've flagged gaps where you'll want to add your own observations.
 
-Remember: this is evidence gathering only. Rating decisions and promotion assessments are yours to make based on the full picture -- including things I can't see.
+Remember: this is evidence gathering only. Rating decisions and promotion assessments are yours to make based on the full picture, including things I can't see.
 ```
 
 ### 10. Sub-Agent Review
 
 Spawn a sub-agent to review the evidence summary with fresh eyes. The reviewer should:
-- Check for **recency bias** -- is most evidence from the last few weeks, or spread across the review period?
-- Check for **dimension imbalance** -- are some dimensions well-evidenced while others are thin? Flag under-covered areas.
-- Check for **interpretive language** -- flag any phrasing that crosses from evidence ("shipped X on time") into interpretation ("demonstrated strong execution").
+- Check for **recency bias**: is most evidence from the last few weeks, or spread across the review period?
+- Check for **dimension imbalance**: are some dimensions well-evidenced while others are thin? Flag under-covered areas.
+- Check for **interpretive language**: flag any phrasing that crosses from evidence ("shipped X on time") into interpretation ("demonstrated strong execution").
 - Verify evidence gaps are honestly flagged, not papered over with weak data.
 - Check that values evidence is presented as "examples I found", not "the full picture."
 

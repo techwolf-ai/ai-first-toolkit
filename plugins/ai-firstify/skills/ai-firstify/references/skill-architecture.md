@@ -20,28 +20,28 @@ Step-by-step prescriptive workflow:
 4. Run scripts/validate.sh to check the output
 5. Save the result to [specific location]
 
-## References (example -- adapt to your skill)
-- references/style-guide.md -- detailed style rules
-- references/examples.md -- example outputs
+## References (example, adapt to your skill)
+- references/style-guide.md: detailed style rules
+- references/examples.md: example outputs
 
 ## Tools
-- scripts/validate.sh -- validates output against rules
-- scripts/read-all.sh -- reads existing content for context
+- scripts/validate.sh: validates output against rules
+- scripts/read-all.sh: reads existing content for context
 ```
 
 ### Best Practices
 
-- **Keep SKILL.md lean** -- under 100 lines. Put detailed guidance in references/
-- **Be prescriptive** -- numbered steps, specific actions, clear outputs
-- **Use progressive disclosure** -- SKILL.md links to references/ for depth
-- **Name skills clearly** -- the name becomes the slash command
-- **Include frontmatter** -- name and description are required for slash command registration
+- **Keep SKILL.md lean** (under 100 lines). Put detailed guidance in references/
+- **Be prescriptive**: numbered steps, specific actions, clear outputs
+- **Use progressive disclosure**: SKILL.md links to references/ for depth
+- **Name skills clearly**: the name becomes the slash command
+- **Include frontmatter**: name and description are required for slash command registration
 
 ### When to Create scripts/ vs references/
 
-- **scripts/** -- Deterministic operations: validation, data reading, formatting, date/time
-- **references/** -- Knowledge: style guides, examples, templates, domain context
-- **Neither** -- Simple instructions that the agent handles natively
+- **scripts/**: Deterministic operations: validation, data reading, formatting, date/time
+- **references/**: Knowledge: style guides, examples, templates, domain context
+- **Neither**: Simple instructions that the agent handles natively
 
 ---
 
@@ -55,7 +55,7 @@ SKILL.md (lean, ~50-100 lines)
        └── references/examples.md (detailed, with full examples)
 ```
 
-> **Note:** The file names above (style-guide.md, examples.md) are illustrative. Name your reference files to match your skill's domain -- e.g., references/assessment-rubric.md, references/api-docs.md, etc.
+> **Note:** The file names above (style-guide.md, examples.md) are illustrative. Name your reference files to match your skill's domain (e.g., references/assessment-rubric.md, references/api-docs.md, etc.).
 
 The agent loads SKILL.md first (cheap). Only loads reference files when needed for the current step (on-demand). This saves tokens and keeps context focused.
 
@@ -68,7 +68,7 @@ The agent loads SKILL.md first (cheap). Only loads reference files when needed f
 | Scope | One specific project | All your projects |
 | Sharing | Shared via git repo | Personal only |
 | Examples | Content studio writer, project-specific validator | Memo writer, ai-firstify, code review |
-| When to promote | After proving useful across 3+ projects | -- |
+| When to promote | After proving useful across 3+ projects | - |
 
 **Start project-level.** Promote to user-level when the skill is proven useful across multiple projects.
 
@@ -89,9 +89,9 @@ Don't create skills speculatively. Wait for the pattern to emerge.
 ## Sharing and Packaging Skills
 
 Skills are just folders with text files. To share:
-1. **Zip the folder** -- `zip -r my-skill.zip .claude/skills/my-skill/`
-2. **Push to GitLab** -- include .claude/skills/ in your repo
-3. **Copy directly** -- recipients paste into their .claude/skills/
+1. **Zip the folder**: `zip -r my-skill.zip .claude/skills/my-skill/`
+2. **Push to GitLab**: include .claude/skills/ in your repo
+3. **Copy directly**: recipients paste into their .claude/skills/
 
 Treat shared skills as deployed products:
 - Version them (track changes in git)
@@ -143,7 +143,7 @@ Main agent --> splits 50 items into groups of 10 -->
 
 ### Nested Agents
 
-Agent spawns agent spawns agent. Use sparingly -- one level of nesting covers most cases.
+Agent spawns agent spawns agent. Use sparingly. One level of nesting covers most cases.
 
 ```
 Main agent --> spawns research agent -->

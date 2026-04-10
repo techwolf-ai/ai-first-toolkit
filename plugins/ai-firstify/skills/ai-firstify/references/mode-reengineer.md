@@ -12,7 +12,7 @@ First, perform the full audit (read references/mode-audit.md). Then execute fixe
 - Scan for embedded agent patterns (read references/anti-patterns.md for detection)
 - For each found: propose replacement with Claude Code skills + sub-agents
 - After user approval, remove agent infrastructure code
-- Remember: "deployed an agent in a web app that nobody used because it was too complex and had too little context -- switched to Claude Code and it worked 10 times better"
+- Remember: "deployed an agent in a web app that nobody used because it was too complex and had too little context. Switched to Claude Code and it worked 10 times better"
 
 ## Phase 3: Skill Extraction
 - Identify repeated workflows (scripts run multiple times, similar prompt patterns, recurring data transformations)

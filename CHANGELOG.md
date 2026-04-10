@@ -23,7 +23,7 @@ The format is based on Keep a Changelog and this project follows Semantic Versio
 
 ### Added
 
-- `people-management` plugin -- AI-augmented management tooling for people managers.
+- `people-management` plugin: AI-augmented management tooling for people managers.
   - 8 skills: setup, meeting-prep, one-on-one-prep, triage-messages, customer-status, priority-planner, team-health, performance-cycle.
   - 10-phase interactive setup that discovers team structure, performance frameworks, values, and ways of working.
   - Framework-agnostic: adapts to any org's performance dimensions, rating scale, management competencies, and values.

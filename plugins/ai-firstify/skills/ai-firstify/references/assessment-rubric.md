@@ -249,10 +249,10 @@ git log --oneline --since="1 week ago" 2>/dev/null | wc -l
 
 ## Priority Recommendations
 
-1. **[HIGH]** [recommendation] -- [estimated effort]
-2. **[HIGH]** [recommendation] -- [estimated effort]
-3. **[MEDIUM]** [recommendation] -- [estimated effort]
-4. **[LOW]** [recommendation] -- [estimated effort]
+1. **[HIGH]** [recommendation]: [estimated effort]
+2. **[HIGH]** [recommendation]: [estimated effort]
+3. **[MEDIUM]** [recommendation]: [estimated effort]
+4. **[LOW]** [recommendation]: [estimated effort]
 
 ## Detailed Findings
 

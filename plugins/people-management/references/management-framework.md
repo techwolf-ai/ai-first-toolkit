@@ -6,9 +6,9 @@ How this plugin uses your org's management framework. The actual framework is co
 
 During `/setup` Phase 2, the plugin discovers or helps you define:
 
-- **Management dimensions** -- what your org expects from managers (e.g., "Results + People", a competency model, or something custom)
-- **Competencies per dimension** -- the specific skills or behaviours expected
-- **How managers are evaluated** -- separate track, same as ICs, or informal
+- **Management dimensions:** what your org expects from managers (e.g., "Results + People", a competency model, or something custom)
+- **Competencies per dimension:** the specific skills or behaviours expected
+- **How managers are evaluated:** separate track, same as ICs, or informal
 
 If your org doesn't have a formal management framework, setup provides sensible defaults.
 

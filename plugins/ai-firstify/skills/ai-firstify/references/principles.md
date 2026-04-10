@@ -4,7 +4,7 @@
 
 **Summary:** You are the pilot. AI is your co-pilot. Your name is on everything it produces.
 
-**Description:** Think of yourself as a pilot. The AI is your autopilot -- it handles a lot of the flying, but you are always responsible for the plane and everyone on it. Whether the AI wrote the email, generated the report, or built the tool -- your name is on it. This applies especially to automated systems. If you build something that runs unattended and it makes mistakes, that is on you -- even if the AI caused the error.
+**Description:** Think of yourself as a pilot. The AI is your autopilot. It handles a lot of the flying, but you are always responsible for the plane and everyone on it. Whether the AI wrote the email, generated the report, or built the tool, your name is on it. This applies especially to automated systems. If you build something that runs unattended and it makes mistakes, that is on you, even if the AI caused the error.
 
 **When it applies:** Always. Every interaction with AI tools. Especially when outputs are shared with others or when automated systems run without human oversight.
 
@@ -31,7 +31,7 @@
 
 **Summary:** Define narrow goals. Avoid complexity creep from vibe coding. One task at a time.
 
-**Description:** LLMs perform worse when given too many tasks at once. They are like a brilliant but easily distracted junior colleague -- give them one clear task and they will excel. Pile on five things and quality drops everywhere. The empty folder approach: start each significant task in a fresh, empty folder.
+**Description:** LLMs perform worse when given too many tasks at once. They are like a brilliant but easily distracted junior colleague. Give them one clear task and they will excel. Pile on five things and quality drops everywhere. The empty folder approach: start each significant task in a fresh, empty folder.
 
 **When it applies:** Every time you give instructions to an agent. When designing skills. When scoping projects.
 
@@ -59,7 +59,7 @@
 
 **Summary:** Build for yourself before others. Use it daily. Then share what works.
 
-**Description:** Do not build tools for others until you have built them for yourself. When you use your own tool daily, you discover what actually matters and what is unnecessary fluff. Usage is not a good metric for impact -- a Pokemon game has lots of usage but doesn't solve a business problem.
+**Description:** Do not build tools for others until you have built them for yourself. When you use your own tool daily, you discover what actually matters and what is unnecessary fluff. Usage is not a good metric for impact. A Pokemon game has lots of usage but doesn't solve a business problem.
 
 **When it applies:** Starting any new project. Deciding whether to share a tool. Prioritizing features.
 
@@ -114,7 +114,7 @@
 
 **Summary:** Use Claude Code. It improves automatically. Your custom agent won't.
 
-**Description:** You already have an agent with tools, research, and coding abilities. Building agent infrastructure in your applications is almost never the right choice. Your custom agent will never be as smart, bulletproof, or flexible as maintained agents like Claude Code. As models improve, Claude Code improves automatically -- your custom agent stays stuck in time.
+**Description:** You already have an agent with tools, research, and coding abilities. Building agent infrastructure in your applications is almost never the right choice. Your custom agent will never be as smart, bulletproof, or flexible as maintained agents like Claude Code. As models improve, Claude Code improves automatically. Your custom agent stays stuck in time.
 
 > **Important:** Sub-agents WITHIN Claude Code (e.g., using the Agent tool, TeamCreate, or sub-agent patterns in skills) are fine and encouraged. "Don't build your own agent" means don't build a web app or deployed service with an embedded LLM agent. Using Claude Code's built-in multi-agent capabilities is the recommended approach.
 
@@ -172,7 +172,7 @@
 
 **Summary:** Use voice. Be generous with context. Detailed prompts beat short ones.
 
-**Description:** Removing ambiguity and giving more depth to your prompts works wonders. Provide ample documentation, additional links, etc. Use voice transcription to give complete and nuanced input. The times of over-engineering prompts are over -- just be clear and detailed.
+**Description:** Removing ambiguity and giving more depth to your prompts works wonders. Provide ample documentation, additional links, etc. Use voice transcription to give complete and nuanced input. The times of over-engineering prompts are over. Just be clear and detailed.
 
 **When it applies:** Writing prompts. Creating skills. Describing requirements.
 

@@ -1,5 +1,5 @@
 # Performance Review Prep: [Name]
-Review period: [start] -- [end]
+Review period: [start] to [end]
 Role: [role] | Level: [level] | Manager: [manager]
 Last review rating: [if known]
 
@@ -21,7 +21,7 @@ _This dimension is hardest to assess from digital signals. Your 1:1 observations
 
 [Same structure as above, one section per sub-dimension]
 
-## Values -- How They Showed Up
+## Values: How They Showed Up
 
 _Values are how results were delivered. This section helps paint the full picture beyond what and how much._
 
@@ -30,7 +30,7 @@ _Values are how results were delivered. This section helps paint the full pictur
 | [Value from manager-context/values.md] | [evidence] | [Strong / Some / Gap] |
 
 **Values highlights:**
-- [1-2 strongest examples with links -- moments that exemplify this person's character]
+- [1-2 strongest examples with links, moments that exemplify this person's character]
 
 **Values development areas:**
 - [Any patterns worth discussing]
@@ -38,11 +38,11 @@ _Values are how results were delivered. This section helps paint the full pictur
 This section is only included if organizational values were configured during setup.
 
 ## Peer Recognition Highlights
-- "[quote/summary]" -- from [person] in #[channel] on [date]
+- "[quote/summary]", from [person] in #[channel] on [date]
 - [additional recognition]
 
 ## Evidence Gaps
-Areas where I found limited or no evidence -- you may want to gather more context:
+Areas where I found limited or no evidence. You may want to gather more context:
 - [ ] [Dimension]: [what's missing and where to look]
 - [ ] [Dimension]: [what's missing]
 
@@ -62,7 +62,7 @@ Before finalising the review, consider:
 
 # Batch Mode: Team Review Prep
 
-# Team Review Prep -- [Cycle Name]
+# Team Review Prep: [Cycle Name]
 
 ## Evidence Readiness
 | Name | [Dimension 1] Evidence | [Dimension 2] Evidence | Values Evidence | Gaps to Fill |

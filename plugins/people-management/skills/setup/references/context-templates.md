@@ -1,6 +1,6 @@
 # Manager Context File Templates
 
-Templates for all files persisted during manager setup. Each template shows the expected structure -- fill in validated data from discovery phases.
+Templates for all files persisted during manager setup. Each template shows the expected structure. Fill in validated data from discovery phases.
 
 ## `manager-context/output-preferences.md`
 
@@ -11,7 +11,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 
 ## General Style
 - Language: English
-- Tone: Professional, concise -- bullet points over prose
+- Tone: Professional, concise, bullet points over prose
 - Detail level: Moderate (summaries with source links)
 - Emoji: Yes (for visual scanning in triage/priorities)
 
@@ -94,14 +94,14 @@ Templates for all files persisted during manager setup. Each template shows the 
 ### [Dimension 1 Name, e.g., Results]
 [Description]
 
-- **[Competency]** -- [what it looks like]
-- **[Competency]** -- [what it looks like]
+- **[Competency]**: [what it looks like]
+- **[Competency]**: [what it looks like]
 
 ### [Dimension 2 Name, e.g., People]
 [Description]
 
-- **[Competency]** -- [what it looks like]
-- **[Competency]** -- [what it looks like]
+- **[Competency]**: [what it looks like]
+- **[Competency]**: [what it looks like]
 
 ## How Managers Are Evaluated
 - [Separate management track / same framework as ICs / informal]
@@ -129,7 +129,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 - [Goal 3]
 
 ## Upcoming Milestones
-- [milestone] -- [date]
+- [milestone]: [date]
 
 ## Notes
 - [Any context about what's being measured, org priorities, etc.]
@@ -142,7 +142,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 
 **Last updated:** [date]
 
-## VIP -- Always Surface
+## VIP: Always Surface
 | Who | Why |
 |-----|-----|
 | [name] | [manager / key stakeholder / customer champion] |
@@ -195,7 +195,7 @@ Templates for all files persisted during manager setup. Each template shows the 
 
 ## 1:1 Style
 - Format: [structured / free-flow / hybrid]
-- Always include: [goals check, wins, blockers, development -- whatever they said]
+- Always include: [goals check, wins, blockers, development, whatever they said]
 - Share prep with report: [yes / no]
 - Notes: [any other preferences]
 

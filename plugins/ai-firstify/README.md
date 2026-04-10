@@ -48,9 +48,9 @@ Or invoke directly:
 
 ## Modes
 
-1. **Audit** -- Read-only analysis across 7 dimensions with a scored report
-2. **Re-Engineer** -- Full audit followed by active fixes in 7 phases
-3. **Bootstrap** -- Interactive new project setup with discovery questions
+1. **Audit**: Read-only analysis across 7 dimensions with a scored report
+2. **Re-Engineer**: Full audit followed by active fixes in 7 phases
+3. **Bootstrap**: Interactive new project setup with discovery questions
 
 ## License
 

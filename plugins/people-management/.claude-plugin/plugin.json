@@ -1,7 +1,7 @@
 {
   "name": "people-management",
   "version": "1.2.0",
-  "description": "AI-augmented management tooling for people managers. Surfaces the right context at the right time -- before meetings, during 1:1 prep, when triaging messages, or reviewing customer status. Adapts to your org's performance and management frameworks. Augments managers, never automates.",
+  "description": "AI-augmented management tooling for people managers. Surfaces the right context at the right time: before meetings, during 1:1 prep, when triaging messages, or reviewing customer status. Adapts to your org's performance and management frameworks. Augments managers, never automates.",
   "author": { "name": "TechWolf" },
   "keywords": ["management", "1:1", "performance", "team-health", "meeting-prep"]
 }

@@ -1,4 +1,4 @@
-# Customer Status -- [Date]
+# Customer Status: [Date]
 Team: [Manager's team name]
 
 ## Summary
@@ -11,7 +11,7 @@ Team: [Manager's team name]
 ## 🔴 Needs Attention
 ### [Account Name]
 **Owner:** [team member] | **Channel:** #[channel] | **Phase:** [delivery phase]
-**Signal:** [1-2 sentences explaining why this is flagged -- with links]
+**Signal:** [1-2 sentences explaining why this is flagged, with links]
 **Last activity:** [date/time]
 **Suggested action:** [e.g., "Check in with [name] about the blocker they raised on [date]"]
 
