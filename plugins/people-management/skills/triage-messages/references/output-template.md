@@ -1,9 +1,9 @@
-# Message Triage -- [Date], [Time Window]
+# Message Triage: [Date], [Time Window]
 
 ## 🔴 Needs Your Decision ([count])
 | Priority | From | Channel/Subject | Summary | Link |
 |----------|------|-----------------|---------|------|
-| 1 | [name] | #[channel] | [1-line summary -- what they need from you] | [link] |
+| 1 | [name] | #[channel] | [1-line summary: what they need from you] | [link] |
 
 ## 🟡 Team Member Needs ([count])
 | From | Channel/Subject | Summary | Link |

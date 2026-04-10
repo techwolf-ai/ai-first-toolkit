@@ -8,8 +8,8 @@
 (Recognition to give: these are great conversation openers)
 
 ## What They've Been Working On
-- [Project/activity 1] -- [brief context]
-- [Project/activity 2] -- [brief context]
+- [Project/activity 1]: [brief context]
+- [Project/activity 2]: [brief context]
 
 ## Topics to Explore
 Based on signals from the past [N] days:
@@ -21,7 +21,7 @@ Based on signals from the past [N] days:
 |-------------------|--------|-------------------|
 | [Value from manager-context/values.md] | [observation] | [question if relevant] |
 
-_Only include values where there's a meaningful signal -- don't force all every time. Skip this section entirely if no values were configured._
+_Only include values where there's a meaningful signal. Don't force all every time. Skip this section entirely if no values were configured._
 
 ## Development Goals
 | Goal | Status | Last Updated | Framework Dimension |
@@ -29,7 +29,7 @@ _Only include values where there's a meaningful signal -- don't force all every 
 | [goal] | [on track / needs attention] | [date] | [dimension from org's framework] |
 
 ## Open Items from Last 1:1
-- [ ] [item] -- [who owns it, status]
+- [ ] [item], [who owns it, status]
 
 ## Suggested Questions
 Aligned with the org's performance framework dimensions and organizational values:

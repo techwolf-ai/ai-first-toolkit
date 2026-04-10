@@ -16,8 +16,8 @@
 [Summary with sources]
 
 ## Open Items from Last Meeting
-- [ ] [Action item] -- assigned to [name], status: [done/pending/unknown]
-- [ ] [Action item] -- assigned to [name], status: [done/pending/unknown]
+- [ ] [Action item], assigned to [name], status: [done/pending/unknown]
+- [ ] [Action item], assigned to [name], status: [done/pending/unknown]
 
 ## Suggested Talking Points
 Based on what I've found, you might want to:

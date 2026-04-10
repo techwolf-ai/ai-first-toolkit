@@ -5,7 +5,7 @@ These principles guide how every skill in this plugin is designed.
 ## Core Principles
 
 ### 1. You Are Responsible
-The human is always accountable. AI surfaces information and proposes -- it never decides or acts autonomously. Every output is a draft for human review. In management context: the manager makes the call, the tool provides leverage.
+The human is always accountable. AI surfaces information and proposes. It never decides or acts autonomously. Every output is a draft for human review. In management context: the manager makes the call, the tool provides leverage.
 
 ### 2. Narrow Scope
 Each skill does ONE thing well. No "do everything" commands. A meeting prep skill preps meetings. A triage skill triages. Users invoke what they need, when they need it. Resist the temptation to combine skills into mega-prompts.

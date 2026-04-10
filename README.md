@@ -8,37 +8,37 @@ Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf
 
 ## What's inside
 
-### ai-firstify -- AI-First Skill
+### ai-firstify: AI-First Skill
 
 Audit, re-engineer, or bootstrap any codebase to align with 9 AI-first design principles and 7 design patterns. Three modes:
 
-- **Audit** -- deep analysis across 7 dimensions with a scored report
-- **Re-engineer** -- actively restructures your project to be AI-first
-- **Bootstrap** -- guides new project setup with discovery questions
+- **Audit**: deep analysis across 7 dimensions with a scored report
+- **Re-engineer**: actively restructures your project to be AI-first
+- **Bootstrap**: guides new project setup with discovery questions
 
-### content-studio -- Thought Leadership Pipeline
+### content-studio: Thought Leadership Pipeline
 
 Full content pipeline for LinkedIn posts, blog posts, and opinion pieces. Includes 8 specialized skills, a visual Kanban editor, and hooks that auto-start the companion app.
 
-- **Write** -- LinkedIn posts, blog posts, opinion pieces with voice-matched style
-- **Brainstorm** -- generate ideas from URLs, files, or recent posts
-- **Analyze** -- engagement pattern analysis across published content
-- **Setup** -- interactive onboarding that learns your voice and creates a personalized content repo
+- **Write**: LinkedIn posts, blog posts, opinion pieces with voice-matched style
+- **Brainstorm**: generate ideas from URLs, files, or recent posts
+- **Analyze**: engagement pattern analysis across published content
+- **Setup**: interactive onboarding that learns your voice and creates a personalized content repo
 
-### people-management -- AI-Augmented Management
+### people-management: AI-Augmented Management
 
-AI-augmented tooling for people managers. Surfaces the right context at the right time -- before meetings, during 1:1 prep, when triaging messages, or reviewing performance. Adapts to any org's frameworks and values.
+AI-augmented tooling for people managers. Surfaces the right context at the right time, before meetings, during 1:1 prep, when triaging messages, or reviewing performance. Adapts to any org's frameworks and values.
 
-- **Setup** -- interactive onboarding (10 phases) that discovers your team, frameworks, values, and ways of working
-- **8 skills** -- meeting prep, 1:1 prep, triage, customer status, priority planner, team health, performance cycle
-- **Framework-agnostic** -- configures to your org's performance dimensions, rating scale, management competencies, and values
+- **Setup**: interactive onboarding (10 phases) that discovers your team, frameworks, values, and ways of working
+- **8 skills**: meeting prep, 1:1 prep, triage, customer status, priority planner, team health, performance cycle
+- **Framework-agnostic**: configures to your org's performance dimensions, rating scale, management competencies, and values
 
-### techwolf-brand-kit -- Brand Assets
+### techwolf-brand-kit: Brand Assets
 
 Official TechWolf brand assets for AI-generated outputs. Ensures agents use the correct logo files instead of guessing or approximating.
 
-- **TechWolf Logo** -- 4 variants (dark, white, mono-dark, mono-white) in SVG and PNG
-- **currentColor SVG** -- inline variant that inherits color from parent CSS for themed contexts
+- **TechWolf Logo**: 4 variants (dark, white, mono-dark, mono-white) in SVG and PNG
+- **currentColor SVG**: inline variant that inherits color from parent CSS for themed contexts
 
 ## Quick start
 
@@ -111,4 +111,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-[MIT](LICENSE) -- see [CHANGELOG.md](CHANGELOG.md) for release history.
+[MIT](LICENSE). See [CHANGELOG.md](CHANGELOG.md) for release history.

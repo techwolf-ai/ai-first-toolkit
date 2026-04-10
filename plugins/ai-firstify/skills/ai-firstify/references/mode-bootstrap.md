@@ -1,14 +1,14 @@
 # Mode 3: Bootstrap (New Project Setup)
 
-Guide the user through setting up a new AI-first project from scratch. This mode is interactive -- ask questions, do discovery, and build the right foundation.
+Guide the user through setting up a new AI-first project from scratch. This mode is interactive: ask questions, do discovery, and build the right foundation.
 
 ## Phase 1: Discovery (Ask Questions)
 
-Ask the user these questions one at a time. Don't overwhelm -- ask 2-3, then follow up based on answers.
+Ask the user these questions one at a time. Don't overwhelm. Ask 2-3, then follow up based on answers.
 
 **Problem definition:**
 1. What specific problem are you trying to solve? (One sentence)
-2. Who benefits? (Start with "me" -- build for yourself first)
+2. Who benefits? (Start with "me", build for yourself first)
 3. What does "done" look like? What's the concrete output?
 4. How will you measure impact? (Time saved, quality improved, tasks completed)
 
@@ -19,7 +19,7 @@ Ask the user these questions one at a time. Don't overwhelm -- ask 2-3, then fol
 8. Should this be a skill, a content studio, or a standalone tool?
 
 **Architecture decisions:**
-9. Does this need to run without you present? (Deployment check -- if no, make it a skill)
+9. Does this need to run without you present? (Deployment check. If no, make it a skill)
 10. Do you need to search external systems? (MCP connections: Slack, Notion, Atlassian?)
 11. Will this involve multiple phases? (Research -> create -> review = sub-agent opportunity)
 12. Are there quality criteria that can be checked automatically? (Validation tools)
@@ -28,7 +28,7 @@ Ask the user these questions one at a time. Don't overwhelm -- ask 2-3, then fol
 
 Based on the answers, recommend one of these architectures:
 
-**Simple Skill** (most common -- default to this)
+**Simple Skill** (most common, default to this)
 - Single SKILL.md with step-by-step instructions
 - Optional references/ for domain knowledge
 - Optional scripts/ for validation

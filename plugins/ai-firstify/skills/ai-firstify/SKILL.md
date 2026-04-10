@@ -28,7 +28,7 @@ Read **references/mode-reengineer.md** for the full re-engineering procedure.
 
 ## Mode 3: Bootstrap (New Project Setup)
 
-Guide the user through setting up a new AI-first project from scratch. Interactive -- ask discovery questions, recommend architecture, scaffold, and test.
+Guide the user through setting up a new AI-first project from scratch. Interactive: ask discovery questions, recommend architecture, scaffold, and test.
 
 Read **references/mode-bootstrap.md** for the full bootstrap procedure.
 
@@ -36,15 +36,15 @@ Read **references/mode-bootstrap.md** for the full bootstrap procedure.
 
 Domain knowledge (load on demand per dimension):
 
-- **references/principles.md** -- All 9 AI-first design principles in depth
-- **references/patterns.md** -- All 7 design patterns with implementation guidance
-- **references/anti-patterns.md** -- Common mistakes with detection patterns and fixes
-- **references/skill-architecture.md** -- How to structure skills, sub-agents, and workflows
-- **references/project-structure.md** -- Ideal project layouts, CLAUDE.md templates, .gitignore
-- **references/assessment-rubric.md** -- Scoring criteria and report template
+- **references/principles.md**: All 9 AI-first design principles in depth
+- **references/patterns.md**: All 7 design patterns with implementation guidance
+- **references/anti-patterns.md**: Common mistakes with detection patterns and fixes
+- **references/skill-architecture.md**: How to structure skills, sub-agents, and workflows
+- **references/project-structure.md**: Ideal project layouts, CLAUDE.md templates, .gitignore
+- **references/assessment-rubric.md**: Scoring criteria and report template
 
-Load the relevant reference file for the dimension you are currently analyzing. Do not load all references at once -- use progressive disclosure.
+Load the relevant reference file for the dimension you are currently analyzing. Do not load all references at once. Use progressive disclosure.
 
 ## Tools
 
-- **scripts/validate-report.sh** -- Validates that a generated assessment report has all required sections, dimensions, and scores
+- **scripts/validate-report.sh**: Validates that a generated assessment report has all required sections, dimensions, and scores

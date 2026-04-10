@@ -14,8 +14,8 @@
 - Data: [Markdown with YAML frontmatter / SQLite / etc.]
 
 ## Key Files
-- [filename] -- [what it does]
-- [filename] -- [what it does]
+- [filename]: [what it does]
+- [filename]: [what it does]
 
 ## Conventions
 - [File naming convention]
@@ -28,7 +28,7 @@
 - [Data handling rules]
 
 ## Skills
-- /[skill-name] -- [what it does]
+- /[skill-name]: [what it does]
 
 ## Tone
 - [Writing style for generated content]

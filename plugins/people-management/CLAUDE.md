@@ -6,7 +6,7 @@ AI-augmented management tooling. See `README.md` for philosophy and details.
 
 | Command | What it does |
 |---------|--------------|
-| `/setup` | Interactive onboarding -- run this first |
+| `/setup` | Interactive onboarding, run this first |
 | `/meeting-prep` | Pre-meeting briefing from all sources |
 | `/one-on-one-prep` | Deep 1:1 preparation (org's performance framework) |
 | `/triage-messages` | Batch message triage by urgency |
@@ -17,12 +17,12 @@ AI-augmented management tooling. See `README.md` for philosophy and details.
 
 ## Key References
 
-- `references/operating-principles.md` -- shared principles all skills follow
-- `references/performance-framework.md` -- how skills use the performance framework (configured during setup)
-- `references/management-framework.md` -- how skills use the management framework (configured during setup)
-- `references/values-guide.md` -- how org values are used across skills
+- `references/operating-principles.md`: shared principles all skills follow
+- `references/performance-framework.md`: how skills use the performance framework (configured during setup)
+- `references/management-framework.md`: how skills use the management framework (configured during setup)
+- `references/values-guide.md`: how org values are used across skills
 
 ## Runtime Data
 
-- `manager-context/` -- persisted team context (created by `/setup`, gitignored)
-- `outputs/` -- skill outputs (gitignored)
+- `manager-context/`: persisted team context (created by `/setup`, gitignored)
+- `outputs/`: skill outputs (gitignored)

@@ -10,10 +10,10 @@ Thanks for your interest in contributing to the TechWolf AI-First Toolkit!
 
 ## What You Can Contribute
 
-- **New skills** -- Add skills to existing plugins or propose new plugins
-- **Bug fixes** -- Fix issues in existing skills, scripts, or docs
-- **Documentation** -- Improve READMEs, add examples, fix typos
-- **Ideas** -- Open an issue to discuss new plugins or improvements
+- **New skills**: Add skills to existing plugins or propose new plugins
+- **Bug fixes**: Fix issues in existing skills, scripts, or docs
+- **Documentation**: Improve READMEs, add examples, fix typos
+- **Ideas**: Open an issue to discuss new plugins or improvements
 
 ## Project Structure
 
@@ -37,7 +37,7 @@ plugins/
 
 ## Submitting Changes
 
-1. Keep PRs focused -- one feature or fix per PR
+1. Keep PRs focused: one feature or fix per PR
 2. Update relevant READMEs if your change affects usage
 3. Test your skills with Claude Code (and Codex via `./install.sh` if possible)
 4. Open a PR against `main` with a clear description of what and why

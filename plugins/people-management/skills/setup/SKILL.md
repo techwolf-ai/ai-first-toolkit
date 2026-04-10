@@ -5,7 +5,7 @@ description: "Interactive onboarding that discovers team structure, terminology,
 
 # Setup
 
-> **Principle: "You are responsible."** This skill discovers and proposes -- the manager validates and decides what's accurate.
+> **Principle: "You are responsible."** This skill discovers and proposes. The manager validates and decides what's accurate.
 
 Interactive onboarding that builds the foundation every other skill relies on. Crawls connected sources, extracts context, and validates with the manager before saving.
 
@@ -14,11 +14,11 @@ If any MCP connector is unavailable, follow the connector unavailability protoco
 ## Prerequisites
 
 Ensure these MCP connectors are available:
-- **Slack** -- team channels, messages, terminology
-- **Notion** -- performance docs, goals, team pages
-- **Google Drive** -- 1:1 docs, meeting notes, strategy docs
-- **Gmail** -- communication patterns
-- **Google Calendar** -- recurring meetings, team rhythms
+- **Slack**: team channels, messages, terminology
+- **Notion**: performance docs, goals, team pages
+- **Google Drive**: 1:1 docs, meeting notes, strategy docs
+- **Gmail**: communication patterns
+- **Google Calendar**: recurring meetings, team rhythms
 
 If any connector is missing, note it and proceed with what's available. Flag gaps at the end.
 
@@ -47,7 +47,7 @@ Present defaults (language, tone, file format, folder structure) and let the man
 Persist: `manager-context/output-preferences.md`
 
 ### Phase 5: Manager's Own Context
-Capture upward context -- OKRs, who they report to, key deadlines.
+Capture upward context: OKRs, who they report to, key deadlines.
 
 Persist: `manager-context/manager-goals.md`
 
@@ -85,6 +85,6 @@ When called with `--refresh`:
 
 Read `../../references/operating-principles.md` for shared principles (data scope, DM flagging, connector unavailability).
 
-- **Never assume -- always validate.** If something looks like a team member but you're not sure, ask.
+- **Never assume, always validate.** If something looks like a team member but you're not sure, ask.
 - **Flag gaps explicitly.** "I couldn't find X" is more useful than silently skipping it.
 - **Stale data is worse than no data.** Always check recency and flag anything older than ~2 months.

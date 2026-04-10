@@ -5,13 +5,13 @@ description: Comprehensive pre-meeting briefing that gathers all relevant contex
 
 # Meeting Prep
 
-> **Principle: "Narrow scope, high impact."** One meeting, one thorough brief. No guessing -- only sourced context.
+> **Principle: "Narrow scope, high impact."** One meeting, one thorough brief. No guessing, only sourced context.
 
 Gathers context from all connected sources for a specific upcoming meeting and produces a structured briefing.
 
 ## When to Use
 
-- Before any meeting (1:1s have their own skill -- use `/prep-one-on-one` instead)
+- Before any meeting (1:1s have their own skill, use `/prep-one-on-one` instead)
 - When the manager says "prep me for [meeting]", "what do I need to know for [meeting]"
 - Can be invoked for the next upcoming meeting or a specific one by name/time
 

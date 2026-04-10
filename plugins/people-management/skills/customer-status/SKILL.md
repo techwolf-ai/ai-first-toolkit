@@ -1,6 +1,6 @@
 ---
 name: customer-status
-description: Synthesised view of account health and activity for managers overseeing customer-facing teams (Sales, CS, Professional Services, Presales). Scans project channels, email threads, and Notion pages to surface status, risks, and upcoming milestones -- without requiring the manager to trawl through individual channels. Supports proactive account management.
+description: Synthesised view of account health and activity for managers overseeing customer-facing teams (Sales, CS, Professional Services, Presales). Scans project channels, email threads, and Notion pages to surface status, risks, and upcoming milestones, without requiring the manager to trawl through individual channels. Supports proactive account management.
 ---
 
 # Customer Status Overview
@@ -23,9 +23,9 @@ If any MCP connector is unavailable, follow the connector unavailability protoco
 ### 1. Load Context
 
 Read from `manager-context/`:
-- `sources.md` -- customer/project channels, account mappings
-- `manager-profile.md` -- team members and their account assignments
-- `team/` -- individual team member profiles and project assignments
+- `sources.md`: customer/project channels, account mappings
+- `manager-profile.md`: team members and their account assignments
+- `team/`: individual team member profiles and project assignments
 
 If no manager-context exists:
 ```
@@ -84,9 +84,9 @@ Read `references/output-template.md` for the full output template structure.
 ### 6. Sub-Agent Review
 
 Spawn a sub-agent to review the customer status overview with fresh eyes. The reviewer should:
-- Check that **health signal assessments are evidence-based** -- every red/yellow rating should cite specific signals, not just absence of activity.
-- Verify that **silence is not over-interpreted** -- a quiet channel on a stable account is not the same as a quiet channel on an active delivery.
-- Check for **team member workload signals** -- if one person owns many flagged accounts, note it.
+- Check that **health signal assessments are evidence-based**: every red/yellow rating should cite specific signals, not just absence of activity.
+- Verify that **silence is not over-interpreted**: a quiet channel on a stable account is not the same as a quiet channel on an active delivery.
+- Check for **team member workload signals**: if one person owns many flagged accounts, note it.
 - Flag any accounts where the evidence is thin enough that the health signal might be misleading.
 
 Incorporate the reviewer's feedback before presenting the final overview.
@@ -108,4 +108,4 @@ Additional notes specific to this skill:
 - **Don't alarm unnecessarily.** Silence on a channel might mean things are running smoothly. Combine multiple signals before flagging red.
 - **Recency matters.** Flag any account where project docs haven't been updated in >2 weeks on active projects.
 - **Respect customer confidentiality.** Summarise, don't reproduce customer communications verbatim. When surfacing DM content, flag it as `(from DM)`.
-- **Team member context.** If a team member owns multiple accounts, note that -- they might be spread thin.
+- **Team member context.** If a team member owns multiple accounts, note that, they might be spread thin.
