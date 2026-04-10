@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.3.0] - 2026-04-10
+
+### Added
+
+- `techwolf-brand-kit` plugin with TechWolf logo skill providing 4 variants (dark, white, mono-dark, mono-white) in SVG and PNG formats.
+
+### Changed
+
+- Renamed `brand-kit` plugin to `techwolf-brand-kit` for consistency.
+
+### Fixed
+
+- Invalid hooks format in content-studio setup instructions.
+- Missing `/api/content` route files in content-studio.
+
 ## [1.2.0] - 2026-03-24
 
 ### Added
