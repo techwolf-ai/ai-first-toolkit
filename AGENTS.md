@@ -22,3 +22,4 @@ This repository publishes TechWolf AI-first plugins and skills for both Claude C
 - The installer also manages plugin metadata, verification, and uninstall state under `~/.codex/skills/.techwolf-ai-first/`.
 - `content-studio` has a plugin-level Codex entry skill in addition to its specialized skills.
 - `people-management` has 8 skills that require `/setup` to be run first to configure org-specific frameworks and context.
+- `knowledge-base` ships three Python helper scripts (`kb-index.py`, `kb-verify.py`, `kb-validate.py`) that are copied into the user's project by `/setup-knowledge-base`. The plugin's `/kb-answer` workflow depends on `kb-verify.py` existing in the project's `scripts/` directory.
