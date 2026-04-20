@@ -1,0 +1,13 @@
+name: "Default"
+description: "Full knowledge base, no filters applied"
+
+in_scope:
+  - "All KB content"
+
+out_of_scope: []
+
+overrides: {}
+
+notes:
+  - "This is the base scope with all content available"
+  - "Create additional scope files to customize answers for specific contexts"

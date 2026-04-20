@@ -1,0 +1,6 @@
+version: "1.0"
+created: "{{today}}"
+categories:
+  - general
+  - technical
+  - faq

@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.2.0](https://img.shields.io/badge/version-1.2.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.3.0](https://img.shields.io/badge/version-1.3.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai).
 
@@ -33,6 +33,15 @@ AI-augmented tooling for people managers. Surfaces the right context at the righ
 - **8 skills**: meeting prep, 1:1 prep, triage, customer status, priority planner, team health, performance cycle
 - **Framework-agnostic**: configures to your org's performance dimensions, rating scale, management competencies, and values
 
+### knowledge-base: Evidence-Backed Knowledge Base
+
+Build and query a structured knowledge base where every answer cites literal quotes from your KB files. Prevents hallucinations by grounding all responses in documented facts.
+
+- **Setup**: interactive onboarding that defines categories, scaffolds the KB structure, and populates from your existing sources (Notion, Slack, Confluence, local files)
+- **KB Answer**: answer questions with evidence-backed citations from your KB
+- **KB Import**: import knowledge from documents (Markdown, PDF, plain text) into structured entries
+- **KB Refresh**: add new sources or re-scrape existing ones to keep the KB current
+
 ### techwolf-brand-kit: Brand Assets
 
 Official TechWolf brand assets for AI-generated outputs. Ensures agents use the correct logo files instead of guessing or approximating.
@@ -49,6 +58,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 claude plugin install ai-firstify@techwolf-ai-first
 claude plugin install content-studio@techwolf-ai-first
 claude plugin install people-management@techwolf-ai-first
+claude plugin install knowledge-base@techwolf-ai-first
 claude plugin install techwolf-brand-kit@techwolf-ai-first
 ```
 
@@ -61,6 +71,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh ai-firstify
 ./install.sh content-studio
 ./install.sh people-management
+./install.sh knowledge-base
 ./install.sh techwolf-brand-kit
 ```
 
@@ -93,7 +104,8 @@ ai-first-toolkit/
 │   ├── ai-firstify/            # Auditor & re-engineer (1 skill, 9 reference docs)
 │   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
-│   └── techwolf-brand-kit/              # Brand assets (logo variants in SVG + PNG)
+│   ├── knowledge-base/         # Evidence-backed KB (4 skills, templates, index + verify scripts)
+│   └── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
 ├── install.sh                  # Codex skill installer
 └── README.md
 ```
@@ -103,6 +115,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `sk
 - [ai-firstify README](plugins/ai-firstify/README.md)
 - [content-studio README](plugins/content-studio/README.md)
 - [people-management README](plugins/people-management/README.md)
+- [knowledge-base README](plugins/knowledge-base/README.md)
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 
 ## Contributing
