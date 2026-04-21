@@ -57,20 +57,32 @@ Optional context profiles that customize answers. For example, a "enterprise-cus
 
 ```
 kb/
-  .kb-config.yaml       # Category definitions
+  .kb-config.yaml       # Category definitions (flat or nested)
   index.md              # Central navigation index
   scopes/               # Context profiles
     _default.yaml
-  security/             # Category directories
+  security/             # Top-level category directory
     data-encryption.md
     certifications.md
+    access/             # Nested sub-category (optional)
+      mfa.md
+      sso.md
   technical/
     product-overview.md
   ...
 scripts/
-  kb-index.py           # Lists all KB files; --write regenerates index.md
-  kb-verify.py          # Verifies answer citations (strict + normalized-match fallback)
-  kb-validate.py        # Checks frontmatter, categories, and related-link resolution
+  kb-index.py           # Lists all KB files; --write regenerates index.md (nested-aware)
+  kb-verify.py          # Verifies answer citations (single- and multi-line, strict + normalized-match fallback)
+  kb-validate.py        # Checks frontmatter, categories (incl. nested), related-link resolution; --max-age N warns on stale entries
+  kb-search.py          # Keyword search across title, tags, description, body; filter by category/tag
+```
+
+## Searching
+
+```bash
+python3 scripts/kb-search.py "encryption"
+python3 scripts/kb-search.py "MFA" --category security
+python3 scripts/kb-search.py "breach" --tag incident --limit 5
 ```
 
 ## License

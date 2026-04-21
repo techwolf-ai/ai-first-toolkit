@@ -2,11 +2,12 @@
 
 ## Directory Structure
 
-- `kb/`: Knowledge base entries (git-tracked)
+- `kb/`: Knowledge base entries (git-tracked). Categories can be nested — e.g., `kb/security/access/mfa.md` with `category: security/access` in frontmatter.
 - `kb/scopes/`: Context profiles for different audiences or customer segments
-- `scripts/kb-index.py`: Lists all KB files with descriptions; `--write` regenerates `kb/index.md`
+- `scripts/kb-index.py`: Lists all KB files with descriptions; `--write` regenerates `kb/index.md` (renders nested categories as a tree)
 - `scripts/kb-verify.py`: Verifies that `/kb-answer` citations exist in KB files
-- `scripts/kb-validate.py`: Checks KB health (frontmatter, categories, related links)
+- `scripts/kb-validate.py`: Checks KB health (frontmatter, categories incl. nested, related links)
+- `scripts/kb-search.py`: Keyword search; `python3 scripts/kb-search.py "keyword" [--category X] [--tag Y]`
 
 ## KB Entry Format
 

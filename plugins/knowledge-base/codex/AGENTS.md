@@ -15,6 +15,8 @@ Build and query a structured, evidence-backed knowledge base. Every answer cites
 - **Evidence grounding**: Answers must cite literal quotes from KB files
 - **Scopes**: Optional context profiles that customize which KB content is relevant
 - **Index**: Central navigation file for fast KB lookup
+- **Nested categories**: Categories can be flat (`security`) or nested (`security/access`) to match folder structure
+- **Search**: `scripts/kb-search.py "keyword"` ranks entries by title/tags/description/body; supports `--category` and `--tag` filters
 
 ## Getting Started
 
