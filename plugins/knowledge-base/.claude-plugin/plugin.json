@@ -1,0 +1,7 @@
+{
+  "name": "knowledge-base",
+  "version": "1.1.0",
+  "description": "Build and query a structured, evidence-backed knowledge base with Claude Code. Every answer cites literal quotes from your KB files to prevent hallucinations.",
+  "author": { "name": "TechWolf" },
+  "keywords": ["knowledge-base", "kb", "evidence", "citations", "rfp", "search"]
+}
