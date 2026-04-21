@@ -49,6 +49,7 @@ scripts/
   kb-index.py
   kb-verify.py
   kb-validate.py
+  kb-search.py
 CLAUDE.md (or append to existing)
 
 Ready to proceed?
@@ -80,6 +81,8 @@ Read the template files from this plugin and adapt them for the user's project:
 7. **Read** `scripts/kb-verify.py` from this plugin. Copy to `scripts/kb-verify.py` in the user's project.
 
 8. **Read** `scripts/kb-validate.py` from this plugin. Copy to `scripts/kb-validate.py` in the user's project.
+
+9. **Read** `scripts/kb-search.py` from this plugin. Copy to `scripts/kb-search.py` in the user's project.
 
 ## Step 4: Create Project CLAUDE.md
 
@@ -120,8 +123,9 @@ If `kb-index.py` lists the entries and `kb-validate.py` reports "All entries val
 
 Tell the user:
 - What was created and where
-- How to add new entries (create .md files with YAML frontmatter in the right `kb/{category}/` folder)
+- How to add new entries (create .md files with YAML frontmatter in the right `kb/{category}/` folder; nested sub-folders like `kb/security/access/` are supported)
 - How to query the KB (`/kb-answer`)
-- How to import documents (`/kb-import`)
+- How to import documents or bulk-import a directory (`/kb-import`)
 - How to add more sources or refresh existing ones (`/kb-refresh`)
 - How to list all entries (`python3 scripts/kb-index.py`)
+- How to search (`python3 scripts/kb-search.py "keyword"`)

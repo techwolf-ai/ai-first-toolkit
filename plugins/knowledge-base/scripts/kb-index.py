@@ -6,6 +6,10 @@ Usage:
     python3 scripts/kb-index.py --write      # also rewrite kb/index.md in place
     python3 scripts/kb-index.py [kb_path]    # point at a different kb/ directory
 
+Supports nested categories: an entry at kb/security/access/mfa.md is grouped
+under category "security/access" if its frontmatter category matches, or
+under the folder path otherwise. Nested groups render as an indented tree.
+
 With --write, the "All Files by Category" section of kb/index.md is regenerated
 between the markers:
 
@@ -58,25 +62,31 @@ def extract_frontmatter(filepath: Path) -> dict:
     return result
 
 
+def folder_category(rel_path: Path) -> str:
+    if rel_path.parent == Path("."):
+        return "root"
+    return str(rel_path.parent).replace("\\", "/")
+
+
 def collect_entries(kb_path: Path) -> list[dict]:
     files = []
     for md_file in sorted(kb_path.rglob("*.md")):
         if md_file.name in ("index.md", "README.md"):
             continue
         rel_path = md_file.relative_to(kb_path)
-        category = rel_path.parts[0] if len(rel_path.parts) > 1 else "root"
         meta = extract_frontmatter(md_file)
+        category = meta.get("category") or folder_category(rel_path)
         files.append({
-            "path": str(rel_path),
-            "category": meta.get("category", category),
+            "path": str(rel_path).replace("\\", "/"),
+            "category": category,
             "title": meta.get("title", md_file.stem),
             "description": meta.get("description", "No description"),
         })
     return files
 
 
-def group_by_category(files: list[dict]) -> dict:
-    by_category = {}
+def group_by_category(files: list[dict]) -> dict[str, list[dict]]:
+    by_category: dict[str, list[dict]] = {}
     for f in files:
         by_category.setdefault(f["category"], []).append(f)
     for cat in by_category:
@@ -87,17 +97,21 @@ def group_by_category(files: list[dict]) -> dict:
 def format_stdout(by_category: dict) -> str:
     lines = []
     for category in sorted(by_category):
-        lines.append(f"\n## {category}/")
+        depth = category.count("/")
+        pad = "  " * depth
+        lines.append(f"\n{pad}## {category}/")
         for f in by_category[category]:
-            lines.append(f"  {f['path']}")
-            lines.append(f"    {f['description']}")
+            lines.append(f"{pad}  {f['path']}")
+            lines.append(f"{pad}    {f['description']}")
     return "\n".join(lines).lstrip("\n")
 
 
 def format_markdown(by_category: dict) -> str:
     lines = [START_MARKER, "", "## All Files by Category", ""]
     for category in sorted(by_category):
-        lines.append(f"### {category}/")
+        depth = category.count("/")
+        header_level = "###" + ("#" * min(depth, 3))
+        lines.append(f"{header_level} {category}/")
         for f in by_category[category]:
             lines.append(f"- `{f['path']}` — {f['description']}")
         lines.append("")

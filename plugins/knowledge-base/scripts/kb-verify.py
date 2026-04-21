@@ -10,15 +10,25 @@ Two match passes:
      Normalized-only passes are reported as PASS (normalized) so the author knows
      the citation works but isn't byte-exact.
 
+Supports single-line and multi-line citations.
+
 Usage:
     echo "answer text" | python3 scripts/kb-verify.py
     python3 scripts/kb-verify.py answer.md
     python3 scripts/kb-verify.py answer.md kb/
     python3 scripts/kb-verify.py --strict answer.md   # disable normalized fallback
 
-Citation format expected:
-    > "exact quote from the file"
-    > Source: kb/category/filename.md
+Citation formats accepted:
+
+    Single-line:
+        > "exact quote from the file"
+        > Source: kb/category/filename.md
+
+    Multi-line (opening " on first line, closing " at the end of the last):
+        > "exact quote line 1
+        > exact quote line 2
+        > exact quote line 3"
+        > Source: kb/category/filename.md
 """
 
 import re
@@ -42,19 +52,53 @@ def find_kb_path(args: list[str]) -> Path:
 
 
 def parse_citations(text: str) -> list[dict]:
+    """Parse single-line and multi-line `> "..."` citation blocks.
+
+    Single-line: the whole quote lives on one `> "..."` line.
+    Multi-line:  opens with `> "...` on one line, continues on subsequent
+                 `> ...` lines, and closes with a `"` at the end of the last
+                 quote line. The next non-blank line must be `> Source: ...`.
+    """
     citations = []
     lines = text.split("\n")
     i = 0
     while i < len(lines):
-        line = lines[i].strip()
-        if line.startswith('> "') and line.endswith('"'):
-            quote = line[3:-1]
-            if i + 1 < len(lines):
-                source_line = lines[i + 1].strip()
-                match = re.match(r'> Source:\s*(.+)', source_line)
+        stripped = lines[i].strip()
+        if stripped.startswith('> "'):
+            rest = stripped[3:]
+            if rest.endswith('"') and len(rest) >= 1:
+                quote = rest[:-1]
+                consumed = 1
+            else:
+                parts = [rest]
+                j = i + 1
+                closed = False
+                while j < len(lines):
+                    line_j = lines[j].strip()
+                    if not line_j.startswith(">"):
+                        break
+                    inner = line_j[1:].lstrip()
+                    if inner.endswith('"'):
+                        parts.append(inner[:-1])
+                        j += 1
+                        closed = True
+                        break
+                    parts.append(inner)
+                    j += 1
+                if not closed:
+                    i += 1
+                    continue
+                quote = "\n".join(parts)
+                consumed = j - i
+
+            source_idx = i + consumed
+            while source_idx < len(lines) and not lines[source_idx].strip():
+                source_idx += 1
+            if source_idx < len(lines):
+                match = re.match(r'>\s*Source:\s*(.+)', lines[source_idx].strip())
                 if match:
                     citations.append({"quote": quote, "source": match.group(1).strip()})
-                    i += 2
+                    i = source_idx + 1
                     continue
         i += 1
     return citations

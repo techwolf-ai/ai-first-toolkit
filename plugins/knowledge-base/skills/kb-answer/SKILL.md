@@ -34,7 +34,7 @@ python3 scripts/kb-index.py
 
 1. Check the keyword lookup table for matching terms
 2. Go to the matching file(s)
-3. If no keyword match, browse the category that best fits the question
+3. If no keyword match, browse the category that best fits the question. Categories can be nested (e.g., `security/access/`) — drill down into sub-groups when a broad category has them.
 
 ## Step 2: Read Relevant Files
 
@@ -45,7 +45,19 @@ Based on the index navigation:
 
 ## Step 3: Search (if needed)
 
-If the index doesn't point to the right file, search the KB using the Grep tool with path `kb/` and the relevant keyword.
+If the index doesn't point to the right file, run the search script to rank entries by keyword across title, tags, description, category, and body:
+
+```bash
+python3 scripts/kb-search.py "your keyword"
+```
+
+Options worth knowing:
+- `--category security` restricts to a category (matches nested children like `security/access` too).
+- `--tag mfa` filters by frontmatter tag (repeatable).
+- `--limit 5` caps results.
+- `--json` for a machine-readable list (useful when chaining into another step).
+
+Fall back to the Grep tool with path `kb/` only if the search script misses a term (e.g., regex-only patterns).
 
 ## Step 4: Check Active Scope
 
@@ -81,7 +93,14 @@ Format each citation as:
 - Copy the quote character-for-character. Do not paraphrase, summarize, or rephrase.
 - If you cannot find a literal quote supporting a claim, do not make that claim.
 - **Include markdown formatting verbatim.** If the source says `**Confidential**: ...`, your quote must be `**Confidential**: ...`, not `Confidential: ...`. If the source uses bullet list dashes, include them. Missing markdown is the #1 reason `kb-verify.py` flags citations. The script has a normalized-match fallback that will PASS with a warning, but strict mode will FAIL, so always copy formatting literally.
-- For long passages, prefer quoting a single self-contained sentence rather than a multi-line block. Multi-line blocks are fragile across reformatters.
+- For long passages, prefer quoting a single self-contained sentence. When a multi-line quote is unavoidable (e.g., a bulleted list that must be cited as one block), use the multi-line form:
+  ```
+  > "first line of the quote
+  > second line
+  > last line"
+  > Source: kb/category/filename.md
+  ```
+  The verifier joins the `>` lines back into one quote and checks the whole block. Single-line blocks are still preferred for robustness.
 
 ### What to Avoid
 

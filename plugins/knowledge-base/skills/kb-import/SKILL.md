@@ -16,6 +16,11 @@ Import knowledge from existing documents into your knowledge base.
 - Converting unstructured docs into structured KB entries
 - Bulk-importing content into a new KB
 
+## Modes
+
+- **Single-document mode** (default): one source document is split into one or more KB entries. Use Steps 1 to 6 below.
+- **Bulk mode**: many source documents are ingested at once from a directory or a list of files. Use when the user points at a folder or provides a list longer than ~3 files. See [Bulk Mode](#bulk-mode) at the bottom.
+
 ## Step 1: Understand the KB Structure
 
 Read the KB config to understand available categories:
@@ -76,9 +81,10 @@ Each fact should be a self-contained sentence that can be cited as evidence.
 
 ### Content Guidelines
 
-- **Preserve specifics**: Keep exact numbers, dates, names, versions
+- **Preserve specifics**: Keep exact numbers, dates, names, versions. Keep concrete customer/product examples by name (e.g., "T-Mobile", "Atlas Copco") — they make abstract concepts tangible and shouldn't be stripped "for neutrality".
 - **One topic per entry**: Don't create catch-all files
 - **Quotable statements**: Write so that individual sentences can be cited as evidence
+- **Capture the easily-missed content types** when the source covers them: stakeholders (one entry per key person with role + ownership + contact pattern), projects (goal/owner/status), repositories (purpose/ownership). These are the most commonly skipped in first-pass imports.
 - **No opinions or speculation**: Only include facts from the source document
 - **Use markdown structure**: Headers, bullet points, tables for structured data
 
@@ -104,3 +110,49 @@ Report to the user:
 - Which categories they were placed in
 - Any information from the source document that was skipped (and why)
 - Suggestion to review entries and add `related:` links between them
+
+## Bulk Mode
+
+Use this when the user wants to ingest many documents in one go (e.g., "import everything in `~/docs/policies/`", or a list of 5+ files).
+
+### Bulk Step 1: Enumerate the source set
+
+- If the user provided a directory, list supported files in it recursively (`.md`, `.pdf`, `.txt`, `.docx`). Skip obvious noise (`.DS_Store`, `node_modules`, hidden files).
+- If the user provided a list of paths, use exactly those.
+- Present the file count and a sample (first 10) to the user. Confirm before reading anything heavy.
+
+### Bulk Step 2: Plan across the whole batch
+
+Read the frontmatter / first page of each file to get a title guess. Produce a single combined plan:
+
+```
+| # | Source file | Proposed KB entry | Category |
+|---|-------------|-------------------|----------|
+| 1 | policies/acceptable-use.pdf | security/acceptable-use.md | security |
+| 2 | policies/retention.pdf      | security/data-retention.md | security |
+| ...
+```
+
+Rules:
+- One KB entry per source file by default. Split a source into multiple entries only when it clearly covers multiple distinct topics.
+- Prefer nested categories (e.g., `security/access`) when the batch is large enough that a flat category would become unwieldy (> ~10 entries in one category).
+- Flag duplicates up front: if a planned entry already exists in the KB, mark it "UPDATE" instead of "CREATE".
+
+Wait for user confirmation on the full plan before proceeding.
+
+### Bulk Step 3: Process in parallel
+
+- For ≤ 5 files, process sequentially (easier to follow, fewer context switches).
+- For > 5 files, dispatch a subagent per file (or per small group of related files) with the import instructions, the target path from the plan, and the existing KB index as context. Collect results.
+- If any subagent fails, keep the successful entries and report the failures so the user can retry a smaller batch.
+
+### Bulk Step 4: Finalize
+
+After all files are processed:
+```bash
+python3 scripts/kb-index.py --write
+python3 scripts/kb-validate.py
+python3 scripts/kb-search.py "sanity-check-term"   # spot-check a term that should appear
+```
+
+Report: X created, Y updated, Z skipped (with reason per skip). Flag any validate warnings or errors.

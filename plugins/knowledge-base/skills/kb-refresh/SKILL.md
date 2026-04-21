@@ -85,6 +85,11 @@ INSTRUCTIONS:
 4. Split the content into distinct topics. Create one .md file per topic, not one giant file.
 5. If an existing entry covers the same topic, UPDATE it rather than creating a duplicate.
    Read the existing file first, merge the new information, and update last_updated.
+5a. For org-context KBs (company/team/personal knowledge, not just policy docs), actively hunt for these content types — they are the most commonly missed:
+    - **Stakeholders**: one entry per key person (role, ownership areas, how to reach them, what they care about). Without these, the KB can't answer "who should I talk to about X?".
+    - **Projects**: one entry per initiative (goal, owner, status, links). Distinct from generic "strategy" entries.
+    - **Repositories / codebases**: one entry per repo (purpose, key files, how to run, ownership).
+    - **Customer examples**: keep concrete names (e.g., "T-Mobile", "Atlas Copco") that make abstract concepts tangible. Don't strip them for anonymity unless the user asks.
 6. For new entries, create a file in kb/{category}/ with this format:
 
 ---
@@ -113,5 +118,7 @@ REPORT: When done, list all files created or updated with their category and a o
 After all sources are processed:
 1. Run `python3 scripts/kb-index.py --write` to regenerate `kb/index.md`'s "All Files by Category" section from the current KB.
 2. Run `python3 scripts/kb-validate.py` to catch missing frontmatter, bad categories, or broken `related:` links.
-3. Present a summary: X entries created, Y entries updated, from Z sources. Flag any warnings or errors from `kb-validate.py`.
-4. Ask the user if they want to add more sources or are done.
+3. Run `python3 scripts/kb-validate.py --max-age 90` (or a shorter window if the source changes faster) to surface entries that have drifted since their last refresh.
+4. Spot-check discoverability with `python3 scripts/kb-search.py "<term the refresh should have covered>"` to confirm new entries are searchable.
+5. Present a summary: X entries created, Y entries updated, from Z sources. Flag any warnings, errors, or stale entries.
+6. Ask the user if they want to add more sources or are done.

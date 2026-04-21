@@ -4,20 +4,26 @@
 Checks every .md entry under kb/ (skipping index.md and README.md) for:
   - YAML frontmatter present and parseable
   - Required fields: title, description, category, last_updated
-  - category value is listed in .kb-config.yaml
+  - category value is listed in .kb-config.yaml (supports nested paths like 'security/access')
   - last_updated parses as YYYY-MM-DD
   - related: paths resolve to existing files
+  - optional: staleness (--max-age N warns when last_updated is older than N days)
 
-Exits 1 if any error is found. Warnings do not fail the run.
+Nested categories: if frontmatter reads `category: security/access`, the entry
+must live under `kb/security/access/`. Top-level folders without a nested match
+still warn as before.
+
+Exits 1 if any error is found. Warnings (including staleness) do not fail the run.
 
 Usage:
-    python3 scripts/kb-validate.py          # default kb/
+    python3 scripts/kb-validate.py                  # default kb/
     python3 scripts/kb-validate.py [kb_path]
+    python3 scripts/kb-validate.py --max-age 90     # warn on entries older than 90 days
 """
 
 import re
 import sys
-from datetime import date
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 
@@ -93,14 +99,51 @@ def parse_frontmatter(filepath: Path) -> tuple[dict, list[str]]:
     return fields, related
 
 
+def parse_max_age(argv: list[str]) -> int | None:
+    for i, a in enumerate(argv):
+        if a == "--max-age" and i + 1 < len(argv):
+            try:
+                n = int(argv[i + 1])
+                if n > 0:
+                    return n
+            except ValueError:
+                print(f"Error: --max-age expects a positive integer, got {argv[i + 1]!r}", file=sys.stderr)
+                sys.exit(2)
+        if a.startswith("--max-age="):
+            try:
+                n = int(a.split("=", 1)[1])
+                if n > 0:
+                    return n
+            except ValueError:
+                print(f"Error: --max-age expects a positive integer", file=sys.stderr)
+                sys.exit(2)
+    return None
+
+
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    kb_path = find_kb_path(args)
+    argv = sys.argv[1:]
+    max_age_days = parse_max_age(argv)
+
+    positional = []
+    skip_next = False
+    for a in argv:
+        if skip_next:
+            skip_next = False
+            continue
+        if a == "--max-age":
+            skip_next = True
+            continue
+        if a.startswith("--"):
+            continue
+        positional.append(a)
+
+    kb_path = find_kb_path(positional)
 
     config_categories = parse_config_categories(kb_path)
     errors: list[str] = []
     warnings: list[str] = []
     checked = 0
+    stale_cutoff = date.today() - timedelta(days=max_age_days) if max_age_days else None
 
     for md_file in sorted(kb_path.rglob("*.md")):
         if md_file.name in ("index.md", "README.md"):
@@ -128,15 +171,26 @@ def main():
                 f"(allowed: {', '.join(config_categories)})"
             )
 
-        folder_category = rel.parts[0] if len(rel.parts) > 1 else None
-        if folder_category and category and folder_category != category:
+        folder_path = str(rel.parent).replace("\\", "/") if rel.parent != Path(".") else ""
+        if folder_path and category and folder_path != category:
             warnings.append(
-                f"{rel}: folder '{folder_category}' does not match frontmatter category '{category}'"
+                f"{rel}: folder '{folder_path}' does not match frontmatter category '{category}'"
             )
 
         today = date.today().isoformat()
         if last_updated and last_updated > today:
             warnings.append(f"{rel}: last_updated '{last_updated}' is in the future")
+
+        if stale_cutoff and last_updated and DATE_RE.match(last_updated):
+            try:
+                parsed = datetime.strptime(last_updated, "%Y-%m-%d").date()
+                if parsed < stale_cutoff:
+                    age_days = (date.today() - parsed).days
+                    warnings.append(
+                        f"{rel}: stale — last_updated '{last_updated}' is {age_days} days old (--max-age {max_age_days})"
+                    )
+            except ValueError:
+                pass
 
         for r in related:
             target = kb_path / r

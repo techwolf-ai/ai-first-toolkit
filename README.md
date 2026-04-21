@@ -37,10 +37,11 @@ AI-augmented tooling for people managers. Surfaces the right context at the righ
 
 Build and query a structured knowledge base where every answer cites literal quotes from your KB files. Prevents hallucinations by grounding all responses in documented facts.
 
-- **Setup**: interactive onboarding that defines categories, scaffolds the KB structure, and populates from your existing sources (Notion, Slack, Confluence, local files)
+- **Setup**: interactive onboarding that defines categories (flat or nested), scaffolds the KB structure, and populates from your existing sources (Notion, Slack, Confluence, local files)
 - **KB Answer**: answer questions with evidence-backed citations from your KB
-- **KB Import**: import knowledge from documents (Markdown, PDF, plain text) into structured entries
+- **KB Import**: import knowledge from documents (Markdown, PDF, plain text) into structured entries, single-document or bulk-from-folder
 - **KB Refresh**: add new sources or re-scrape existing ones to keep the KB current
+- **KB Search**: `kb-search.py` keyword-ranked lookup across title, tags, description, and body, with category and tag filters
 
 ### techwolf-brand-kit: Brand Assets
 
