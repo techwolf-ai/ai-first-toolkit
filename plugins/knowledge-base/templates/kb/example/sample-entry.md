@@ -1,12 +1,10 @@
 ---
 title: "Password Policy"
 description: "Minimum length, complexity, and MFA rules for account access"
-category: security
+category: general
 tags: [password, mfa, authentication]
 sources: ["Company handbook §4.2"]
 last_updated: "2026-04-20"
-related:
-  - security/access-control.md
 ---
 
 ## Requirements
