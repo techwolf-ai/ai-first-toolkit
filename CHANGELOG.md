@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.3.1] - 2026-05-07
+
+### Fixed
+
+- `people-management` plugin no longer redeclares hosted MCP servers (Slack, Notion, Gmail, Google Drive, Google Calendar) in its `.mcp.json`. The redeclaration triggered an OAuth dynamic client registration attempt on plugin load that hosted endpoints reject ("dynamic client configuration not supported"), breaking users' existing default Claude connectors until the plugin was uninstalled. Users should rely on their installed Claude connectors instead.
+
 ## [1.3.0] - 2026-04-10
 
 ### Added
