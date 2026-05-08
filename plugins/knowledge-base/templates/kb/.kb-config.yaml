@@ -1,0 +1,14 @@
+version: "1.0"
+created: "{{today}}"
+
+# Categories can be flat or nested (slash-separated).
+# A nested category like "security/access" means entries live under
+# kb/security/access/ and will render as a sub-group in the index.
+categories:
+  - general
+  - technical
+  - faq
+  # Example of a nested hierarchy:
+  # - security
+  # - security/access
+  # - security/data

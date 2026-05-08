@@ -27,6 +27,11 @@
       "name": "techwolf-brand-kit",
       "source": "./plugins/techwolf-brand-kit",
       "description": "Official TechWolf brand assets for AI-generated outputs. Provides logo files in multiple variants as SVG and PNG."
+    },
+    {
+      "name": "knowledge-base",
+      "source": "./plugins/knowledge-base",
+      "description": "Build and query a structured, evidence-backed knowledge base. Every answer cites literal quotes from your KB files."
     }
   ]
 }

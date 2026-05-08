@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.4.0] - 2026-05-08
+
+### Added
+
+- `knowledge-base` plugin: evidence-backed knowledge base creator. Every `/kb-answer` reply cites literal quotes from KB files, verified against the source.
+  - 4 skills: `setup-knowledge-base`, `kb-answer`, `kb-import`, `kb-refresh`.
+  - 4 scripts: `kb-index.py` (with `--write` to regenerate `kb/index.md` between markers, nested-category aware), `kb-verify.py` (strict pass plus a normalized-match fallback for markdown and whitespace drift; supports single- and multi-line citations), `kb-validate.py` (frontmatter, category, date, and related-link health checks; `--max-age N` flags stale entries), `kb-search.py` (keyword-ranked lookup across title, tags, description, path, and body; `--category` and `--tag` filters; `--json` output).
+  - Bulk import mode in `/kb-import` for ingesting many documents from a folder in one pass.
+  - Templates for setup scaffolding, a default scope, and a sample entry.
+- Added `knowledge-base` to the marketplace manifest.
+- Added `knowledge-base` to the Codex installer.
+
 ## [1.3.1] - 2026-05-07
 
 ### Fixed
