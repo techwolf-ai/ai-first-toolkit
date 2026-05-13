@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.5.0] - 2026-05-13
+
+### Added
+
+- `ai-adoption` plugin: three skills for working with your Claude Code + Cowork session history. Runs entirely locally, no API calls.
+  - `token-doctor`: two-stage cost diagnostic. Stage 1 walks transcripts, computes length-bucket distribution, marathon share, cache rebuild cost, per-project health, and writes a formatted terminal report inline. Stage 2 (opt-in) picks ~14 hotspot sessions, fans out parallel Haiku subagents per session, and synthesises a per-session habit-recommendation report.
+  - `task-profile`: six-phase mining of session history into a role-level task profile. Clusters sessions by judgment, dispatches one Haiku subagent per cluster, aggregates into canonical tasks with success/iterations/friction/tokens, emits `profile.csv`, a single-file interactive `explorer.html` with progressive disclosure, AI-first coaching cards, and up to five task-centric skill proposals.
+  - `session-search`: two stdlib-only Python scripts that discover and read Claude Code + Cowork transcripts from disk (`~/.claude/projects/**`, Cowork session dir). Filter by kind, time range, title, cwd, or full-text regex; print a session in readable markdown with optional grep/tail.
+  - Privacy: regex-based redaction (API keys, JWTs, emails, phones, cards, IBANs) before any text is dispatched to a subagent or written to output; subagents see token counts and tool-call shape, never prompt or output text.
+- Added `ai-adoption` to the marketplace manifest.
+- Added `ai-adoption` to the Codex installer.
+
 ## [1.4.0] - 2026-05-08
 
 ### Added

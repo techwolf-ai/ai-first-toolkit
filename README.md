@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.4.0](https://img.shields.io/badge/version-1.4.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.5.0](https://img.shields.io/badge/version-1.5.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai).
 
@@ -43,6 +43,14 @@ Build and query a structured knowledge base where every answer cites literal quo
 - **KB Refresh**: add new sources or re-scrape existing ones to keep the KB current
 - **KB Search**: `kb-search.py` keyword-ranked lookup across title, tags, description, and body, with category and tag filters
 
+### ai-adoption: Claude History Analytics
+
+Three skills for working with your Claude Code + Cowork session history. Local-only, no API calls.
+
+- **token-doctor**: diagnoses where your token spend goes (length distribution, marathon share, cache rebuilds, per-project health) and writes a doctor-style terminal report. Opt-in deep dive fans out parallel Haiku subagents over hotspot sessions for habit-level recommendations.
+- **task-profile**: mines sessions into a role-level map of what you actually do with AI, ranked by frequency and friction. Emits a shareable CSV, an interactive HTML explorer, AI-first coaching cards, and up to five skill proposals.
+- **session-search**: finds a specific past session by title, working directory, time range, or free-text content across every transcript on disk.
+
 ### techwolf-brand-kit: Brand Assets
 
 Official TechWolf brand assets for AI-generated outputs. Ensures agents use the correct logo files instead of guessing or approximating.
@@ -60,6 +68,7 @@ claude plugin install ai-firstify@techwolf-ai-first
 claude plugin install content-studio@techwolf-ai-first
 claude plugin install people-management@techwolf-ai-first
 claude plugin install knowledge-base@techwolf-ai-first
+claude plugin install ai-adoption@techwolf-ai-first
 claude plugin install techwolf-brand-kit@techwolf-ai-first
 ```
 
@@ -73,6 +82,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh content-studio
 ./install.sh people-management
 ./install.sh knowledge-base
+./install.sh ai-adoption
 ./install.sh techwolf-brand-kit
 ```
 
@@ -106,6 +116,7 @@ ai-first-toolkit/
 │   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
 │   ├── knowledge-base/         # Evidence-backed KB (4 skills, templates, index + verify scripts)
+│   ├── ai-adoption/            # Claude history analytics (3 skills: token-doctor, task-profile, session-search)
 │   └── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
 ├── install.sh                  # Codex skill installer
 └── README.md
@@ -117,6 +128,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `sk
 - [content-studio README](plugins/content-studio/README.md)
 - [people-management README](plugins/people-management/README.md)
 - [knowledge-base README](plugins/knowledge-base/README.md)
+- [ai-adoption README](plugins/ai-adoption/README.md)
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 
 ## Contributing
