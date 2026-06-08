@@ -6,6 +6,27 @@ Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf
 
 <!-- TODO: Replace with hero GIF showing ai-firstify audit in action -->
 
+**New here?** Add the marketplace, then install any plugin below. Full commands in [Quick start](#quick-start).
+
+```bash
+claude plugin marketplace add techwolf-ai/ai-first-toolkit
+```
+
+## Plugins at a glance
+
+6 plugins, 27 skills. One install command each.
+
+| Plugin | What it does | Install |
+|--------|--------------|---------|
+| **ai-firstify** | Audit, re-engineer, or bootstrap any codebase to 9 AI-first design principles | `claude plugin install ai-firstify@techwolf-ai-first` |
+| **content-studio** | Thought-leadership pipeline (LinkedIn, blog, opinion) with a visual editor | `claude plugin install content-studio@techwolf-ai-first` |
+| **people-management** | AI-augmented management: 1:1 prep, meeting prep, triage, performance cycles | `claude plugin install people-management@techwolf-ai-first` |
+| **knowledge-base** | Evidence-backed KB; every answer cites literal quotes from your files | `claude plugin install knowledge-base@techwolf-ai-first` |
+| **ai-adoption** | Claude history analytics: token-doctor, task-profile, session-search | `claude plugin install ai-adoption@techwolf-ai-first` |
+| **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
+
+Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex via [`./install.sh`](#codex).
+
 ## What's inside
 
 ### ai-firstify: AI-First Skill
