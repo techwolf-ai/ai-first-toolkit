@@ -2,6 +2,8 @@
 
 The distribute phase, branched by audience. Pick the path(s) that match the Phase 0 answer. They are additive: you can ship an org plugin and a public package.
 
+> Distribution mechanics change quickly (the plugin system and the registry are both young). Verify before relying on exact syntax: plugins and marketplaces at `https://code.claude.com/docs/en/plugins` and `https://code.claude.com/docs/en/plugin-marketplaces`; the registry at `https://modelcontextprotocol.io/registry`. Append `.md` to any modelcontextprotocol.io URL to fetch it as markdown.
+
 ## Org / team: bundle as a Claude Code plugin
 
 The cleanest way to give colleagues an MCP server is a Claude Code plugin that ships the server. Installing the plugin auto-registers the server, so nobody runs `claude mcp add` by hand.

@@ -50,8 +50,8 @@ Skip for "Just me" (assume local stdio). Ask for org/public when unclear:
 - question: "What should the server be written in?"
 - options:
   1. "Python (FastMCP)": fastest path, great for wrapping Python-friendly APIs.
-  2. "Node / TypeScript (MCP SDK)": best when the wrapped service has a strong TS SDK or you ship via npm.
-  3. "Recommend for me": pick based on the service analyzed in Phase 1.
+  2. "Node / TypeScript (MCP SDK)": the mcp-builder ecosystem default (strongest SDK, models write TS well, best MCPB compatibility). Pick it when torn, or when the service has a strong TS SDK or you ship via npm.
+  3. "Recommend for me": pick based on the service analyzed in Phase 1; lean TypeScript unless the wrapped service is clearly Python-friendly.
 
 Ask one question at a time. Confirm the resolved context back to the user in one line before proceeding (e.g. "Building a personal, local, Python stdio server that wraps the Linear API"). That resolved tuple drives the branch table below.
 
@@ -79,7 +79,7 @@ Load only the references the current branch and phase need. Progressive disclosu
 Understand what you are wrapping before you write tools. Output a short tool plan, then confirm it.
 
 1. **Identify the service/API.** Read its docs or SDK. Note auth model (API key, OAuth, none), base URL, rate limits, pagination style.
-2. **Pick tool boundaries.** Tools should map to user *intents*, not raw endpoints. Prefer a few high-value workflow tools over one-tool-per-endpoint. Each tool does one focused thing. (mcp-builder has the full tool-design rubric; apply it here.)
+2. **Pick tool boundaries.** This is a real tradeoff, framed the way mcp-builder frames it: comprehensive API coverage gives agents flexibility to compose operations, while specialized workflow tools are more convenient for specific tasks. Performance is client-dependent (some clients do better with code execution over basic tools, others with higher-level workflows). When uncertain, default to comprehensive API coverage rather than a few workflow tools. Either way each tool does one focused thing with a clear, action-oriented name. (mcp-builder has the full tool-design rubric; apply it here.)
 3. **Decide read vs write.** Mark which tools are read-only and which mutate state; this becomes the `readOnlyHint` / `destructiveHint` annotations later.
 4. **Scope the secrets.** What credentials does each tool need? For "Just me" they live in local env. For hosted, they live server-side and must never be passed through from the client (see scaling.md).
 5. **Now ask the language question** (Phase 0 Q3) if it was deferred, recommending based on what you found.
@@ -93,7 +93,7 @@ Hand off to the implementation reference for the chosen language, which in turn 
 - Python: read **references/python-fastmcp.md**, then invoke `example-skills:mcp-builder` for the full FastMCP guide.
 - Node/TS: read **references/node-sdk.md**, then invoke `example-skills:mcp-builder` for the full TypeScript SDK guide.
 
-Build to the tool plan from Phase 1. Apply mcp-builder's rules: clear tool names, Pydantic/Zod input schemas with descriptions and constraints, structured + human-readable output, pagination with limits, actionable error messages, and tool annotations. Compile and test with the MCP Inspector (`npx @modelcontextprotocol/inspector`) before moving on. Write the evaluation set mcp-builder describes (about 10 realistic, read-only, verifiable questions) and run it.
+Build to the tool plan from Phase 1. Apply mcp-builder's rules: clear tool names, Pydantic/Zod input schemas with descriptions and constraints, structured + human-readable output, pagination with limits, actionable error messages, and tool annotations. Compile and test with the MCP Inspector (`npx @modelcontextprotocol/inspector`) before moving on. Then write and run mcp-builder's evaluation set: about 10 realistic, read-only, verifiable questions in its XML format, scored with its `scripts/evaluation.py` harness (e.g. `python scripts/evaluation.py -t stdio -c python -a server.py -o report.md evaluation.xml`). Do not hand-wave this; a server that the eval can't drive is not done.
 
 Start the server on **stdio** regardless of final runtime; it is the simplest thing to test locally. Switching to Streamable HTTP is a transport change at the end, not a rewrite (see transports.md).
 

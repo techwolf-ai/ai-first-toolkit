@@ -2,6 +2,8 @@
 
 How to register a finished server so Claude can use it. For the "just me" and org-local-stdio branches this is the whole deploy phase. For hosted servers, see the HTTP section at the end and `references/scaling.md`.
 
+> The commands below are current as of writing but the CLI moves fast. Verify against the live docs before relying on exact flags: `https://code.claude.com/docs/en/mcp` (Claude Code MCP) and `https://modelcontextprotocol.io/docs/develop/connect-local-servers`. Fetch any modelcontextprotocol.io page as markdown by appending `.md` to the URL.
+
 ## claude mcp add (stdio)
 
 Options come before the name. `--` separates Claude's flags from the server command; everything after `--` is passed to the server untouched.
