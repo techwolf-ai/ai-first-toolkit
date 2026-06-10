@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.6.1] - 2026-06-10
+
+### Fixed
+
+- Codex installs now stage plugin-root shared asset directories (`scripts/`, `templates/`, and any other non-framework plugin-root dir) into each skill so skills that read them "from this plugin" resolve under Codex's flat per-skill layout. Previously `install.sh` copied only `skills/<skill>/`, so these files never reached `~/.codex/skills/`.
+  - `knowledge-base`: `setup-knowledge-base` can now read and copy its `kb-*.py` helpers and `kb/` templates in Codex (the setup flow and `kb-answer` were broken there).
+  - `content-studio`: `setup-content-studio` can now copy the bundled Next.js app, `scripts/`, and `hooks/` in Codex; `repo-setup.md` documents how `<plugin-path>` resolves in Claude Code vs Codex.
+- `people-management`: skills now reference their shared framework docs (`operating-principles.md`, `performance-framework.md`, `management-framework.md`, `values-guide.md`) via skill-relative paths instead of `../../references/`, which pointed outside the skill in Codex. The shared docs are bundled into each skill that uses them, so resolution works in both Claude Code and Codex.
+
+### Changed
+
+- `content-studio` `setup-content-studio`: the post-creation batching step now notes a sequential fallback for agents without sub-agents (e.g. Codex); output is identical.
+
 ## [1.6.0] - 2026-06-10
 
 ### Added

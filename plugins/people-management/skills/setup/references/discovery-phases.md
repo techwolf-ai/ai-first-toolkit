@@ -378,7 +378,7 @@ These will be used as a lens in 1:1 prep, team health, and performance reviews.
 Any values I should weigh more heavily? Any to skip in certain skills?
 ```
 
-Persist to `manager-context/values.md`. Read `references/context-templates.md` for the template. See `../../references/values-guide.md` for how skills use values.
+Persist to `manager-context/values.md`. Read `references/context-templates.md` for the template. See `values-guide.md` for how skills use values.
 
 ---
 

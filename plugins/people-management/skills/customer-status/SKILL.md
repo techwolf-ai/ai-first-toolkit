@@ -18,7 +18,7 @@ Produces a dashboard-style overview of active customer accounts and internal pro
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Load Context
 
@@ -102,7 +102,7 @@ Here's your customer status overview. Want me to:
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Don't alarm unnecessarily.** Silence on a channel might mean things are running smoothly. Combine multiple signals before flagging red.

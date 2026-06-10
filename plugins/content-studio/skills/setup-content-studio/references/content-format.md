@@ -31,4 +31,4 @@ content: |-
 ## Notes
 
 - Use approximate dates for slugs based on the post timing information provided
-- **Use parallel Task agents** to create posts in batches of 10 for efficiency
+- **If your agent supports sub-agents (e.g. Claude Code), use parallel Task agents** to create posts in batches of 10 for efficiency. Otherwise (e.g. Codex), create them sequentially: same output, just slower

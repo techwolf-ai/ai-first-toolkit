@@ -2,7 +2,9 @@
 
 ## 6a. Set Up from Plugin Template
 
-The content-studio plugin provides the generic structure. Copy it to a new repo:
+The content-studio plugin provides the generic structure. Copy it to a new repo.
+
+`<plugin-path>` is wherever this plugin's files live: in Claude Code that is the plugin root (`${CLAUDE_PLUGIN_ROOT}`); in Codex the `content-studio/`, `scripts/`, `templates/`, and `hooks/` directories are bundled alongside this skill, so `<plugin-path>` is this skill's own directory.
 
 ```bash
 # Create new repo directory

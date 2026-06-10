@@ -17,7 +17,7 @@ Gathers context from all connected sources for a specific upcoming meeting and p
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Identify the Meeting
 
@@ -114,7 +114,7 @@ Here's your prep for [meeting]. Anything you'd like me to dig deeper on?
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Don't draft talking points as scripts.** Frame as prompts: "You might want to discuss..." not "Say this..."
