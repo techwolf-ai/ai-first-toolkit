@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.6.0] - 2026-06-10
+
+### Added
+
+- `tool-builder` plugin: build an MCP server end to end, from first questions to published distribution.
+  - `build-mcp` skill: asks who the server is for (personal, org, public) and where it runs (local stdio or hosted HTTP) before writing a line of code, then walks through analyze, build, deploy, scale, and distribute with every step tailored to those answers.
+  - 6 reference files loaded progressively: `transports.md` (stdio vs Streamable HTTP, naming gotcha), `deploy-local.md` (`claude mcp add`, scopes, `.mcp.json`, Claude Desktop, `CLAUDE_PROJECT_DIR`), `distribute-marketplace.md` (Claude Code plugin packaging, org marketplace, public MCP registry + `mcp-publisher` flow), `scaling.md` (stateless design, OAuth 2.1 resource server, versioning, SSRF), `python-fastmcp.md` and `node-sdk.md` (thin quickstarts that hand off to `mcp-builder`).
+  - Explicit branch table across five deployment targets: just-me-stdio, org-stdio, org-HTTP, public-package, public-HTTP. Phases that are N/A for the chosen branch are stated and skipped rather than padded.
+  - Builds on the Anthropic `mcp-builder` skill for implementation depth; adds the scope-and-distribution decision flow it lacks.
+- Added `tool-builder` to the marketplace manifest.
+
 ## [1.5.0] - 2026-05-13
 
 ### Added

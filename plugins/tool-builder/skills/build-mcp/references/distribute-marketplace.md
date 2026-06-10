@@ -96,6 +96,9 @@ The official MCP registry holds **metadata only, not artifacts**. Publish the pa
 ### Steps with the mcp-publisher CLI
 
 ```bash
+# 0. add mcpName to package.json (npm only — required for ownership verification)
+#    the registry checks this field matches server.json `name` before accepting publish
+#    "mcpName": "io.github.<username>/<server-name>"
 # 1. publish the package to its registry
 npm publish --access public          # or: build + upload to PyPI
 # 2. install the publisher CLI
@@ -125,7 +128,7 @@ GitHub auth means the server name must start with `io.github.<your-username>/`.
 }
 ```
 
-For PyPI, use `registryType: "pypi"`; ownership is verified by an `mcp-name: <server-name>` line in the package README rather than a manifest field. For a public hosted server, use a `remotes` array instead of `packages`:
+For PyPI, use `registryType: "pypi"`; ownership is verified by an `mcp-name: <server-name>` line in the package README rather than a manifest field (see `modelcontextprotocol.io/registry/package-types` for the full per-registry verification rules). For a public hosted server, use a `remotes` array instead of `packages`:
 
 ```json
 {

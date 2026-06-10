@@ -85,6 +85,10 @@ claude mcp add --transport http service https://service.example.com/mcp \
 
 If the server returns 401/403 with a `WWW-Authenticate` header, Claude runs the OAuth discovery flow; the user completes it via `/mcp`. See `references/scaling.md` for the auth model.
 
+## CLAUDE_PROJECT_DIR
+
+Claude Code sets `CLAUDE_PROJECT_DIR` in every spawned stdio server's environment, pointing at the project root the Claude session was launched from. Read it inside your server (`os.environ["CLAUDE_PROJECT_DIR"]` in Python, `process.env.CLAUDE_PROJECT_DIR` in Node) to resolve project-relative paths without depending on the working directory. In `.mcp.json` `command`/`args`, reference it with a default (`${CLAUDE_PROJECT_DIR:-.}`) since it is set in the server's environment at runtime, not during config parsing.
+
 ## Verify
 
 ```bash

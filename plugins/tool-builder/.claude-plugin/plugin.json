@@ -1,6 +1,6 @@
 {
   "name": "tool-builder",
   "description": "Build an MCP server the right way, end to end. Branches on audience (personal, org, public) and walks you through analyze, build, deploy, scale, and distribute.",
-  "version": "0.1.0",
+  "version": "1.6.0",
   "author": { "name": "TechWolf" }
 }

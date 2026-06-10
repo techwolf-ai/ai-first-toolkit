@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.5.0](https://img.shields.io/badge/version-1.5.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.6.0](https://img.shields.io/badge/version-1.6.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai).
 
@@ -14,7 +14,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 
 ## Plugins at a glance
 
-6 plugins, 27 skills. One install command each.
+7 plugins, 28 skills. One install command each.
 
 | Plugin | What it does | Install |
 |--------|--------------|---------|
@@ -24,6 +24,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **knowledge-base** | Evidence-backed KB; every answer cites literal quotes from your files | `claude plugin install knowledge-base@techwolf-ai-first` |
 | **ai-adoption** | Claude history analytics: token-doctor, task-profile, session-search | `claude plugin install ai-adoption@techwolf-ai-first` |
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
+| **tool-builder** | Build an MCP server end to end: analyze, build, deploy, scale, distribute | `claude plugin install tool-builder@techwolf-ai-first` |
 
 Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex via [`./install.sh`](#codex).
 
@@ -79,6 +80,14 @@ Official TechWolf brand assets for AI-generated outputs. Ensures agents use the 
 - **TechWolf Logo**: 4 variants (dark, white, mono-dark, mono-white) in SVG and PNG
 - **currentColor SVG**: inline variant that inherits color from parent CSS for themed contexts
 
+### tool-builder: Build an MCP Server
+
+End-to-end guide for building a Model Context Protocol server, from first questions to published distribution. Asks who the server is for before building anything, then tailors every phase to that answer.
+
+- **build-mcp**: one skill, five phases (analyze, build, deploy, scale, distribute). Establishes audience (personal / org / public) and runtime (local stdio / hosted HTTP) with `AskUserQuestion` before writing a line of code. Builds on the Anthropic `mcp-builder` skill for implementation depth and adds the scope-and-distribution decision flow it lacks.
+- Branch table drives the deploy and distribute phases across five targets: personal local, org local, org hosted, public package, public hosted.
+- 6 reference files loaded on demand: transports, local deploy, marketplace distribution, scaling, Python and TypeScript quickstarts.
+
 ## Quick start
 
 ### Claude Code
@@ -91,6 +100,7 @@ claude plugin install people-management@techwolf-ai-first
 claude plugin install knowledge-base@techwolf-ai-first
 claude plugin install ai-adoption@techwolf-ai-first
 claude plugin install techwolf-brand-kit@techwolf-ai-first
+claude plugin install tool-builder@techwolf-ai-first
 ```
 
 ### Codex
@@ -105,6 +115,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh knowledge-base
 ./install.sh ai-adoption
 ./install.sh techwolf-brand-kit
+./install.sh tool-builder
 ```
 
 <details>
@@ -138,7 +149,8 @@ ai-first-toolkit/
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
 │   ├── knowledge-base/         # Evidence-backed KB (4 skills, templates, index + verify scripts)
 │   ├── ai-adoption/            # Claude history analytics (3 skills: token-doctor, task-profile, session-search)
-│   └── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
+│   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
+│   └── tool-builder/           # MCP server builder (1 skill: build-mcp, 6 reference files)
 ├── install.sh                  # Codex skill installer
 └── README.md
 ```
@@ -151,6 +163,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `sk
 - [knowledge-base README](plugins/knowledge-base/README.md)
 - [ai-adoption README](plugins/ai-adoption/README.md)
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
+- [tool-builder README](plugins/tool-builder/README.md)
 
 ## Contributing
 
