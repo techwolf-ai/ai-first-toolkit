@@ -1,4 +1,4 @@
-# TechWolf tool-builder for Codex
+# TechWolf tool-build-kit for Codex
 
 Use the `build-mcp` skill when the user wants to build an MCP server, wrap an API as a tool, make a tool for Claude, or expose a service to an agent.
 

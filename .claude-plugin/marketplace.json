@@ -39,8 +39,8 @@
       "description": "Three skills for working with your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes. task-profile mines sessions into a role-level task map with friction and tokens. session-search finds past sessions by title, cwd, time range, or full-text content."
     },
     {
-      "name": "tool-builder",
-      "source": "./plugins/tool-builder",
+      "name": "tool-build-kit",
+      "source": "./plugins/tool-build-kit",
       "description": "Build an MCP server the right way, end to end. Branches on audience (personal, org, public) and walks through analyze, build, deploy, scale, and distribute. Builds on the mcp-builder skill."
     }
   ]

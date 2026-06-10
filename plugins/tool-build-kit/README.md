@@ -1,4 +1,4 @@
-# tool-builder
+# tool-build-kit
 
 Build an MCP server the right way, end to end. One skill, `build-mcp`, that asks who the server is for before it builds anything, then tailors every step to that answer. Builds on the Anthropic [`mcp-builder`](https://github.com/anthropics/skills) skill for implementation depth and adds the scope-and-distribution decision flow it lacks.
 
@@ -9,7 +9,7 @@ Build an MCP server the right way, end to end. One skill, `build-mcp`, that asks
 claude plugin marketplace add techwolf-ai/ai-first-toolkit
 
 # Install the plugin
-claude plugin install tool-builder@techwolf-ai-first
+claude plugin install tool-build-kit@techwolf-ai-first
 ```
 
 ## Usage

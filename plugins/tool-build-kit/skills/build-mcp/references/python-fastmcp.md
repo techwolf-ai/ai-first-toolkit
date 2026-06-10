@@ -8,6 +8,16 @@ Thin starter. For the full implementation guide (tool design, schemas, annotatio
 - You want the fastest path to a working stdio server.
 - You will distribute via PyPI / `uvx`.
 
+## Environment setup
+
+```bash
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install "mcp[cli]" httpx pydantic
+```
+
+Use `.venv/bin/python` (or `.venv\Scripts\python.exe` on Windows) any time you reference Python directly so you stay inside the venv instead of the system interpreter.
+
 ## Minimal stdio server
 
 ```python
@@ -39,6 +49,8 @@ Switch to hosted HTTP at the end with `mcp.run(transport="streamable_http", port
 
 - Define an entry point in `pyproject.toml` so the server runs as `uvx <package>`.
 - Dependencies: `mcp`, `httpx`, `pydantic`.
-- Build and smoke-test: `python -m py_compile server.py`, then `npx @modelcontextprotocol/inspector`.
+- Build and smoke-test: `.venv/bin/python -m py_compile server.py`, then `npx @modelcontextprotocol/inspector`.
+- If the Inspector is blocked (SSL-restricted network, corporate proxy), fall back to manual JSON-RPC: pipe a JSON-RPC `initialize` + `tools/list` request to the server via stdin and confirm the response on stdout. Example: `echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"0"}}}' | .venv/bin/python server.py`.
+- When registering a development server before packaging, use the full venv path so the subprocess inherits the right interpreter: `claude mcp add myserver -- /abs/path/to/.venv/bin/python server.py`. Bare `python` resolves to whatever is on `$PATH` at spawn time, which is usually not your venv.
 
 See `references/deploy-local.md` for registration and `references/distribute-marketplace.md` for publishing to PyPI and the MCP registry.
