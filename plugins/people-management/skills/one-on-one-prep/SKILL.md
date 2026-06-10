@@ -17,7 +17,7 @@ Deep-dive preparation for 1:1 meetings with a specific direct report, anchored i
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Identify the Team Member
 
@@ -138,7 +138,7 @@ Using the goals location from the team member's profile:
 
 **Reference the org's performance framework dimensions** (from `manager-context/performance-framework.md`). Use the org's dimension names and sub-dimensions when checking goal progress. If this file doesn't exist, ask the manager to run `/setup` first.
 
-See the "Evidence Gathering Guidelines" section in `../../references/performance-framework.md` for what to look for per dimension type:
+See the "Evidence Gathering Guidelines" section in `references/performance-framework.md` for what to look for per dimension type:
 - **Results/delivery dimensions:** goal completion, shipped work, quality feedback, business outcomes
 - **Growth/development dimensions:** learning activities, new skills applied, scope expansion, behavioural changes
 - **Collaboration/leadership dimensions:** cross-team activity, mentoring, influence in discussions
@@ -194,7 +194,7 @@ Here's your prep for your 1:1 with [name]. Anything you'd like me to dig deeper 
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Wins first.** Always lead with recognition opportunities. This sets the tone.

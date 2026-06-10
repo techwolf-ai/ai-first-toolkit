@@ -18,7 +18,7 @@ Aggregates signals from multiple sources to surface the manager's highest-levera
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Determine Scope
 
@@ -113,7 +113,7 @@ Here's a suggested priority plan. This is a starting point. Adjust based on your
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Never prescribe.** Use "I'd suggest", "Consider". The manager knows context the tool doesn't.

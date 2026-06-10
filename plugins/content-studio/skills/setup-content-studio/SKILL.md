@@ -87,7 +87,7 @@ Read **references/repo-setup.md** for the full repository setup procedure, inclu
 
 Convert each example post into a YAML file. Read **references/content-format.md** for the file path convention and YAML structure.
 
-**Use parallel Task agents** to create posts in batches of 10 for efficiency.
+**If your agent supports sub-agents (e.g. Claude Code), use parallel Task agents** to create posts in batches of 10 for efficiency. Otherwise (e.g. Codex), create the posts sequentially: the output is identical, it just takes longer.
 
 ## Step 8: Install Dependencies and Verify
 

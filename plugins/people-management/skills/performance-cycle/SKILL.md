@@ -28,7 +28,7 @@ If `manager-context/performance-framework.md` doesn't exist, ask the manager to 
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Identify Scope
 
@@ -49,9 +49,9 @@ For the target team member, read from `manager-context/team/[name].md`:
 - Their projects and responsibilities
 
 Also load:
-- `manager-context/performance-framework.md`: org-specific framework dimensions and rating descriptors (falls back to `../../references/performance-framework.md` defaults)
-- `manager-context/management-framework.md`: org-specific management dimensions (falls back to `../../references/management-framework.md` defaults)
-- `../../references/values-guide.md`: values definitions and signal guidance
+- `manager-context/performance-framework.md`: org-specific framework dimensions and rating descriptors (falls back to `references/performance-framework.md` defaults)
+- `manager-context/management-framework.md`: org-specific management dimensions (falls back to `references/management-framework.md` defaults)
+- `references/values-guide.md`: values definitions and signal guidance
 - `manager-context/values.md`: the organization's specific values
 
 ### 3. Gather Evidence Along Each Dimension
@@ -74,7 +74,7 @@ For dimensions that are hardest to assess digitally (e.g., behavioural growth, l
 
 ### 4. Gather Values Evidence
 
-Values are the "how": how this person delivered their results and showed up for the team. Search for evidence across the organization's values (from `manager-context/values.md`). See `../../references/values-guide.md` for guidance on finding value signals.
+Values are the "how": how this person delivered their results and showed up for the team. Search for evidence across the organization's values (from `manager-context/values.md`). See `references/values-guide.md` for guidance on finding value signals.
 
 For each value defined in `manager-context/values.md`, search for evidence using the signal guidance stored there. Common evidence sources by value type:
 
@@ -146,7 +146,7 @@ Incorporate the reviewer's feedback before presenting the final summary to the m
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **NEVER suggest a rating.** Not even hints. The manager decides ratings. Period.

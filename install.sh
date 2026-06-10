@@ -177,6 +177,24 @@ install_plugin() {
 
     rm -rf "$dest"
     mkdir -p "$dest"
+
+    # Stage plugin-root shared asset dirs into the skill. Claude Code resolves
+    # these via the plugin root, but Codex installs each skill as a flat
+    # self-contained dir, so a skill that reads "scripts/X" or "templates/X from
+    # this plugin" needs those files alongside its own SKILL.md. We copy every
+    # plugin-root subdir except the framework dirs (skills/, codex/,
+    # .claude-plugin/), before the skill payload so skill-local files win on any
+    # name conflict.
+    local shared_src
+    for shared_src in "${SCRIPT_DIR}/plugins/${plugin_name}"/*/; do
+      [[ -d "$shared_src" ]] || continue
+      case "$(basename "$shared_src")" in
+        skills|codex|.claude-plugin) continue ;;
+      esac
+      # Strip trailing slash so cp copies the directory itself, not its contents.
+      cp -R "${shared_src%/}" "$dest/"
+    done
+
     cp -R "${skill_dir}/." "$dest/"
     write_skill_metadata "$dest" "$plugin_name" "$version" "$skill_name" "$skill_dir"
 

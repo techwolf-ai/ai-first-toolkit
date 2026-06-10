@@ -18,7 +18,7 @@ Scans unread Slack messages and recent emails, categorises them by urgency and t
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Determine Time Window
 
@@ -122,7 +122,7 @@ That's your triage for [time window]. Want me to:
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Never draft replies.** The manager writes their own messages. This skill only surfaces and categorises.

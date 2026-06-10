@@ -18,7 +18,7 @@ A periodic overview of team dynamics, engagement signals, wellbeing, and develop
 
 ## Instructions
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ### 1. Load Team Context
 
@@ -128,7 +128,7 @@ Incorporate the reviewer's feedback before presenting the final health check to 
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
+Read `references/operating-principles.md` for shared operating principles (data scope, DM flagging, signals vs diagnoses, connector unavailability).
 
 Additional notes specific to this skill:
 - **Celebrate first.** Lead with wins, recognition, and positive energy. Wellbeing & Connection starts with seeing the good.

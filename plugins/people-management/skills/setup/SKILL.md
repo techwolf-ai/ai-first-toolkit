@@ -9,7 +9,7 @@ description: "Interactive onboarding that discovers team structure, terminology,
 
 Interactive onboarding that builds the foundation every other skill relies on. Crawls connected sources, extracts context, and validates with the manager before saving.
 
-If any MCP connector is unavailable, follow the connector unavailability protocol in `../../references/operating-principles.md`.
+If any MCP connector is unavailable, follow the connector unavailability protocol in `references/operating-principles.md`.
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ Identify the manager (name, role, teams), crawl sources for direct reports, vali
 Persist: `manager-context/manager-profile.md`, `manager-context/team/[name].md` per report, `manager-context/terminology.md`, `manager-context/sources.md`
 
 ### Phase 2: Performance & Management Frameworks
-Discover how the org evaluates performance and managers. Search for existing framework docs, then walk the manager through defining their dimensions, rating scale, promotion readiness labels, review cadence, goal cadence, and management competencies. See `../../references/performance-framework.md` and `../../references/management-framework.md` for how skills use these frameworks.
+Discover how the org evaluates performance and managers. Search for existing framework docs, then walk the manager through defining their dimensions, rating scale, promotion readiness labels, review cadence, goal cadence, and management competencies. See `references/performance-framework.md` and `references/management-framework.md` for how skills use these frameworks.
 
 Persist: `manager-context/performance-framework.md`, `manager-context/management-framework.md`
 
@@ -83,7 +83,7 @@ When called with `--refresh`:
 
 ## Important Notes
 
-Read `../../references/operating-principles.md` for shared principles (data scope, DM flagging, connector unavailability).
+Read `references/operating-principles.md` for shared principles (data scope, DM flagging, connector unavailability).
 
 - **Never assume, always validate.** If something looks like a team member but you're not sure, ask.
 - **Flag gaps explicitly.** "I couldn't find X" is more useful than silently skipping it.
