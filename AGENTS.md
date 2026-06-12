@@ -1,20 +1,23 @@
 # TechWolf AI-First Toolkit
 
-This repository publishes TechWolf AI-first plugins and skills for both Claude Code and Codex.
+This repository publishes TechWolf AI-first plugins and skills for Claude Code, Codex, and Google Antigravity.
 
 ## Repository Purpose
 
 - `plugins/<plugin>/` is the source of truth for each plugin.
-- Claude-specific plugin metadata lives in `.claude-plugin/`.
-- Codex-compatible skills live in each plugin's `skills/` directory.
-- Codex installs are managed via `./install.sh`.
+- The `skills/` directory in each plugin holds the `SKILL.md` packages, shared verbatim across all three targets (agentskills.io spec). There is no per-target skill rewrite.
+- Per-target metadata is the only thing that differs:
+  - Claude Code: `.claude-plugin/marketplace.json` (root) and `plugins/<plugin>/.claude-plugin/plugin.json`.
+  - Antigravity / vendor-neutral: `.agents/plugins/marketplace.json` (root) and `plugins/<plugin>/plugin.json` (Antigravity plugin marker).
+- Codex and Antigravity installs are both managed via `./install.sh` (Codex is the default; `--ide antigravity` installs one self-contained plugin dir per plugin into `~/.gemini/config/plugins/`, matching where Antigravity keeps its own plugins).
 
 ## Working Conventions
 
-- Preserve the mapping between a plugin and its Codex-installed skills.
-- When changing a plugin, update both Claude-facing and Codex-facing docs if behavior changes.
-- If Codex install behavior changes, update `README.md`, plugin READMEs, and `CHANGELOG.md`.
-- Prefer adding Codex guidance under `plugins/<plugin>/codex/AGENTS.md` when plugin-specific instructions are needed.
+- Preserve the mapping between a plugin and its installed skills across all targets.
+- When adding or renaming a plugin, update **both** marketplace manifests (`.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json`) and add the per-plugin `plugin.json` marker, keeping name/version/description in sync with `.claude-plugin/plugin.json`.
+- When changing a plugin, update Claude-, Codex-, and Antigravity-facing docs if behavior changes.
+- If install behavior changes, update `README.md`, plugin READMEs, and `CHANGELOG.md`.
+- Prefer adding plugin-specific agent guidance under `plugins/<plugin>/codex/AGENTS.md` (the installer copies it into the install state dir for both Codex and Antigravity targets).
 
 ## Codex Install Notes
 

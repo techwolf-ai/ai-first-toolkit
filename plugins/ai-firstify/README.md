@@ -32,6 +32,22 @@ For Codex, this plugin installs:
 
 The installer also writes plugin metadata into the installed skill directory and copies a Codex guidance file into `~/.codex/skills/.techwolf-ai-first/plugins/ai-firstify/`.
 
+### Google Antigravity
+
+```bash
+./install.sh ai-firstify --ide antigravity
+```
+
+Update, uninstall, or verify:
+
+```bash
+./install.sh update ai-firstify --ide antigravity
+./install.sh uninstall ai-firstify --ide antigravity
+./install.sh verify ai-firstify --ide antigravity
+```
+
+This installs the plugin as `~/.gemini/config/plugins/ai-firstify/` (`plugin.json` + `installed_version.json` + `skills/`), the same layout Antigravity uses for its own plugins.
+
 ## Usage
 
 The skill triggers automatically when you ask Claude Code to:

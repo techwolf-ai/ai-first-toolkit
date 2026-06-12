@@ -61,6 +61,24 @@ For Codex, this plugin installs:
 
 The installer also writes plugin metadata into each installed skill directory and copies a Codex guidance file into `~/.codex/skills/.techwolf-ai-first/plugins/content-studio/`.
 
+### Google Antigravity
+
+From the repository root:
+
+```bash
+./install.sh content-studio --ide antigravity
+```
+
+Update, uninstall, or verify:
+
+```bash
+./install.sh update content-studio --ide antigravity
+./install.sh uninstall content-studio --ide antigravity
+./install.sh verify content-studio --ide antigravity
+```
+
+This installs the plugin as `~/.gemini/config/plugins/content-studio/` (`plugin.json` + `installed_version.json` + `skills/`), the same layout Antigravity uses for its own plugins.
+
 ### 2. Set Up for a Person
 
 Run the setup skill to create a personalized content studio:

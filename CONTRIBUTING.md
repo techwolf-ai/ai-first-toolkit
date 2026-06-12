@@ -20,7 +20,8 @@ Thanks for your interest in contributing to the TechWolf AI-First Toolkit!
 ```
 plugins/
   <plugin-name>/
-    .claude-plugin/     # Plugin manifest
+    .claude-plugin/     # Claude Code plugin manifest
+    plugin.json         # Antigravity plugin marker
     skills/
       <skill-name>/
         SKILL.md        # Skill definition (agentskills.io spec)
@@ -39,7 +40,7 @@ plugins/
 
 1. Keep PRs focused: one feature or fix per PR
 2. Update relevant READMEs if your change affects usage
-3. Test your skills with Claude Code (and Codex via `./install.sh` if possible)
+3. Test your skills with Claude Code (and Codex / Google Antigravity via `./install.sh` if possible)
 4. Open a PR against `main` with a clear description of what and why
 
 ## Code Style

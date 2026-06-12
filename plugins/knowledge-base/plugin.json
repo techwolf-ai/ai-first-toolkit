@@ -1,0 +1,5 @@
+{
+  "name": "knowledge-base",
+  "version": "1.1.1",
+  "description": "Build and query a structured, evidence-backed knowledge base. Every answer cites literal quotes from your KB files."
+}

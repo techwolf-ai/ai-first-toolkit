@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.7.0] - 2026-06-12
+
+### Added
+
+- Google Antigravity support. The toolkit's plugins now install into Antigravity (and the Gemini CLI) end to end, reusing the existing `SKILL.md` packages unchanged.
+  - `install.sh` gains an `--ide <codex|antigravity>` flag. `--ide antigravity` installs one self-contained dir per plugin into `~/.gemini/config/plugins/<plugin>/` (`plugin.json` + `installed_version.json` + `skills/`), matching where Antigravity keeps its own plugins. Codex remains the default (flat skills into `~/.codex/skills/`). An explicit `--target` still overrides either. All lifecycle commands (`install`, `update`, `verify`, `uninstall`, `list`) work for both targets, including the plugin-root shared-asset staging.
+  - `.agents/plugins/marketplace.json`: vendor-neutral marketplace manifest (Antigravity schema with `interface.displayName`, per-plugin `source`, `policy`, and `category`) listing all 7 plugins, so Antigravity can discover the toolkit as a plugin marketplace.
+  - `plugins/<plugin>/plugin.json`: an Antigravity plugin marker per plugin (name, version, description kept in sync with `.claude-plugin/plugin.json`).
+- README and `AGENTS.md` document the third target and the dual-manifest convention; added an Antigravity badge.
+
 ## [1.6.1] - 2026-06-10
 
 ### Fixed

@@ -1,23 +1,47 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET="${HOME}/.codex/skills"
+IDE="codex"
+TARGET=""
 ACTION="install"
 PLUGIN=""
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 STATE_DIR_NAME=".techwolf-ai-first"
 
+# Default install dir per IDE. An explicit --target overrides either.
+#   codex:       ~/.codex/skills        flat per-skill dirs: <target>/<skill>/
+#   antigravity: ~/.gemini/config/plugins  one dir per plugin, preserving the
+#                plugin shape Antigravity expects:
+#                  <target>/<plugin>/plugin.json
+#                  <target>/<plugin>/installed_version.json
+#                  <target>/<plugin>/skills/<skill>/SKILL.md
+# Skills are staged identically in both (plugin-root shared assets copied next to
+# each SKILL.md); only the surrounding directory shape differs.
+default_target_for_ide() {
+  case "$1" in
+    codex) echo "${HOME}/.codex/skills" ;;
+    antigravity) echo "${HOME}/.gemini/config/plugins" ;;
+    *) echo "" ;;
+  esac
+}
+
 usage() {
   cat <<'EOF'
 Usage:
-  ./install.sh [install|update|uninstall|verify|list] [plugin] [--target <dir>]
+  ./install.sh [install|update|uninstall|verify|list] [plugin] [--ide <codex|antigravity>] [--target <dir>]
+
+Targets:
+  --ide codex        Install into ~/.codex/skills (default)
+  --ide antigravity  Install into ~/.gemini/config/plugins (Antigravity)
+  --target <dir>     Override the install dir for either IDE
 
 Examples:
   ./install.sh
   ./install.sh content-studio
   ./install.sh install ai-firstify
+  ./install.sh install ai-firstify --ide antigravity
   ./install.sh update content-studio
-  ./install.sh uninstall content-studio
+  ./install.sh uninstall content-studio --ide antigravity
   ./install.sh verify
   ./install.sh --target /tmp/codex-skills
 EOF
@@ -51,9 +75,37 @@ plugin_guide_src() {
   echo "${SCRIPT_DIR}/plugins/${plugin_name}/codex/AGENTS.md"
 }
 
+# Where a plugin's files live under TARGET. Codex flattens skills directly into
+# TARGET; Antigravity keeps one self-contained dir per plugin.
+plugin_install_root() {
+  local plugin_name="$1"
+  if [[ "$IDE" == "antigravity" ]]; then
+    echo "${TARGET}/${plugin_name}"
+  else
+    echo "${TARGET}"
+  fi
+}
+
+# Where a single skill's payload lands.
+skill_install_dir() {
+  local plugin_name="$1"
+  local skill_name="$2"
+  if [[ "$IDE" == "antigravity" ]]; then
+    echo "${TARGET}/${plugin_name}/skills/${skill_name}"
+  else
+    echo "${TARGET}/${skill_name}"
+  fi
+}
+
 plugin_state_dir() {
   local plugin_name="$1"
-  echo "${TARGET}/${STATE_DIR_NAME}/plugins/${plugin_name}"
+  if [[ "$IDE" == "antigravity" ]]; then
+    # Keep state inside the plugin dir so it is removed with the plugin and does
+    # not pollute ~/.gemini/config/plugins with a non-plugin entry.
+    echo "${TARGET}/${plugin_name}/${STATE_DIR_NAME}"
+  else
+    echo "${TARGET}/${STATE_DIR_NAME}/plugins/${plugin_name}"
+  fi
 }
 
 skill_source_dir() {
@@ -153,6 +205,24 @@ install_plugin() {
   echo "Installing ${plugin_name} v${version} to ${TARGET}"
   mkdir -p "$TARGET"
 
+  # Antigravity expects one self-contained dir per plugin (plugin.json +
+  # installed_version.json + skills/). Reset it and write the plugin-level files
+  # before staging skills, mirroring how Antigravity ships its own plugins.
+  if [[ "$IDE" == "antigravity" ]]; then
+    local plugin_root
+    plugin_root="$(plugin_install_root "$plugin_name")"
+    rm -rf "$plugin_root"
+    mkdir -p "${plugin_root}/skills"
+    local marker_src="${SCRIPT_DIR}/plugins/${plugin_name}/plugin.json"
+    if [[ -f "$marker_src" ]]; then
+      cp "$marker_src" "${plugin_root}/plugin.json"
+    else
+      printf '{\n  "name": "%s",\n  "version": "%s"\n}\n' \
+        "$(json_escape "$plugin_name")" "$(json_escape "$version")" > "${plugin_root}/plugin.json"
+    fi
+    printf '{"version": "%s"}\n' "$(json_escape "$version")" > "${plugin_root}/installed_version.json"
+  fi
+
   # Write manifest first so interrupted installs can be cleaned up
   write_plugin_manifest "$plugin_name" "$version"
 
@@ -162,10 +232,12 @@ install_plugin() {
     local skill_name
     local dest
     skill_name="$(basename "$skill_dir")"
-    dest="${TARGET}/${skill_name}"
+    dest="$(skill_install_dir "$plugin_name" "$skill_name")"
 
-    # Check for ownership conflict with another plugin
-    if [[ -f "${dest}/.techwolf-plugin.json" ]]; then
+    # Codex flattens all plugins into one dir, so guard against two plugins
+    # claiming the same skill name. Antigravity isolates each plugin in its own
+    # dir, so there is no cross-plugin collision to check.
+    if [[ "$IDE" != "antigravity" && -f "${dest}/.techwolf-plugin.json" ]]; then
       local existing_owner
       existing_owner="$(grep -F '"plugin":' "${dest}/.techwolf-plugin.json" | sed 's/.*"plugin":[[:space:]]*"\([^"]*\)".*/\1/' || true)"
       if [[ -n "$existing_owner" && "$existing_owner" != "$plugin_name" ]]; then
@@ -219,8 +291,22 @@ verify_plugin() {
 
   version="$(plugin_version "$plugin_name")"
 
+  if [[ "$IDE" == "antigravity" ]]; then
+    local plugin_root
+    plugin_root="$(plugin_install_root "$plugin_name")"
+    if [[ ! -f "${plugin_root}/plugin.json" ]]; then
+      echo "  Missing plugin.json for ${plugin_name} at ${plugin_root}"
+      failures=$((failures + 1))
+    fi
+    if [[ ! -f "${plugin_root}/installed_version.json" ]]; then
+      echo "  Missing installed_version.json for ${plugin_name} at ${plugin_root}"
+      failures=$((failures + 1))
+    fi
+  fi
+
   for skill_name in $(skill_names_for_plugin "$plugin_name"); do
-    local dest="${TARGET}/${skill_name}"
+    local dest
+    dest="$(skill_install_dir "$plugin_name" "$skill_name")"
     checked=$((checked + 1))
 
     if [[ ! -f "${dest}/SKILL.md" ]]; then
@@ -269,6 +355,19 @@ verify_plugin() {
 uninstall_plugin() {
   local plugin_name="$1"
   local state_dir
+
+  # Antigravity keeps the whole plugin in one dir, so removing it is enough.
+  if [[ "$IDE" == "antigravity" ]]; then
+    local plugin_root
+    plugin_root="$(plugin_install_root "$plugin_name")"
+    if [[ ! -d "$plugin_root" ]]; then
+      echo "No install found for ${plugin_name} under ${plugin_root}"
+      return 1
+    fi
+    rm -rf "$plugin_root"
+    echo "Uninstalled ${plugin_name} (removed ${plugin_root})"
+    return 0
+  fi
 
   state_dir="$(plugin_state_dir "$plugin_name")"
   if [[ ! -f "${state_dir}/manifest.txt" ]]; then
@@ -359,6 +458,22 @@ while [[ $# -gt 0 ]]; do
       ACTION="$1"
       shift
       ;;
+    --ide)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: --ide requires a value (codex|antigravity)" >&2
+        usage
+        exit 1
+      fi
+      case "$2" in
+        codex|antigravity) IDE="$2" ;;
+        *)
+          echo "Error: unknown --ide '$2' (expected codex|antigravity)" >&2
+          usage
+          exit 1
+          ;;
+      esac
+      shift 2
+      ;;
     --target)
       if [[ $# -lt 2 ]]; then
         echo "Error: --target requires a value" >&2
@@ -383,6 +498,12 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# Resolve the install dir: an explicit --target wins, otherwise fall back to the
+# IDE default. Done after parsing so --ide and --target work in any order.
+if [[ -z "$TARGET" ]]; then
+  TARGET="$(default_target_for_ide "$IDE")"
+fi
 
 run_for_selected_plugins
 

@@ -1,0 +1,60 @@
+{
+  "name": "techwolf-ai-first",
+  "interface": {
+    "displayName": "TechWolf AI-First"
+  },
+  "metadata": {
+    "description": "AI-first skills and tools from TechWolf's ai-first.techwolf.ai training program"
+  },
+  "plugins": [
+    {
+      "name": "content-studio",
+      "source": { "source": "local", "path": "./plugins/content-studio" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Content & Marketing",
+      "description": "Content studio for managing thought leadership content with a visual editor, agent skills, and utility scripts."
+    },
+    {
+      "name": "ai-firstify",
+      "source": { "source": "local", "path": "./plugins/ai-firstify" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Development & Architecture",
+      "description": "AI-first project auditor and re-engineer based on the 9 design principles and 7 design patterns from the TechWolf AI-First Bootcamp"
+    },
+    {
+      "name": "people-management",
+      "source": { "source": "local", "path": "./plugins/people-management" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity",
+      "description": "AI-augmented management tooling for people managers. Surfaces the right context at the right time. Adapts to your org's performance and management frameworks."
+    },
+    {
+      "name": "techwolf-brand-kit",
+      "source": { "source": "local", "path": "./plugins/techwolf-brand-kit" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Design & Branding",
+      "description": "Official TechWolf brand assets for AI-generated outputs. Provides logo files in multiple variants as SVG and PNG."
+    },
+    {
+      "name": "knowledge-base",
+      "source": { "source": "local", "path": "./plugins/knowledge-base" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Knowledge & Research",
+      "description": "Build and query a structured, evidence-backed knowledge base. Every answer cites literal quotes from your KB files."
+    },
+    {
+      "name": "ai-adoption",
+      "source": { "source": "local", "path": "./plugins/ai-adoption" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Analytics & Insights",
+      "description": "Three skills for working with your Claude history. token-doctor diagnoses where your spend goes. task-profile mines sessions into a role-level task map. session-search finds past sessions by title, cwd, time range, or content."
+    },
+    {
+      "name": "tool-build-kit",
+      "source": { "source": "local", "path": "./plugins/tool-build-kit" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Development & Architecture",
+      "description": "Build an MCP server the right way, end to end. Branches on audience (personal, org, public) and walks through analyze, build, deploy, scale, and distribute."
+    }
+  ]
+}
