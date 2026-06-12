@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.8.0] - 2026-06-12
+
+### Added
+
+- Host-aware session analysis for the **ai-adoption** plugin (token-doctor, task-profile, session-search), so the skills route to the correct per-platform session store or degrade honestly instead of silently scanning Claude Code paths on Codex/Antigravity.
+  - `install.sh` now stamps a `platform` field (the `--ide` target) into each installed skill's `.techwolf-plugin.json`, making runtime host detection deterministic.
+  - New shared helper `host_platform.py` (one copy per skill's `scripts/` dir, identical logic) resolves the host via, in order: `AI_FIRST_PLATFORM` env var, the installed `platform` stamp, then a `~/.claude` fallback (Claude Code native installs are never stamped). Exposes `detect_platform()` and a `degrade()` helper. Documented once in the README.
+  - **All three skills now support Codex.** New `codex_sessions.py` adapter parses Codex rollouts (`~/.codex/sessions/**/rollout-*.jsonl`) into the same turn/session shapes the skills already use:
+    - session-search: `find_sessions.py` + `show_session.py` route to Codex (list, time/cwd/title filters, full-text `--grep`, readable turn dump).
+    - token-doctor: `inventory.py` builds session rows from Codex `token_count` events (per-response `last_token_usage`); `pricing.py` gains OpenAI list rates (gpt-5.4 family) so cost is real, and returns no rate for unknown models so the report shows token counts without a fabricated dollar figure.
+    - task-profile: `inventory.py` builds the same condensate + token aggregates from Codex rollouts.
+    Claude Code / Cowork behavior is unchanged on all three.
+  - **Antigravity session analysis degrades by design.** Investigation found the Antigravity IDE store is AEAD-encrypted at rest (`~/.gemini/antigravity/conversations/*.pb`, chacha20poly1305/GCM via the `language_server` binary) and the unencrypted CLI SQLite store (`antigravity-cli/conversations/*.db`) carries no parseable turn/token content. All skills print a clear, accurate "not available on Antigravity" message and exit 0.
+
+### Changed
+
+- README gains a per-platform support matrix for ai-adoption ("Not using Claude Code?"). Each ai-adoption `SKILL.md` states its platform scope.
+
 ## [1.7.0] - 2026-06-12
 
 ### Added

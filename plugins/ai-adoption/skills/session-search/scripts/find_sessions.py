@@ -14,6 +14,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Iterator
 
+sys.path.insert(0, str(Path(__file__).parent))
+import codex_sessions  # noqa: E402
+from host_platform import CLAUDE, CODEX, degrade, detect_platform  # noqa: E402
+
 HOME = Path.home()
 CODE_ROOT = HOME / ".claude" / "projects"
 COWORK_ROOT = HOME / "Library" / "Application Support" / "Claude" / "local-agent-mode-sessions"
@@ -140,6 +144,22 @@ def grep_session(path: Path, pattern: re.Pattern, max_snippets: int) -> list[str
     return snippets
 
 
+def grep_codex(path: Path, pattern: re.Pattern, max_snippets: int) -> list[str]:
+    """grep_session equivalent for a Codex rollout (uses the codex adapter)."""
+    snippets: list[str] = []
+    for role, txt in codex_sessions.iter_turns(path):
+        if len(snippets) >= max_snippets:
+            break
+        for m in pattern.finditer(txt):
+            start = max(0, m.start() - 60)
+            end = min(len(txt), m.end() + 60)
+            snip = txt[start:end].replace("\n", " ").strip()
+            snippets.append(f"[{role}] …{snip}…")
+            if len(snippets) >= max_snippets:
+                break
+    return snippets
+
+
 def fmt_size(b: float) -> str:
     for u in ("B", "K", "M", "G"):
         if b < 1024:
@@ -165,13 +185,24 @@ def main() -> int:
     p.add_argument("--json", action="store_true")
     args = p.parse_args()
 
+    # Route by host platform. Claude Code reads its own transcripts; Codex reads
+    # ~/.codex/sessions rollouts; Antigravity has no parseable local store.
+    platform = detect_platform()
+    if platform not in (CLAUDE, CODEX):
+        degrade("session-search", platform)
+
     since_ts = parse_date(args.since) if args.since else None
     until_ts = parse_date(args.until) + 86400 if args.until else None
     title_q = args.title.lower() if args.title else None
     cwd_q = args.cwd.lower() if args.cwd else None
     grep_re = re.compile(args.grep, re.IGNORECASE) if args.grep else None
 
-    sessions = list(iter_sessions(args.kind))
+    if platform == CODEX:
+        sessions = list(codex_sessions.iter_sessions())
+        grep_fn = grep_codex
+    else:
+        sessions = list(iter_sessions(args.kind))
+        grep_fn = grep_session
     sessions.sort(key=lambda s: s["mtime"], reverse=True)
 
     results = []
@@ -185,7 +216,7 @@ def main() -> int:
         if cwd_q and cwd_q not in (s["cwd"] or "").lower():
             continue
         if grep_re is not None:
-            snips = grep_session(Path(s["path"]), grep_re, args.snippets)
+            snips = grep_fn(Path(s["path"]), grep_re, args.snippets)
             if not snips:
                 continue
             s = dict(s, snippets=snips)
@@ -206,7 +237,7 @@ def main() -> int:
     print("-" * 100)
     for s in results:
         ts = datetime.fromtimestamp(s["mtime"]).strftime("%Y-%m-%d %H:%M")
-        if s["kind"] == "code":
+        if s["kind"] in ("code", "codex"):
             label = s["title"] or "(no user message yet)"
             if s["cwd"]:
                 label = f"{label}  ·  {s['cwd']}"

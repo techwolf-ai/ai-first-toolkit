@@ -5,6 +5,8 @@ description: Personal diagnosis of where your Claude Code + Cowork spend goes. R
 
 # Token Doctor
 
+> **Platforms: Claude Code / Cowork and Codex.** `scripts/inventory.py` detects the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and routes: Claude Code (`~/.claude/projects`) + Cowork transcripts, or Codex rollouts (`~/.codex/sessions`). Codex token usage comes from Codex's own per-response `token_count` events; cost uses OpenAI list rates in `pricing.py` (gpt-5.4 family; unknown models show token counts with no fabricated cost). **Antigravity** is unsupported: its IDE store is AEAD-encrypted at rest and its CLI store has no parseable turn/token content, so the skill prints a clear "not available" message and exits.
+
 Two-stage diagnostic. Stage 1 is fast and lands directly in the terminal so the user always walks away with their numbers. Stage 2 is opt-in, fans out subagents over hotspots, and writes a tight Markdown report.
 
 **Read this whole file before running.**
