@@ -5,6 +5,8 @@ description: Mine the user's Claude Code + Cowork session history into a structu
 
 # task-profile
 
+> **Platforms: Claude Code / Cowork and Codex.** `scripts/inventory.py` detects the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and routes: Claude Code (`~/.claude/projects`) + Cowork transcripts, or Codex rollouts (`~/.codex/sessions`), building the same session condensate + token aggregates either way. **Antigravity** is unsupported: its IDE store is AEAD-encrypted at rest and its CLI store has no parseable turn content, so the skill prints a clear "not available" message and exits.
+
 End-to-end skill: session inventory → LLM clustering → parallel Haiku analysis → aggregation → branded explorer HTML + shareable CSV + atomic skill proposals.
 
 ## When to run

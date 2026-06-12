@@ -5,6 +5,8 @@ description: Find context from past Claude Code (CLI) and Claude Cowork (desktop
 
 # session-search
 
+> **Platforms: Claude Code / Cowork and Codex.** `find_sessions.py` and `show_session.py` detect the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and route to the right store: Claude Code (`~/.claude/projects`) + Cowork transcripts, or Codex rollouts (`~/.codex/sessions/**/rollout-*.jsonl`). Both support list, time/cwd/title filters, and full-text `--grep`. **Antigravity is not supported**: its IDE conversations are AEAD-encrypted at rest (`~/.gemini/antigravity/conversations/*.pb`) and its unencrypted CLI store carries no parseable turn content, so the skill prints a clear "not available" message and exits.
+
 Two scripts in `scripts/` locate past sessions and dump their content:
 
 - `find_sessions.py` , discover + filter sessions (metadata + optional full-text grep).

@@ -1,6 +1,6 @@
 {
   "name": "ai-adoption",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI Adoption, three skills for working with your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes (length distribution, marathon share, cache rebuilds, per-project health), writes a doctor-style terminal report, and optionally fans out parallel Haiku subagents over your top sessions for habit-level recommendations. task-profile mines those same sessions into a structured task profile: what you do with AI, how often, how successfully, where friction lives; it emits a shareable CSV, an interactive HTML explorer with progressive disclosure and a code-vs-cowork token chart, AI-first coaching cards, and up to five task-centric skill proposals. session-search finds a specific past session by title, working directory, time range, or free-text content across every Claude Code and Cowork transcript on disk.",
   "author": {
     "name": "Jeroen Van Hautte",

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Print a single Claude Code or Claude Cowork session as readable user/assistant turns.
+"""Print a single Claude Code / Cowork or Codex session as readable turns.
 
-Takes the transcript path reported by find_sessions.py (a .jsonl file).
+Takes the transcript path reported by find_sessions.py (a .jsonl file). Codex
+rollouts (~/.codex/sessions/.../rollout-*.jsonl) are detected by path and read
+through the Codex adapter.
 See ../SKILL.md for when to use this.
 """
 from __future__ import annotations
@@ -12,6 +14,14 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+import codex_sessions  # noqa: E402
+
+
+def _is_codex(path: Path) -> bool:
+    parts = path.parts
+    return ".codex" in parts and "sessions" in parts or path.name.startswith("rollout-")
 
 
 def _extract_text(entry: dict) -> str:
@@ -71,7 +81,11 @@ def main() -> int:
         print(f"not found: {path}", file=sys.stderr)
         return 1
 
-    turns = list(iter_turns(path))
+    if _is_codex(path):
+        turns = [{"role": role, "ts": "", "text": txt}
+                 for role, txt in codex_sessions.iter_turns(path) if txt.strip()]
+    else:
+        turns = list(iter_turns(path))
 
     if args.grep:
         pat = re.compile(args.grep, re.IGNORECASE)

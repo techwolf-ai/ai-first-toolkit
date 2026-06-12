@@ -18,6 +18,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pricing import cost_for_usage  # noqa: E402
+import codex_sessions  # noqa: E402
+from host_platform import ANTIGRAVITY, CLAUDE, CODEX, degrade, detect_platform  # noqa: E402
 
 HOME = Path.home()
 CODE_ROOT = HOME / ".claude" / "projects"
@@ -153,6 +155,15 @@ def _process_code_transcript(path: Path) -> dict | None:
     sid = sid or path.stem
     autom = _is_automation(path, turns, first_meta)
     return _summarize_session(sid=sid, surface="code", path=path, cwd=cwd, turns=turns, automation=autom)
+
+def _process_codex_transcript(path: Path) -> dict | None:
+    """Parse a Codex rollout (~/.codex/sessions/.../rollout-*.jsonl)."""
+    meta = codex_sessions.session_meta(path)
+    turns = codex_sessions.codex_turns(path, model_hint=meta.get("model", ""))
+    if not turns:
+        return None
+    return _summarize_session(sid=path.stem, surface="codex", path=path,
+                              cwd=meta.get("cwd") or None, turns=turns, automation=None)
 
 def _process_cowork_transcript(audit_path: Path) -> dict | None:
     """Parse a Cowork audit.jsonl + companion json sidecar."""
@@ -302,6 +313,10 @@ def main():
     ap.add_argument("--no-cowork", dest="include_cowork", action="store_false")
     args = ap.parse_args()
 
+    platform = detect_platform()
+    if platform == ANTIGRAVITY:
+        degrade("token-doctor", platform)
+
     if args.all:
         since = until = None
     else:
@@ -316,30 +331,41 @@ def main():
 
     n_in = n_out = n_autom = 0
     with out_path.open("w", encoding="utf-8") as f_out:
-        # Code transcripts
-        if CODE_ROOT.exists():
-            for p in sorted(CODE_ROOT.glob("*/*.jsonl")):
+        if platform == CODEX:
+            # Codex rollouts (~/.codex/sessions). Token usage comes from Codex's
+            # own per-response token_count events; cost via OpenAI rates.
+            for p in sorted(codex_sessions.CODEX_ROOT.glob("*/*/*/rollout-*.jsonl")):
                 n_in += 1
-                sess = _process_code_transcript(p)
+                sess = _process_codex_transcript(p)
                 if not sess: continue
                 if not _within_window(sess, since, until): continue
-                if sess.get("automation") and not args.include_automation:
-                    n_autom += 1
-                    continue
                 f_out.write(json.dumps(sess, default=str) + "\n")
                 n_out += 1
-        # Cowork transcripts
-        if args.include_cowork and COWORK_ROOT.exists():
-            for p in sorted(COWORK_ROOT.glob("*/*/local_*/audit.jsonl")):
-                n_in += 1
-                sess = _process_cowork_transcript(p)
-                if not sess: continue
-                if not _within_window(sess, since, until): continue
-                if sess.get("automation") and not args.include_automation:
-                    n_autom += 1
-                    continue
-                f_out.write(json.dumps(sess, default=str) + "\n")
-                n_out += 1
+        else:
+            # Code transcripts
+            if CODE_ROOT.exists():
+                for p in sorted(CODE_ROOT.glob("*/*.jsonl")):
+                    n_in += 1
+                    sess = _process_code_transcript(p)
+                    if not sess: continue
+                    if not _within_window(sess, since, until): continue
+                    if sess.get("automation") and not args.include_automation:
+                        n_autom += 1
+                        continue
+                    f_out.write(json.dumps(sess, default=str) + "\n")
+                    n_out += 1
+            # Cowork transcripts
+            if args.include_cowork and COWORK_ROOT.exists():
+                for p in sorted(COWORK_ROOT.glob("*/*/local_*/audit.jsonl")):
+                    n_in += 1
+                    sess = _process_cowork_transcript(p)
+                    if not sess: continue
+                    if not _within_window(sess, since, until): continue
+                    if sess.get("automation") and not args.include_automation:
+                        n_autom += 1
+                        continue
+                    f_out.write(json.dumps(sess, default=str) + "\n")
+                    n_out += 1
 
     print(f"Scanned {n_in} transcripts, wrote {n_out} sessions to {out_path}, excluded {n_autom} automation runs.")
     print(f"Window: {since.date() if since else 'all'} to {until.date() if until else 'now'}")

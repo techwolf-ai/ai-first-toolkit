@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.7.0](https://img.shields.io/badge/version-1.7.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.8.0](https://img.shields.io/badge/version-1.8.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -26,7 +26,19 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
 | **tool-build-kit** | Build an MCP server end to end: analyze, build, deploy, scale, distribute | `claude plugin install tool-build-kit@techwolf-ai-first` |
 
-Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex).
+<a name="not-using-claude-code"></a>
+Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex). One caveat on per-platform support:
+
+- **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
+- **Host-aware (the ai-adoption plugin):** token-doctor, task-profile, session-search read agent **session history** off disk, which is per-platform. Each script detects the host (via the `platform` field `install.sh` stamps into each installed skill; override with `AI_FIRST_PLATFORM=claude|codex|antigravity`) and routes or degrades rather than scanning the wrong path. Support today:
+
+  | Skill | Claude Code / Cowork | Codex (`~/.codex/sessions`) | Antigravity |
+  |---|---|---|---|
+  | session-search | yes | yes | no (degrades) |
+  | token-doctor | yes | yes (cost via OpenAI rates) | no (degrades) |
+  | task-profile | yes | yes | no (degrades) |
+
+  **Antigravity** is unsupported for session analysis on purpose: the IDE stores conversations AEAD-encrypted at rest (`~/.gemini/antigravity/conversations/*.pb`), and the unencrypted CLI store carries no parseable turn/token content. Where a skill can't honestly read a platform's data it prints a clear "not available on \<platform\>" message and exits, never empty or misleading output.
 
 ## What's inside
 
@@ -68,6 +80,8 @@ Build and query a structured knowledge base where every answer cites literal quo
 ### ai-adoption: Claude History Analytics
 
 Three skills for working with your Claude Code + Cowork session history. Local-only, no API calls.
+
+> **Host-aware (reads session history off disk).** All three skills work on Claude Code / Cowork **and Codex** (`~/.codex/sessions`); token-doctor prices Codex usage with OpenAI rates. Antigravity session analysis is unsupported (encrypted IDE store). Each script detects the host and degrades with a clear message rather than scanning the wrong path. Every other plugin in the toolkit is fully cross-platform. See [Not using Claude Code?](#not-using-claude-code).
 
 - **token-doctor**: diagnoses where your token spend goes (length distribution, marathon share, cache rebuilds, per-project health) and writes a doctor-style terminal report. Opt-in deep dive fans out parallel Haiku subagents over hotspot sessions for habit-level recommendations.
 - **task-profile**: mines sessions into a role-level map of what you actually do with AI, ranked by frequency and friction. Emits a shareable CSV, an interactive HTML explorer, AI-first coaching cards, and up to five skill proposals.

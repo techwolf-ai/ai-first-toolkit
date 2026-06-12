@@ -138,11 +138,14 @@ write_skill_metadata() {
   local skill_name="$4"
   local source_dir="$5"
 
+  # "platform" stamps the target IDE so runtime host-detection is deterministic.
+  # Scripts that read Claude-only session history use it to route or degrade.
   cat > "${dest}/.techwolf-plugin.json" <<EOF
 {
   "plugin": "$(json_escape "$plugin_name")",
   "version": "$(json_escape "$version")",
   "skill": "$(json_escape "$skill_name")",
+  "platform": "$(json_escape "$IDE")",
   "source": "$(json_escape "$source_dir")"
 }
 EOF

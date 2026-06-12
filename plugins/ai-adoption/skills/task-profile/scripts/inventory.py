@@ -19,6 +19,10 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Iterable, Iterator
 
+sys.path.insert(0, str(Path(__file__).parent))
+import codex_sessions  # noqa: E402
+from host_platform import ANTIGRAVITY, CODEX, degrade, detect_platform  # noqa: E402
+
 HOME = Path.home()
 CODE_ROOT = HOME / ".claude" / "projects"
 
@@ -493,6 +497,47 @@ def process(path: Path, kind: str) -> dict | None:
     }
 
 
+def process_codex(path: Path) -> dict | None:
+    """Build an inventory row from a Codex rollout (~/.codex/sessions)."""
+    try:
+        st = path.stat()
+    except OSError:
+        return None
+    meta = codex_sessions.session_meta(path)
+    turns = codex_sessions.codex_turns(path, model_hint=meta.get("model", ""))
+    if not turns:
+        return None
+    # Codex user_message turns are raw freeform prompts (no command wrappers).
+    for t in turns:
+        t.setdefault("raw_has_content", bool(t.get("text")))
+        t.setdefault("is_only_wrappers", False)
+
+    first_user_msg = ""
+    for t in turns:
+        if t["role"] == "user" and t["text"]:
+            first_user_msg = redact(t["text"][:400])
+            break
+    summary = first_user_msg.splitlines()[0][:120] if first_user_msg else ""
+    cond = build_condensate(turns)
+    return {
+        "path": str(path),
+        "kind": "codex",
+        "mtime": st.st_mtime,
+        "cwd": meta.get("cwd") or "",
+        "size": st.st_size,
+        "entrypoint": "",
+        "first_user_msg": first_user_msg,
+        "summary": summary,
+        "turns": sum(1 for t in turns if t["text"]),
+        "user_correction_count": cond["correction_count"],
+        "duration_s": _duration(turns),
+        "is_automation": False,
+        "automation_reason": "",
+        "tokens": aggregate_tokens(turns),
+        "condensate": cond,
+    }
+
+
 def apply_recurrence_automation(rows: list[dict]) -> None:
     """Post-pass: any row with composite short-no-freeform whose summary repeats ≥2× on same cwd within 7 days graduates to composite:short-recurring."""
     by_key: dict[tuple[str, str], list[dict]] = {}
@@ -535,6 +580,10 @@ def main() -> int:
     p.add_argument("--all", action="store_true", help="disable default 6-month window")
     args = p.parse_args()
 
+    platform = detect_platform()
+    if platform == ANTIGRAVITY:
+        degrade("task-profile", platform)
+
     now = time.time()
     since_ts: float | None
     until_ts: float | None
@@ -558,11 +607,26 @@ def main() -> int:
 
     rows: list[dict] = []
     scanned = 0
-    for path, kind in _candidates(since_ts, until_ts):
-        scanned += 1
-        row = process(path, kind)
-        if row is not None:
-            rows.append(row)
+    if platform == CODEX:
+        for path in sorted(codex_sessions.CODEX_ROOT.glob("*/*/*/rollout-*.jsonl")):
+            try:
+                mtime = path.stat().st_mtime
+            except OSError:
+                continue
+            if since_ts is not None and mtime < since_ts:
+                continue
+            if until_ts is not None and mtime > until_ts:
+                continue
+            scanned += 1
+            row = process_codex(path)
+            if row is not None:
+                rows.append(row)
+    else:
+        for path, kind in _candidates(since_ts, until_ts):
+            scanned += 1
+            row = process(path, kind)
+            if row is not None:
+                rows.append(row)
     apply_recurrence_automation(rows)
     rows.sort(key=lambda r: r["mtime"], reverse=True)
 
@@ -579,6 +643,7 @@ def main() -> int:
             "interactive": sum(1 for r in rows if not r["is_automation"]),
             "code": sum(1 for r in rows if r["kind"] == "code"),
             "cowork": sum(1 for r in rows if r["kind"] == "cowork"),
+            "codex": sum(1 for r in rows if r["kind"] == "codex"),
         },
         "sessions": rows,
     }

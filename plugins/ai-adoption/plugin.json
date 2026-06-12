@@ -1,5 +1,5 @@
 {
   "name": "ai-adoption",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Three skills for working with your Claude history. token-doctor diagnoses where your spend goes. task-profile mines sessions into a role-level task map. session-search finds past sessions by title, cwd, time range, or content."
 }

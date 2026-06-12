@@ -1,5 +1,7 @@
 # AI Adoption
 
+> **Host-aware.** These skills read agent session history from disk, which is per-platform. They detect the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and route or degrade rather than scanning the wrong path. All three support **Claude Code / Cowork and Codex** (`~/.codex/sessions`); token-doctor prices Codex (gpt-5.x) usage with OpenAI list rates. **Antigravity** session analysis is unsupported: the IDE store is AEAD-encrypted at rest and the CLI store has no parseable turn/token content, so the skills print a clear "not available" message.
+
 Three skills for working with your Claude history:
 
 - **`token-doctor`**, diagnose where your Claude Code + Cowork spend goes. Writes a doctor-style terminal report (length distribution, marathon share, cache rebuilds, per-project health) and offers an opt-in deep dive that fans out parallel Haiku subagents over your top sessions for habit-level recommendations.
