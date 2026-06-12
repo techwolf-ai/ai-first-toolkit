@@ -1,0 +1,5 @@
+{
+  "name": "tool-build-kit",
+  "version": "1.6.0",
+  "description": "Build an MCP server the right way, end to end. Branches on audience (personal, org, public) and walks through analyze, build, deploy, scale, and distribute."
+}

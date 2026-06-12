@@ -1,8 +1,8 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.6.1](https://img.shields.io/badge/version-1.6.1-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.7.0](https://img.shields.io/badge/version-1.7.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
-Open-source Claude Code skills and Codex skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai).
+Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
 <!-- TODO: Replace with hero GIF showing ai-firstify audit in action -->
 
@@ -26,7 +26,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
 | **tool-build-kit** | Build an MCP server end to end: analyze, build, deploy, scale, distribute | `claude plugin install tool-build-kit@techwolf-ai-first` |
 
-Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex via [`./install.sh`](#codex).
+Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex).
 
 ## What's inside
 
@@ -137,12 +137,28 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 
 </details>
 
+### Google Antigravity
+
+The same skills install into Antigravity, which keeps one self-contained dir per plugin under `~/.gemini/config/plugins/`. Pass `--ide antigravity`:
+
+```bash
+./install.sh install --ide antigravity                 # all plugins
+./install.sh install ai-firstify --ide antigravity     # one plugin
+./install.sh list --ide antigravity
+./install.sh uninstall ai-firstify --ide antigravity
+```
+
+Each plugin installs as `~/.gemini/config/plugins/<plugin>/` with a `plugin.json`, an `installed_version.json`, and a `skills/` directory, the same shape Antigravity uses for its own plugins. For repo-side discovery as a marketplace, Antigravity reads [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json) (the vendor-neutral `.agents/` standard), and each plugin carries an Antigravity `plugin.json` marker at `plugins/<plugin>/plugin.json`. Skills are the same `SKILL.md` files used by Claude Code and Codex, no per-target rewrite.
+
 ## Repository structure
 
 ```
 ai-first-toolkit/
 ├── .claude-plugin/
-│   └── marketplace.json        # Marketplace manifest
+│   └── marketplace.json        # Claude Code marketplace manifest
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json    # Antigravity / vendor-neutral marketplace manifest
 ├── plugins/
 │   ├── ai-firstify/            # Auditor & re-engineer (1 skill, 9 reference docs)
 │   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
@@ -151,11 +167,11 @@ ai-first-toolkit/
 │   ├── ai-adoption/            # Claude history analytics (3 skills: token-doctor, task-profile, session-search)
 │   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
 │   └── tool-build-kit/         # MCP server builder (1 skill: build-mcp, 6 reference files)
-├── install.sh                  # Codex skill installer
+├── install.sh                  # Codex + Antigravity skill installer
 └── README.md
 ```
 
-Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest and `skills/` directory containing `SKILL.md` files. See individual plugin READMEs for details:
+Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest, an Antigravity `plugin.json` marker, and a `skills/` directory of `SKILL.md` files shared across all targets. See individual plugin READMEs for details:
 
 - [ai-firstify README](plugins/ai-firstify/README.md)
 - [content-studio README](plugins/content-studio/README.md)
