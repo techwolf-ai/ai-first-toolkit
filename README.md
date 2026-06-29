@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.8.0](https://img.shields.io/badge/version-1.8.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.9.0](https://img.shields.io/badge/version-1.9.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -14,7 +14,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 
 ## Plugins at a glance
 
-7 plugins, 28 skills. One install command each.
+8 plugins, 27 skills. One install command each.
 
 | Plugin | What it does | Install |
 |--------|--------------|---------|
@@ -22,21 +22,22 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **content-studio** | Thought-leadership pipeline (LinkedIn, blog, opinion) with a visual editor | `claude plugin install content-studio@techwolf-ai-first` |
 | **people-management** | AI-augmented management: 1:1 prep, meeting prep, triage, performance cycles | `claude plugin install people-management@techwolf-ai-first` |
 | **knowledge-base** | Evidence-backed KB; every answer cites literal quotes from your files | `claude plugin install knowledge-base@techwolf-ai-first` |
-| **ai-adoption** | Claude history analytics: token-doctor, task-profile, session-search | `claude plugin install ai-adoption@techwolf-ai-first` |
+| **ai-adoption** | Claude history analytics: token-doctor and task-profile | `claude plugin install ai-adoption@techwolf-ai-first` |
+| **session-tools** | Session continuity: find past sessions, write handoff notes | `claude plugin install session-tools@techwolf-ai-first` |
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
 | **tool-build-kit** | Build an MCP server end to end: analyze, build, deploy, scale, distribute | `claude plugin install tool-build-kit@techwolf-ai-first` |
 
 <a name="not-using-claude-code"></a>
 Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex). One caveat on per-platform support:
 
-- **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
-- **Host-aware (the ai-adoption plugin):** token-doctor, task-profile, session-search read agent **session history** off disk, which is per-platform. Each script detects the host (via the `platform` field `install.sh` stamps into each installed skill; override with `AI_FIRST_PLATFORM=claude|codex|antigravity`) and routes or degrades rather than scanning the wrong path. Support today:
+- **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit, and the `handoff` skill in session-tools. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
+- **Host-aware (ai-adoption and session-tools):** token-doctor, task-profile, and session-search read agent **session history** off disk, which is per-platform. Each script detects the host (via the `platform` field `install.sh` stamps into each installed skill; override with `AI_FIRST_PLATFORM=claude|codex|antigravity`) and routes or degrades rather than scanning the wrong path. Support today:
 
-  | Skill | Claude Code / Cowork | Codex (`~/.codex/sessions`) | Antigravity |
-  |---|---|---|---|
-  | session-search | yes | yes | no (degrades) |
-  | token-doctor | yes | yes (cost via OpenAI rates) | no (degrades) |
-  | task-profile | yes | yes | no (degrades) |
+  | Skill | Plugin | Claude Code / Cowork | Codex (`~/.codex/sessions`) | Antigravity |
+  |---|---|---|---|---|
+  | session-search | session-tools | yes | yes | no (degrades) |
+  | token-doctor | ai-adoption | yes | yes (cost via OpenAI rates) | no (degrades) |
+  | task-profile | ai-adoption | yes | yes | no (degrades) |
 
   **Antigravity** is unsupported for session analysis on purpose: the IDE stores conversations AEAD-encrypted at rest (`~/.gemini/antigravity/conversations/*.pb`), and the unencrypted CLI store carries no parseable turn/token content. Where a skill can't honestly read a platform's data it prints a clear "not available on \<platform\>" message and exits, never empty or misleading output.
 
@@ -79,13 +80,19 @@ Build and query a structured knowledge base where every answer cites literal quo
 
 ### ai-adoption: Claude History Analytics
 
-Three skills for working with your Claude Code + Cowork session history. Local-only, no API calls.
+Two skills for analyzing your Claude Code + Cowork session history. Local-only, no API calls.
 
-> **Host-aware (reads session history off disk).** All three skills work on Claude Code / Cowork **and Codex** (`~/.codex/sessions`); token-doctor prices Codex usage with OpenAI rates. Antigravity session analysis is unsupported (encrypted IDE store). Each script detects the host and degrades with a clear message rather than scanning the wrong path. Every other plugin in the toolkit is fully cross-platform. See [Not using Claude Code?](#not-using-claude-code).
+> **Host-aware (reads session history off disk).** Both skills work on Claude Code / Cowork **and Codex** (`~/.codex/sessions`); token-doctor prices Codex usage with OpenAI rates. Antigravity session analysis is unsupported (encrypted IDE store). Each script detects the host and degrades with a clear message rather than scanning the wrong path. See [Not using Claude Code?](#not-using-claude-code).
 
 - **token-doctor**: diagnoses where your token spend goes (length distribution, marathon share, cache rebuilds, per-project health) and writes a doctor-style terminal report. Opt-in deep dive fans out parallel Haiku subagents over hotspot sessions for habit-level recommendations.
 - **task-profile**: mines sessions into a role-level map of what you actually do with AI, ranked by frequency and friction. Emits a shareable CSV, an interactive HTML explorer, AI-first coaching cards, and up to five skill proposals.
-- **session-search**: finds a specific past session by title, working directory, time range, or free-text content across every transcript on disk.
+
+### session-tools: Session Continuity
+
+Two skills for finding past sessions and preserving the current one.
+
+- **session-search**: finds a specific past session by title, working directory, time range, or free-text content across every transcript on disk. Works on Claude Code / Cowork and Codex; Antigravity degrades with a clear message.
+- **handoff**: writes a tight `HANDOFF.md` resume note at the current working directory so a fresh session can continue without replaying the conversation. No platform dependency; works on Claude Code, Cowork, and Codex.
 
 ### techwolf-brand-kit: Brand Assets
 
@@ -113,6 +120,7 @@ claude plugin install content-studio@techwolf-ai-first
 claude plugin install people-management@techwolf-ai-first
 claude plugin install knowledge-base@techwolf-ai-first
 claude plugin install ai-adoption@techwolf-ai-first
+claude plugin install session-tools@techwolf-ai-first
 claude plugin install techwolf-brand-kit@techwolf-ai-first
 claude plugin install tool-build-kit@techwolf-ai-first
 ```
@@ -128,6 +136,7 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh people-management
 ./install.sh knowledge-base
 ./install.sh ai-adoption
+./install.sh session-tools
 ./install.sh techwolf-brand-kit
 ./install.sh tool-build-kit
 ```
@@ -156,8 +165,9 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 The same skills install into Antigravity, which keeps one self-contained dir per plugin under `~/.gemini/config/plugins/`. Pass `--ide antigravity`:
 
 ```bash
-./install.sh install --ide antigravity                 # all plugins
-./install.sh install ai-firstify --ide antigravity     # one plugin
+./install.sh install --ide antigravity                   # all plugins
+./install.sh install ai-firstify --ide antigravity       # one plugin
+./install.sh install session-tools --ide antigravity     # handoff works; session-search degrades
 ./install.sh list --ide antigravity
 ./install.sh uninstall ai-firstify --ide antigravity
 ```
@@ -178,7 +188,8 @@ ai-first-toolkit/
 │   ├── content-studio/         # Content pipeline (8 skills, visual editor, hooks)
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
 │   ├── knowledge-base/         # Evidence-backed KB (4 skills, templates, index + verify scripts)
-│   ├── ai-adoption/            # Claude history analytics (3 skills: token-doctor, task-profile, session-search)
+│   ├── ai-adoption/            # Claude history analytics (2 skills: token-doctor, task-profile)
+│   ├── session-tools/          # Session continuity (2 skills: session-search, handoff)
 │   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
 │   └── tool-build-kit/         # MCP server builder (1 skill: build-mcp, 6 reference files)
 ├── install.sh                  # Codex + Antigravity skill installer
@@ -192,6 +203,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest, an Ant
 - [people-management README](plugins/people-management/README.md)
 - [knowledge-base README](plugins/knowledge-base/README.md)
 - [ai-adoption README](plugins/ai-adoption/README.md)
+- [session-tools README](plugins/session-tools/README.md)
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 - [tool-build-kit README](plugins/tool-build-kit/README.md)
 

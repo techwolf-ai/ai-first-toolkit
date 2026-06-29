@@ -26,3 +26,5 @@ This repository publishes TechWolf AI-first plugins and skills for Claude Code, 
 - `content-studio` has a plugin-level Codex entry skill in addition to its specialized skills.
 - `people-management` has 8 skills that require `/setup` to be run first to configure org-specific frameworks and context.
 - `knowledge-base` ships three Python helper scripts (`kb-index.py`, `kb-verify.py`, `kb-validate.py`) that are copied into the user's project by `/setup-knowledge-base`. The plugin's `/kb-answer` workflow depends on `kb-verify.py` existing in the project's `scripts/` directory.
+- `session-tools` has two skills: `session-search` (moved from `ai-adoption` in v1.9.0; host-aware, reads disk transcripts) and `handoff` (writes `HANDOFF.md` resume notes; no platform dependency). `ai-adoption` no longer includes `session-search`.
+- `ai-adoption` now covers two skills only: `token-doctor` and `task-profile`.
