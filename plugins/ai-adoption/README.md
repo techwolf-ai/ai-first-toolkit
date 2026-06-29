@@ -2,11 +2,12 @@
 
 > **Host-aware.** These skills read agent session history from disk, which is per-platform. They detect the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and route or degrade rather than scanning the wrong path. All three support **Claude Code / Cowork and Codex** (`~/.codex/sessions`); token-doctor prices Codex (gpt-5.x) usage with OpenAI list rates. **Antigravity** session analysis is unsupported: the IDE store is AEAD-encrypted at rest and the CLI store has no parseable turn/token content, so the skills print a clear "not available" message.
 
-Three skills for working with your Claude history:
+Four skills for working with your Claude history:
 
 - **`token-doctor`**, diagnose where your Claude Code + Cowork spend goes. Writes a doctor-style terminal report (length distribution, marathon share, cache rebuilds, per-project health) and offers an opt-in deep dive that fans out parallel Haiku subagents over your top sessions for habit-level recommendations.
 - **`task-profile`**, mine your Claude Code + Cowork session history into a role-level map of what you actually do with AI, ranked by frequency and friction, with the tokens beside every row.
 - **`session-search`**, find a specific past session by title, working directory, time range, or free-text content across every transcript on disk.
+- **`handoff`**, write a tight resume note at the end of a session so the next session can pick up exactly where you left off, without replaying the conversation.
 
 ## Why
 
@@ -19,6 +20,7 @@ Most teams roll out Claude without ever measuring how people actually use it. To
 | `/token-doctor` | Diagnose where Claude spend goes. Two-stage: fast terminal report + opt-in deep dive over hotspot sessions |
 | `/task-profile` | Mine sessions into a task profile with friction signals, tokens per task, AI-first coaching cards, and skill proposals |
 | `/session-search` | Find a past session by title, working directory, time range, or full-text content |
+| `/handoff` | Write a tight resume note so the next session starts from exactly where you stopped |
 
 ## Getting Started
 
@@ -26,6 +28,7 @@ Most teams roll out Claude without ever measuring how people actually use it. To
 2. Run `/token-doctor` to get an instant terminal report on where your tokens go.
 3. Run `/task-profile` for a 5-10 minute deep analysis that produces an interactive HTML explorer.
 4. Use `/session-search` any time to dig up a specific past session.
+5. Use `/handoff` at the end of any session to write a resume note; say "pick up the handoff" next session to continue.
 
 All output lands under `./out/` in your current working directory. Nothing leaves your machine.
 
@@ -127,6 +130,25 @@ Seven phases. Stage 1 is always shown; Stage 2 is opt-in.
 - Cowork desktop for the Cowork side; Cowork-side analysis is optional (Code CLI sessions work stand-alone)
 - macOS primary; Windows supported for Cowork path resolution; Linux falls back to Code-only
 
+## `handoff`
+
+Writes a tight `HANDOFF.md` resume note at the current working directory so a fresh session can continue without replaying the conversation. Two modes:
+
+- **Write** (default): `handoff`, `wrap up`, `park this session`, `save where we are`. Captures goal, what's done vs open, the single most concrete next step, decisions made, dead ends, run state (branch, tree, processes), verify command, and open questions. Appends newest-first, keeps the 3 most recent entries; replaces today's entry rather than stacking.
+- **Read**: `/handoff read`, `pick up the handoff`, `read the handoff`. Reads `HANDOFF.md` from cwd, surfaces the most recent entry's goal and Start-here steps, warns if the handoff is stale relative to git history, and asks before acting.
+
+Sample phrasings:
+
+- `handoff`
+- `wrap up`
+- `park this session`
+- `save where we are`
+- `pick up the handoff`
+- `read the handoff`
+- `/handoff read`
+
+The skill writes to the project directory, not to tool memory. If the directory is a git repo, it offers to add `HANDOFF.md` to `.gitignore` rather than staging it.
+
 ## Attribution
 
-Skill sources: `skills/token-doctor/`, `skills/task-profile/`, `skills/session-search/`. Branded with the TechWolf aquamarine + dark palette and the TechWolf logo (via `assets/logo.svg`). Swap the logo if repurposing externally, the generator falls back to a neutral glyph if the asset is missing.
+Skill sources: `skills/token-doctor/`, `skills/task-profile/`, `skills/session-search/`, `skills/handoff/`. Branded with the TechWolf aquamarine + dark palette and the TechWolf logo (via `assets/logo.svg`). Swap the logo if repurposing externally, the generator falls back to a neutral glyph if the asset is missing.

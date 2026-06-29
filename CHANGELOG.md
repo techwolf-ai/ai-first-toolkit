@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.9.0] - 2026-06-29
+
+### Added
+
+- `handoff` skill added to the **ai-adoption** plugin (v1.2.0). Writes a tight `HANDOFF.md` resume note at the current working directory so a fresh session can continue without replaying the conversation. Two modes: write (default) and read (`/handoff read`). Completes the session-skills family alongside session-search, task-profile, and token-doctor. Works in Claude Code and Cowork; no platform-specific dependencies.
+
 ## [1.8.0] - 2026-06-12
 
 ### Added
