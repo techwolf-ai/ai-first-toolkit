@@ -36,7 +36,12 @@
     {
       "name": "ai-adoption",
       "source": "./plugins/ai-adoption",
-      "description": "Three skills for working with your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes. task-profile mines sessions into a role-level task map with friction and tokens. session-search finds past sessions by title, cwd, time range, or full-text content."
+      "description": "Two skills for analyzing your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes. task-profile mines sessions into a role-level task map with friction and tokens. (session-search moved to session-tools.)"
+    },
+    {
+      "name": "session-tools",
+      "source": "./plugins/session-tools",
+      "description": "Two skills for session continuity. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped."
     },
     {
       "name": "tool-build-kit",

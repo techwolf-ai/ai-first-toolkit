@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.9.0] - 2026-06-29
+
+### Added
+
+- `session-tools` plugin (v1.0.0): two skills for session continuity.
+  - `session-search`: moved from `ai-adoption`. Finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. Scripts and host-aware platform detection unchanged.
+  - `handoff`: new skill. Writes a tight `HANDOFF.md` resume note at the current working directory so a fresh session can continue without replaying the conversation. Two modes: write (default) and read (`/handoff read`). No platform dependency; works in Claude Code, Cowork, and Codex.
+- Added `session-tools` to both marketplace manifests (`.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json`).
+
+### Changed
+
+- `ai-adoption` plugin bumped to v2.0.0. `session-search` removed and moved to `session-tools`. Plugin now covers two skills: `token-doctor` and `task-profile`. Users who relied on `session-search` from `ai-adoption` should install `session-tools`.
+
 ## [1.8.0] - 2026-06-12
 
 ### Added
