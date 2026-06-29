@@ -112,9 +112,7 @@ Adapted from content-studio plugin with:
 - Professional profile and writing guidelines for [Name]'s voice
 - [N] published LinkedIn posts with full text and engagement metrics
 - Skills for [list skills]
-- Content types: [list types]
-
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
+- Content types: [list types]"
 
 git push -u origin main
 ```

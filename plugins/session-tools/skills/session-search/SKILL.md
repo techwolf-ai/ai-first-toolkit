@@ -1,6 +1,6 @@
 ---
 name: session-search
-description: Find context from past Claude Code (CLI) and Claude Cowork (desktop) sessions on this Mac. Use when the user wants to recall something they did before but can't find it , phrasings like "where did I work on X", "find that session where I…", "when did I last do Y", "pull up the conversation about Z", "that time I built/tried/discussed …". Searches by kind (code/cowork), time range, title, working directory, or free-text content across all transcripts.
+description: Find context from past Claude Code (CLI) and Claude Cowork (desktop) sessions on this Mac. Use when the user wants to recall something they did before but can't find it, phrasings like "where did I work on X", "find that session where I…", "when did I last do Y", "pull up the conversation about Z", "that time I built/tried/discussed …". Searches by kind (code/cowork), time range, title, working directory, or free-text content across all transcripts.
 ---
 
 # session-search

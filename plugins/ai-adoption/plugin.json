@@ -1,5 +1,5 @@
 {
   "name": "ai-adoption",
   "version": "2.0.0",
-  "description": "Two skills for analyzing your Claude history. token-doctor diagnoses where your spend goes. task-profile mines sessions into a role-level task map with friction signals, tokens per task, and skill proposals. (session-search moved to the session-tools plugin.)"
+  "description": "Two skills for analyzing your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes. task-profile mines sessions into a role-level task map with friction and tokens. (session-search moved to session-tools.)"
 }

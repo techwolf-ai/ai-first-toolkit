@@ -105,4 +105,3 @@ Print the handoff in chat (it's the deliverable, the file is the durable copy) a
 - `HANDOFF.md` lives in the project. If it's a git repo, check whether the file is already tracked (`git ls-files HANDOFF.md`). Default to keeping it out of version control: if there's a `.gitignore`, offer to add `HANDOFF.md` in the same step. Never stage or commit it without asking.
 - Keep it honest: if a step failed, say so in "Where it stands", and anchor every "done" to the Verify command. A handoff that overstates progress wastes the next session's time.
 - The whole value is the **Start here** block. If you write nothing else well, write that.
-```
