@@ -1,16 +1,17 @@
 # AI Adoption
 
-> **Host-aware.** These skills read agent session history from disk, which is per-platform. They detect the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and route or degrade rather than scanning the wrong path. All three support **Claude Code / Cowork and Codex** (`~/.codex/sessions`); token-doctor prices Codex (gpt-5.x) usage with OpenAI list rates. **Antigravity** session analysis is unsupported: the IDE store is AEAD-encrypted at rest and the CLI store has no parseable turn/token content, so the skills print a clear "not available" message.
+> **Host-aware.** Both skills read agent session history from disk, which is per-platform. They detect the host (via the `platform` stamp `install.sh` writes, or `AI_FIRST_PLATFORM`) and route or degrade rather than scanning the wrong path. Both support **Claude Code / Cowork and Codex** (`~/.codex/sessions`); token-doctor prices Codex (gpt-5.x) usage with OpenAI list rates. **Antigravity** session analysis is unsupported: the IDE store is AEAD-encrypted at rest and the CLI store has no parseable turn/token content, so the skills print a clear "not available" message.
 
-Three skills for working with your Claude history:
+> **Looking for session-search?** It moved to the **session-tools** plugin alongside the new `handoff` skill. Install with `./install.sh session-tools`.
+
+Two skills for analyzing your Claude history:
 
 - **`token-doctor`**, diagnose where your Claude Code + Cowork spend goes. Writes a doctor-style terminal report (length distribution, marathon share, cache rebuilds, per-project health) and offers an opt-in deep dive that fans out parallel Haiku subagents over your top sessions for habit-level recommendations.
 - **`task-profile`**, mine your Claude Code + Cowork session history into a role-level map of what you actually do with AI, ranked by frequency and friction, with the tokens beside every row.
-- **`session-search`**, find a specific past session by title, working directory, time range, or free-text content across every transcript on disk.
 
 ## Why
 
-Most teams roll out Claude without ever measuring how people actually use it. Token bills land monthly with no signal on what's healthy, what's wasteful, and which habits compound. This plugin turns your local transcript history into three concrete artifacts: a personal cost diagnosis, a role-level task profile, and a transcript search index. Everything runs on disk; no API calls, no auth.
+Most teams roll out Claude without ever measuring how people actually use it. Token bills land monthly with no signal on what's healthy, what's wasteful, and which habits compound. This plugin turns your local transcript history into two concrete artifacts: a personal cost diagnosis and a role-level task profile. Everything runs on disk; no API calls, no auth.
 
 ## Skills
 
@@ -18,14 +19,12 @@ Most teams roll out Claude without ever measuring how people actually use it. To
 |-------|-------------|
 | `/token-doctor` | Diagnose where Claude spend goes. Two-stage: fast terminal report + opt-in deep dive over hotspot sessions |
 | `/task-profile` | Mine sessions into a task profile with friction signals, tokens per task, AI-first coaching cards, and skill proposals |
-| `/session-search` | Find a past session by title, working directory, time range, or full-text content |
 
 ## Getting Started
 
 1. Install the plugin via Claude Code marketplace or `./install.sh ai-adoption`.
 2. Run `/token-doctor` to get an instant terminal report on where your tokens go.
 3. Run `/task-profile` for a 5-10 minute deep analysis that produces an interactive HTML explorer.
-4. Use `/session-search` any time to dig up a specific past session.
 
 All output lands under `./out/` in your current working directory. Nothing leaves your machine.
 
@@ -74,17 +73,6 @@ Sample phrasings:
 
 The skill's `SKILL.md` is the entry point; it drives the multi-phase workflow: inventory, cluster, parallel Haiku analysis, aggregation, HTML build, skill proposals.
 
-## `session-search`
-
-Two small scripts that read transcripts directly from disk, no API calls, no auth. Activates on phrasings like `where did I work on X`, `find that session where I...`, `when did I last do Y`, `pull up the conversation about Z`.
-
-| Script | Purpose |
-|---|---|
-| `scripts/find_sessions.py` | Discover + filter sessions by `--kind`, `--since`, `--until`, `--title`, `--cwd`, `--grep` (full-text regex), with a tabular or `--json` output |
-| `scripts/show_session.py` | Print a single session's conversation in readable markdown; supports `--grep` and `--tail` for focused slices |
-
-Code sessions live at `~/.claude/projects/*/*.jsonl`; Cowork sessions at `~/Library/Application Support/Claude/local-agent-mode-sessions/*/*/local_*/audit.jsonl`. Both paths are resolved from `$HOME`, so it works for any user.
-
 ## How `task-profile` works
 
 Six phases, mostly LLM-driven with small deterministic scripts around the edges:
@@ -116,7 +104,7 @@ Seven phases. Stage 1 is always shown; Stage 2 is opt-in.
 ## Privacy
 
 - **Local only**: every transcript stays on disk. Subagents in `token-doctor` receive token counts, tool-call names, turn indices, and a 120-char title — never user prompts or model output.
-- **Redaction before dispatch and output**: API keys, tokens, JWTs, private key blocks, emails (local-part), phone/card/IBAN patterns are regex-stripped before any text is dispatched to a subagent or written to the CSV/HTML/Markdown.
+- **Redaction before dispatch and output**: API keys, tokens, JWTs, private key blocks, emails (local-part), phone/card/IBAN patterns are regex-stripped before any text is dispatched to a subagent or written to output.
 - **Automation exclusion**: scheduled-task, paperclip, ditto-routine, and sdk-cli sub-agent sessions are filtered from the analysis (counts kept in the footer for transparency).
 - **Final manual review**: after generation, spot-check outputs for any high-entropy tokens the regex might have missed.
 
@@ -129,4 +117,4 @@ Seven phases. Stage 1 is always shown; Stage 2 is opt-in.
 
 ## Attribution
 
-Skill sources: `skills/token-doctor/`, `skills/task-profile/`, `skills/session-search/`. Branded with the TechWolf aquamarine + dark palette and the TechWolf logo (via `assets/logo.svg`). Swap the logo if repurposing externally, the generator falls back to a neutral glyph if the asset is missing.
+Skill sources: `skills/token-doctor/`, `skills/task-profile/`. Branded with the TechWolf aquamarine + dark palette and the TechWolf logo (via `assets/logo.svg`). Swap the logo if repurposing externally, the generator falls back to a neutral glyph if the asset is missing.
