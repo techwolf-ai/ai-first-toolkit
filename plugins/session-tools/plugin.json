@@ -1,0 +1,5 @@
+{
+  "name": "session-tools",
+  "version": "1.0.0",
+  "description": "Two skills for session continuity. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped."
+}
