@@ -1,6 +1,6 @@
 ---
 name: build-plugin
-description: "Bundle skills, hooks, agents, or an MCP server into one installable Claude Code plugin and ship it. Use when asked to bundle tools into one plugin, package tools for a colleague, publish a plugin to a marketplace, share my tools with my team, or ship a plugin. Asks who it's for and where it's hosted, then walks assemble, ship, enable, and maintain, tailored to that answer. Sibling to build-mcp."
+description: "Bundle skills, hooks, agents, or an MCP server into one installable Claude Code plugin and ship it. Use when asked to bundle tools into one plugin, package tools for a colleague, publish a plugin to a marketplace, share my tools with my team, or ship a plugin. Asks who it's for and where it's hosted, then walks analyze, assemble, ship, and maintain, tailored to that answer. Sibling to build-mcp."
 ---
 
 # Build Plugin
@@ -50,11 +50,11 @@ Confirm the resolved tuple back to the user in one line before proceeding (e.g. 
 
 | Phase | Just me | Team/org (GitHub) | Team/org (GitLab/other) | Public |
 |-------|---------|-------------------|-------------------------|--------|
-| **Ship** | N/A, stop here. Load via `claude --plugin-dir` or a local `.mcp.json`; no marketplace. | Marketplace repo on GitHub; entry `source: {source:"github", repo:"org/repo"}` or a relative `"./path"`. Private repo optional to keep it internal. | Marketplace repo on GitLab/Bitbucket/self-hosted; entry `source: {source:"url", url:"https://...git"}`. | Public marketplace repo; entry by host as above. Be deliberate: anyone who knows the repo can install, and plugins run arbitrary code. |
+| **Ship** | N/A, no marketplace. Load via `claude --plugin-dir`, or scaffold it in your skills dir (`claude plugin init`) to auto-load every session. | Marketplace repo on GitHub; entry `source: {source:"github", repo:"org/repo"}` or a relative `"./path"`. Private repo optional to keep it internal. | Marketplace repo on GitLab/Bitbucket/self-hosted; entry `source: {source:"url", url:"https://...git"}`. | Public marketplace repo; entry by host as above. Be deliberate: anyone who knows the repo can install, and plugins run arbitrary code. |
 | **Enable** | N/A, stop here. It is already loaded on your machine. | `/plugin marketplace add org/repo` then `/plugin install name@marketplace`; or auto-enable for the team via project `.claude/settings.json`. | `/plugin marketplace add https://gitlab.com/team/plugins.git` then `/plugin install name@marketplace`; same `.claude/settings.json` auto-enable. | Same commands; `owner/repo` shorthand is GitHub-only, others use the full URL. |
 | **Maintain** | Bump `version` in `plugin.json` for a clean update boundary; you are the only user. | `/plugin marketplace update`; one maintainer per plugin; fixes land via merge request. Org-wide enforcement via managed settings. | Same, via the GitLab/other merge-request flow. | Same, plus a public changelog and a clear versioning policy. |
 
-If a cell says "N/A, stop here" for the chosen branch, say so explicitly and move on. Do not pad it.
+If a cell says "N/A, stop here" for the chosen branch, say so explicitly and move on. Do not pad it. The **Enable** row is the team-facing half of Ship (turning the marketplace on for colleagues), not a separate phase.
 
 Reference files:
 - **references/assemble.md**: plugin folder layout, the manifest fields, moving existing `~/.claude/` tools in, local `claude --plugin-dir` testing, skill namespacing, `claude plugin validate`.
@@ -82,7 +82,7 @@ Read **references/assemble.md**. Build the folder to the layout, write the manif
 1. Create the plugin dir. Only `plugin.json` goes inside `.claude-plugin/`; `skills/`, `agents/`, `hooks/hooks.json`, and `.mcp.json` sit at the plugin ROOT.
 2. Write `.claude-plugin/plugin.json` with `name`, `description`, `version`, `author`.
 3. Move the inventoried tools in and delete the loose originals.
-4. Test: `claude --plugin-dir ./my-plugin` (it also accepts a `.zip`). Confirm every bundled tool shows up and one invokes. Validate the manifest with `claude plugin validate .`.
+4. Validate, then load-test. `claude plugin validate .` checks the manifest and layout with no login. `claude plugin details <name>` lists the skills, hooks, and servers it discovered, also login-free. `claude --plugin-dir ./my-plugin` (it also accepts a `.zip`) loads it into a live session so you can invoke a tool; that one needs you logged in.
 
 For a "Just me" bundle this is the last substantive phase: it is loaded, it works, stop.
 
@@ -106,6 +106,6 @@ Read **references/maintain.md**. Branch lightly; the mechanics are the same acro
 
 ## Done criteria
 
-- The plugin loads via `claude --plugin-dir` with no errors, every bundled tool shows up, and at least one invokes.
+- The plugin validates (`claude plugin validate`) and its tools show up (`claude plugin details`); loading it via `claude --plugin-dir` in a session invokes at least one.
 - It is on a marketplace repo the resolved audience can reach, public or private matching that audience (or, for "Just me", it is loaded locally and there is no marketplace).
 - The user can name exactly how a colleague installs it, two-command or one-click, matching the audience answer.
