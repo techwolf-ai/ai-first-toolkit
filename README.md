@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.9.0](https://img.shields.io/badge/version-1.9.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.10.0](https://img.shields.io/badge/version-1.10.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -25,7 +25,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **ai-adoption** | Claude history analytics: token-doctor and task-profile | `claude plugin install ai-adoption@techwolf-ai-first` |
 | **session-tools** | Session continuity: find past sessions, write handoff notes | `claude plugin install session-tools@techwolf-ai-first` |
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
-| **tool-build-kit** | Build an MCP server end to end: analyze, build, deploy, scale, distribute | `claude plugin install tool-build-kit@techwolf-ai-first` |
+| **tool-build-kit** | Build an MCP server and bundle your tools into a shareable plugin, end to end | `claude plugin install tool-build-kit@techwolf-ai-first` |
 
 <a name="not-using-claude-code"></a>
 Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex). One caveat on per-platform support:
@@ -101,13 +101,12 @@ Official TechWolf brand assets for AI-generated outputs. Ensures agents use the 
 - **TechWolf Logo**: 4 variants (dark, white, mono-dark, mono-white) in SVG and PNG
 - **currentColor SVG**: inline variant that inherits color from parent CSS for themed contexts
 
-### tool-build-kit: Build an MCP Server
+### tool-build-kit: Build and Ship Tools
 
-End-to-end guide for building a Model Context Protocol server, from first questions to published distribution. Asks who the server is for before building anything, then tailors every phase to that answer.
+End-to-end guide for building an MCP server and bundling your tools into a shareable plugin, from first questions to published distribution. Two sibling skills; each asks who the work is for before building anything, then tailors every phase to that answer.
 
-- **build-mcp**: one skill, five phases (analyze, build, deploy, scale, distribute). Establishes audience (personal / org / public) and runtime (local stdio / hosted HTTP) with `AskUserQuestion` before writing a line of code. Builds on the Anthropic `mcp-builder` skill for implementation depth and adds the scope-and-distribution decision flow it lacks.
-- Branch table drives the deploy and distribute phases across five targets: personal local, org local, org hosted, public package, public hosted.
-- 6 reference files loaded on demand: transports, local deploy, marketplace distribution, scaling, Python and TypeScript quickstarts.
+- **build-mcp**: five phases (analyze, build, deploy, scale, distribute). Establishes audience (personal / org / public) and runtime (local stdio / hosted HTTP) with `AskUserQuestion` before writing a line of code. Builds on the Anthropic `mcp-builder` skill for implementation depth and adds the scope-and-distribution decision flow it lacks. Branch table drives deploy and distribute across five targets; 6 reference files loaded on demand (transports, local deploy, marketplace distribution, scaling, Python and TypeScript quickstarts).
+- **build-plugin**: four phases (analyze, assemble, ship, maintain). Bundles many tools (skills, hooks, agents, MCP servers) into one installable plugin and ships it via a marketplace. Establishes audience and git host with `AskUserQuestion`, then a branch table maps each phase across Just-me / Team-org-GitHub / Team-org-GitLab / Public. Picks up where build-mcp's distribute phase leaves off; 4 reference files loaded on demand (assemble, marketplace, team enablement, maintain).
 
 ## Quick start
 
@@ -191,7 +190,7 @@ ai-first-toolkit/
 │   ├── ai-adoption/            # Claude history analytics (2 skills: token-doctor, task-profile)
 │   ├── session-tools/          # Session continuity (2 skills: session-search, handoff)
 │   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
-│   └── tool-build-kit/         # MCP server builder (1 skill: build-mcp, 6 reference files)
+│   └── tool-build-kit/         # MCP + plugin builder (2 skills: build-mcp, build-plugin)
 ├── install.sh                  # Codex + Antigravity skill installer
 └── README.md
 ```
