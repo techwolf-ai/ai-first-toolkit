@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.10.0] - 2026-07-07
+
+### Added
+
+- `build-plugin` skill in `tool-build-kit`, a sibling to `build-mcp`. Bundles many tools (skills, hooks, agents, MCP servers) into one installable Claude Code plugin and ships it via a marketplace.
+  - Establishes context first with `AskUserQuestion` (audience, then git host), then walks four phases: Analyze, Assemble, Ship, Maintain. A branch table maps each phase to the concrete move for Just-me / Team-org-GitHub / Team-org-GitLab / Public.
+  - Four on-demand references: `assemble.md` (folder layout, manifest, local `claude --plugin-dir` test), `marketplace.md` (`marketplace.json` shape, per-host `source` types, install commands, public vs private), `team-enablement.md` (project `.claude/settings.json` auto-enable, org-wide managed settings), `maintain.md` (updates, version bumps, ownership).
+
+### Changed
+
+- `tool-build-kit` plugin bumped to v1.7.0 and its description broadened to cover building an MCP server AND bundling tools into a shareable plugin (both `plugin.json` markers and both marketplace manifests updated).
+
 ## [1.9.0] - 2026-06-29
 
 ### Added

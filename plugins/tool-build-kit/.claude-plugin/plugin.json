@@ -1,6 +1,6 @@
 {
   "name": "tool-build-kit",
-  "description": "Build an MCP server the right way, end to end. Branches on audience (personal, org, public) and walks you through analyze, build, deploy, scale, and distribute.",
-  "version": "1.6.0",
+  "description": "Build an MCP server and bundle your tools into a shareable plugin, end to end. Two skills: build-mcp scaffolds one server; build-plugin packages skills, hooks, agents, and MCP servers into an installable plugin and ships it via a marketplace. Both branch on audience (personal, org, public).",
+  "version": "1.7.0",
   "author": { "name": "TechWolf" }
 }
