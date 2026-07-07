@@ -8,7 +8,7 @@ Users pull new versions with `/plugin marketplace update`, or Claude Code checks
 
 ## Version boundary
 
-Set `version` (semver) in `plugin.json`. Users only get an update when you bump it, so a version bump is a clean, intentional update boundary. Omit `version` everywhere and Claude Code falls back to the git commit SHA, treating every commit as a new version, which is noisier than you usually want. When a plugin's `plugin.json` and its marketplace entry disagree, `plugin.json` wins.
+Set `version` (semver) in `plugin.json`. Users only get an update when you bump it, so a version bump is a clean, intentional update boundary. Omit `version` everywhere and Claude Code falls back to the git commit SHA, treating every commit as a new version, which is noisier than you usually want. Claude Code resolves the version from `plugin.json` first, then the marketplace entry, then the commit SHA, so do not set `version` in both places: `plugin.json` always wins, and a stale one there silently masks the value in the marketplace entry.
 
 ## Ownership
 
