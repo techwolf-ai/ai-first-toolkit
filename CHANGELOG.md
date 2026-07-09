@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.10.1] - 2026-07-09
+
+### Fixed
+
+- `session-tools` was skipped during marketplace sync ("requires .claude-plugin/plugin.json or a top-level SKILL.md"). The plugin shipped only the top-level Antigravity `plugin.json` marker and was missing the Claude Code `.claude-plugin/plugin.json` manifest that every other plugin carries. Added the `.claude-plugin/plugin.json` manifest (identical contents); the Antigravity marker is unchanged, so both hosts now resolve the plugin.
+
 ## [1.10.0] - 2026-07-07
 
 ### Added
