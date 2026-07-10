@@ -1,9 +1,10 @@
 # Session Tools
 
-Two skills for session continuity — finding past sessions and preserving the current one.
+Three skills for session continuity — finding past sessions, preserving the current one, and launching autonomous runs.
 
 - **`session-search`**, find a specific past session by title, working directory, time range, or free-text content across every transcript on disk.
 - **`handoff`**, write a tight resume note at the end of a session so the next session can pick up exactly where you left off, without replaying the conversation.
+- **`goal-prompt`**, turn a task, plan, or feature request into a ready-to-paste `/goal` command with a measurable end state, a demonstrable proof, and the constraints that must not drift.
 
 ## Getting Started
 
@@ -17,6 +18,7 @@ Two skills for session continuity — finding past sessions and preserving the c
 |-------|-------------|
 | `/session-search` | Find a past session by title, working directory, time range, or full-text content |
 | `/handoff` | Write a tight resume note so the next session starts from exactly where you stopped |
+| `/goal-prompt` | Turn a task into a ready-to-paste `/goal` command for an autonomous Claude Code run |
 
 ## `session-search`
 
@@ -100,12 +102,29 @@ Sample phrasings:
 
 If the directory is a git repo, the skill offers to add `HANDOFF.md` to `.gitignore` rather than staging it.
 
+## `goal-prompt`
+
+Turns whatever you are trying to accomplish into a single ready-to-paste `/goal` command for an autonomous Claude Code run. A good goal has three parts, and the skill enforces all of them:
+
+1. A measurable end state: one concrete finish line (a passing test, a file that must exist, a count, an empty queue).
+2. A stated proof: exactly how Claude demonstrates completion in its own output, since the `/goal` evaluator only reads the transcript.
+3. Constraints that must not drift: files not to touch, framing to keep, no network or prod.
+
+Output is one fenced `/goal ...` block plus 2-3 lines explaining why the end state is demonstrable.
+
+Sample phrasings:
+
+- `give me a goal`
+- `turn this into a goal`
+- `make this a /goal`
+- `/goal-prompt`
+
 ## Requirements
 
 - Claude Code ≥ 2.x
 - session-search: Python ≥ 3.10 (stdlib only; no pip install needed), macOS primary; Linux falls back to Code-only; Windows supported for Cowork path resolution
-- handoff: no additional requirements
+- handoff, goal-prompt: no additional requirements
 
 ## Attribution
 
-Skill sources: `skills/session-search/`, `skills/handoff/`.
+Skill sources: `skills/session-search/`, `skills/handoff/`, `skills/goal-prompt/`.

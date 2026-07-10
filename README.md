@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.10.1](https://img.shields.io/badge/version-1.10.1-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.11.0](https://img.shields.io/badge/version-1.11.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -14,7 +14,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 
 ## Plugins at a glance
 
-8 plugins, 27 skills. One install command each.
+8 plugins, 28 skills. One install command each.
 
 | Plugin | What it does | Install |
 |--------|--------------|---------|
@@ -23,14 +23,14 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **people-management** | AI-augmented management: 1:1 prep, meeting prep, triage, performance cycles | `claude plugin install people-management@techwolf-ai-first` |
 | **knowledge-base** | Evidence-backed KB; every answer cites literal quotes from your files | `claude plugin install knowledge-base@techwolf-ai-first` |
 | **ai-adoption** | Claude history analytics: token-doctor and task-profile | `claude plugin install ai-adoption@techwolf-ai-first` |
-| **session-tools** | Session continuity: find past sessions, write handoff notes | `claude plugin install session-tools@techwolf-ai-first` |
+| **session-tools** | Session continuity: find past sessions, write handoff notes, craft /goal prompts | `claude plugin install session-tools@techwolf-ai-first` |
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
 | **tool-build-kit** | Build an MCP server and bundle your tools into a shareable plugin, end to end | `claude plugin install tool-build-kit@techwolf-ai-first` |
 
 <a name="not-using-claude-code"></a>
 Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex). One caveat on per-platform support:
 
-- **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit, and the `handoff` skill in session-tools. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
+- **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit, and the `handoff` and `goal-prompt` skills in session-tools. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
 - **Host-aware (ai-adoption and session-tools):** token-doctor, task-profile, and session-search read agent **session history** off disk, which is per-platform. Each script detects the host (via the `platform` field `install.sh` stamps into each installed skill; override with `AI_FIRST_PLATFORM=claude|codex|antigravity`) and routes or degrades rather than scanning the wrong path. Support today:
 
   | Skill | Plugin | Claude Code / Cowork | Codex (`~/.codex/sessions`) | Antigravity |
@@ -89,10 +89,11 @@ Two skills for analyzing your Claude Code + Cowork session history. Local-only, 
 
 ### session-tools: Session Continuity
 
-Two skills for finding past sessions and preserving the current one.
+Three skills for finding past sessions, preserving the current one, and launching autonomous runs.
 
 - **session-search**: finds a specific past session by title, working directory, time range, or free-text content across every transcript on disk. Works on Claude Code / Cowork and Codex; Antigravity degrades with a clear message.
 - **handoff**: writes a tight `HANDOFF.md` resume note at the current working directory so a fresh session can continue without replaying the conversation. No platform dependency; works on Claude Code, Cowork, and Codex.
+- **goal-prompt**: turns a task, plan, or feature request into a ready-to-paste `/goal` command: one measurable end state, a demonstrable proof, and the constraints that must not drift. Targets Claude Code's `/goal` autonomous mode.
 
 ### techwolf-brand-kit: Brand Assets
 
@@ -188,7 +189,7 @@ ai-first-toolkit/
 │   ├── people-management/      # Management tooling (8 skills, 5 reference docs)
 │   ├── knowledge-base/         # Evidence-backed KB (4 skills, templates, index + verify scripts)
 │   ├── ai-adoption/            # Claude history analytics (2 skills: token-doctor, task-profile)
-│   ├── session-tools/          # Session continuity (2 skills: session-search, handoff)
+│   ├── session-tools/          # Session continuity (3 skills: session-search, handoff, goal-prompt)
 │   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
 │   └── tool-build-kit/         # MCP + plugin builder (2 skills: build-mcp, build-plugin)
 ├── install.sh                  # Codex + Antigravity skill installer

@@ -54,7 +54,7 @@
       "source": { "source": "local", "path": "./plugins/session-tools" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Productivity",
-      "description": "Two skills for session continuity. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped."
+      "description": "Three skills for session continuity and autonomous runs. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped. goal-prompt turns a task into a ready-to-paste /goal command with a measurable end state, proof, and constraints."
     },
     {
       "name": "tool-build-kit",
