@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.11.0] - 2026-07-10
+
+### Added
+
+- `goal-prompt` skill in `session-tools`: turns a task, plan, or feature request into a ready-to-paste `/goal` command for an autonomous Claude Code run. Enforces the three-part shape the `/goal` evaluator needs: a measurable end state, a proof demonstrable in Claude's own output, and constraints that must not drift.
+
+### Changed
+
+- `session-tools` plugin bumped to v1.1.0; description updated in both `plugin.json` markers and both marketplace manifests.
+
 ## [1.10.1] - 2026-07-09
 
 ### Fixed

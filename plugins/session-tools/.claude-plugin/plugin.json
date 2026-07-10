@@ -1,5 +1,5 @@
 {
   "name": "session-tools",
-  "version": "1.0.0",
-  "description": "Two skills for session continuity. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped."
+  "version": "1.1.0",
+  "description": "Three skills for session continuity and autonomous runs. session-search finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content. handoff writes a tight resume note so a fresh session picks up exactly where the last one stopped. goal-prompt turns a task into a ready-to-paste /goal command with a measurable end state, proof, and constraints."
 }
