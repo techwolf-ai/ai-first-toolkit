@@ -1,0 +1,12 @@
+{
+  "key": "APP-301",
+  "fields": {
+    "parent": null,
+    "issuelinks": [
+      {
+        "type": { "name": "Relates" },
+        "outwardIssue": { "key": "APP-200" }
+      }
+    ]
+  }
+}

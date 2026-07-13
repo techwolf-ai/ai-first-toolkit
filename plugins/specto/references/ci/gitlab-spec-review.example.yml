@@ -1,0 +1,47 @@
+# Specto V0.7 CI example: lint pre-pass on every MR push.
+#
+# Copy this into your repo's .gitlab-ci.yml (or include from there).
+# This runs the deterministic lint pass — em-dashes, emoji codes, missing
+# metadata rows, metric count — on the product-spec.md files changed by
+# the MR. Lint failures fail the job (gating).
+#
+# Model-driven review (reviewer agents) is NOT included here — see the
+# README in this directory for guidance on wiring the model pass.
+#
+# Assumptions:
+# 1. The Specto plugin is installed in the CI runner (or the lint
+#    scripts have been copied into your repo at .specto/scripts/lint/).
+# 2. The runner has bash + jq installed.
+
+specto-spec-lint:
+  stage: test
+  image: alpine:3.19
+  before_script:
+    - apk add --no-cache bash jq git
+  script:
+    # Find product-spec.md files changed in this MR.
+    - |
+      changed=$(git diff --name-only "origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-main}"...HEAD -- 'docs/development/specs/**/product-spec.md' || true)
+      if [ -z "$changed" ]; then
+        echo "no product-spec.md changes in this MR; skipping lint."
+        exit 0
+      fi
+      echo "Linting changed product specs:"
+      echo "$changed"
+      # Resolve the lint library — adjust path if you copied scripts into your repo.
+      LINT_DIR="${SPECTO_LINT_DIR:-/opt/specto/scripts/lint}"
+      if [ ! -d "$LINT_DIR" ]; then
+        echo "Specto lint dir not found at $LINT_DIR. Set SPECTO_LINT_DIR or copy plugins/specto/scripts/lint/ into your repo."
+        exit 1
+      fi
+      failed=0
+      for f in $changed; do
+        if ! "$LINT_DIR/product-spec-lint.sh" "$f"; then
+          failed=$((failed + 1))
+        fi
+      done
+      [ "$failed" -eq 0 ] || { echo "$failed file(s) failed lint."; exit 1; }
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - docs/development/specs/**/*.md

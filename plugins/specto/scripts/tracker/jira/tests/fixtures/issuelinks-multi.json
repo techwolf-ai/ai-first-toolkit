@@ -1,0 +1,10 @@
+{
+  "key": "APP-100",
+  "fields": {
+    "issuelinks": [
+      { "id": "46401", "type": { "name": "Blocks" }, "outwardIssue": { "key": "APP-200" } },
+      { "id": "46402", "type": { "name": "Relates" }, "inwardIssue": { "key": "APP-300" } },
+      { "id": "46401", "type": { "name": "Blocks" }, "outwardIssue": { "key": "APP-200" } }
+    ]
+  }
+}

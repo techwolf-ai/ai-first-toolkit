@@ -1,0 +1,20 @@
+{
+  "data": {
+    "issue": {
+      "children": {
+        "nodes": [
+          {
+            "id": "c1"
+          }
+        ]
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "specto"
+          }
+        ]
+      }
+    }
+  }
+}

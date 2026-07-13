@@ -17,6 +17,8 @@ All skills execute locally through your Claude Code or Codex session. Any API ca
 
 The content-studio plugin includes a local Next.js web application that runs on localhost. It does not communicate with external servers.
 
+The specto plugin collects nothing and sends nothing. It contains no analytics or telemetry; the only network traffic it produces is the calls you explicitly configure to your own forge (GitLab/GitHub) and tracker (Jira, Linear, or GitHub Issues) using your own credentials.
+
 ## Contact
 
 Questions about this policy: lennert.demey@techwolf.ai

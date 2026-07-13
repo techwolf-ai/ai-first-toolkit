@@ -1,0 +1,8 @@
+Use the specto:code-mr-review subagent to review a code branch against its spec and ticket, in COLLECT mode (print findings to stdout grouped by axis; do not post to any MR, do not run glab).
+
+Inputs to pass to the subagent:
+- branch_diff: the contents of ./branch_diff.txt (read the file and pass its text as the diff).
+- spec_path: ./docs/development/specs/2026-01-01-canned-replies/engineering-spec.md — anchor on §2.3 Storage model.
+- ticket AC: read it by running the specto helper "$CLAUDE_PLUGIN_ROOT/scripts/tracker/get-ticket-description.sh" TOY-2 --from-fixture ./ac.json (this returns the ticket description + acceptance criteria offline; do NOT call acli).
+
+Collect mode only — no mr_iid, no project_path. Print the findings.

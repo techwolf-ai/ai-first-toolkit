@@ -1,0 +1,7 @@
+{
+  "data": {
+    "issue": {
+      "description": "# Goal\n\nShip **confidence** scores via `GET /skills`.\n\n- AC1: score in [0, 1]."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "verify-milestone verdict",
+  "description": "The machine-readable result verify-milestone emits for one milestone. run-epic gates the next milestone on overall == 'pass'.",
+  "type": "object",
+  "required": ["milestone", "suite", "acceptance_criteria", "overall", "uncovered_or_failed"],
+  "additionalProperties": false,
+  "properties": {
+    "milestone": { "type": "string", "description": "Milestone id, e.g. 'M1'." },
+    "suite": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["pass", "fail", "skipped"] },
+        "command": { "type": "string", "description": "The test command run." }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "met"],
+        "properties": {
+          "id": { "type": "string", "description": "AC id, e.g. 'M1-AC1' or 'M1-TAC1'." },
+          "met": { "type": "boolean" },
+          "covering_tests": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "overall": { "enum": ["pass", "fail"] },
+    "uncovered_or_failed": {
+      "type": "array",
+      "description": "AC ids that are unmet or lack a covering test; empty when overall == 'pass'.",
+      "items": { "type": "string" }
+    }
+  }
+}

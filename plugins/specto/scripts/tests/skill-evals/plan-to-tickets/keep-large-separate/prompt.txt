@@ -1,0 +1,1 @@
+Use the specto plan-to-tickets skill in DRY RUN on the plan at .specto/plan.md (epic TOY-1, spec folder docs/development/specs/2026-01-01-search). This is a dry run only — do NOT create anything in Jira and do NOT run any live acli writes. Show the dry-run output: the tickets it would create, each with its acceptance criteria and spec-section link.

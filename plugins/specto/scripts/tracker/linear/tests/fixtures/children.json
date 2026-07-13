@@ -1,0 +1,38 @@
+{
+  "data": {
+    "issue": {
+      "children": {
+        "nodes": [
+          {
+            "identifier": "ENG-10",
+            "title": "Build the API",
+            "state": {
+              "name": "In Progress"
+            },
+            "labels": {
+              "nodes": [
+                {
+                  "name": "Bug"
+                }
+              ]
+            }
+          },
+          {
+            "identifier": "ENG-11",
+            "title": "Write docs",
+            "state": {
+              "name": "Todo"
+            },
+            "labels": {
+              "nodes": [
+                {
+                  "name": "specto"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "data": {
+    "issue": {
+      "children": {
+        "nodes": []
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "specto"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+[
+  {"environment": {"id": 1, "name": "staging"}, "wait_timer": 0, "current_user_can_approve": true},
+  {"environment": {"id": 2, "name": "production"}, "wait_timer": 0, "current_user_can_approve": false}
+]

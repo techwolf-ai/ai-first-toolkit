@@ -1,0 +1,7 @@
+{
+  "name": "specto",
+  "description": "Spec-to-implementation workflow: in-repo specs reviewed like code via MR/PR agent panels, plan-to-tickets (Jira, Linear, GitHub Issues), ticket-to-code with scope discipline and a Definition-of-Done gate. GitLab + GitHub, git + jj. Zero telemetry.",
+  "version": "1.0.0",
+  "author": { "name": "TechWolf" },
+  "keywords": ["specs", "spec-review", "spec-driven-development", "planning", "merge-request", "pull-request", "jira", "linear", "github-issues", "workflow"]
+}

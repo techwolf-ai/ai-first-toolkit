@@ -1,0 +1,18 @@
+[
+  {
+    "key": "APP-101",
+    "fields": {
+      "summary": "Wire the scoring endpoint",
+      "status": {"name": "In Progress"},
+      "issuetype": {"name": "Task"}
+    }
+  },
+  {
+    "key": "APP-102",
+    "fields": {
+      "summary": "Fix calibration drift on empty input",
+      "status": {"name": "To Do"},
+      "issuetype": {"name": "Bug"}
+    }
+  }
+]

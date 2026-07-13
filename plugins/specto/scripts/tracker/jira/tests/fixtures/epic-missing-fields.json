@@ -1,0 +1,10 @@
+{
+  "key": "APP-1234",
+  "fields": {
+    "summary": "Epic missing classification metadata",
+    "issuetype": { "name": "Epic" },
+    "Q1: Is the change affecting the authentication and authorization methods to the service?": { "value": "No" },
+    "Q2: Is this a change that could impact the availability of services?": { "value": "No" },
+    "Q3: Will the change make permanent changes to customer data?": { "value": "No" }
+  }
+}

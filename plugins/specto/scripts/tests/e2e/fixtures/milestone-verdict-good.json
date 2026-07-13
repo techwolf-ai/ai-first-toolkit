@@ -1,0 +1,10 @@
+{
+  "milestone": "M1",
+  "suite": { "status": "pass", "command": "just test-unit" },
+  "acceptance_criteria": [
+    { "id": "M1-AC1", "met": true, "covering_tests": ["tests/test_match.py::test_top_n"] },
+    { "id": "M1-TAC1", "met": true, "covering_tests": ["tests/test_match_e2e.py::test_endpoint"] }
+  ],
+  "overall": "pass",
+  "uncovered_or_failed": []
+}

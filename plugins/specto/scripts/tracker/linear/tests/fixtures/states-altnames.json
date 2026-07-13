@@ -1,0 +1,29 @@
+{
+  "data": {
+    "issue": {
+      "id": "uuid-1",
+      "team": {
+        "states": {
+          "nodes": [
+            {
+              "id": "st-backlog",
+              "name": "Backlog"
+            },
+            {
+              "id": "st-prog",
+              "name": "In Progress"
+            },
+            {
+              "id": "st-rev",
+              "name": "Code Review"
+            },
+            {
+              "id": "st-done",
+              "name": "Done"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

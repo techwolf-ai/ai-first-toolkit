@@ -1,0 +1,15 @@
+{
+  "data": {
+    "teams": {
+      "nodes": [
+        {
+          "id": "team-uuid",
+          "key": "ENG",
+          "cycles": {
+            "nodes": []
+          }
+        }
+      ]
+    }
+  }
+}

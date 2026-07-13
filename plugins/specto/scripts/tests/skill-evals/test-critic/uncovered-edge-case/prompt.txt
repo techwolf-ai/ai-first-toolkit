@@ -1,0 +1,7 @@
+Use the specto:test-critic subagent to audit the unit-test edge-case coverage of a branch diff.
+
+Inputs to pass to the subagent:
+- branch_diff: the contents of ./branch_diff.txt (read the file and pass its text as the diff).
+- spec_path: ./docs/development/specs/2026-01-01-paging/engineering-spec.md — the linked spec section §2.1 bounds what counts as an edge case.
+
+Collect mode — print the test-critic report (its per-unit ✓/✗/? list and the Summary line) to stdout. Do not post to any MR.

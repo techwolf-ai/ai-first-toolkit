@@ -1,0 +1,12 @@
+{
+  "number": 7,
+  "url": "https://github.com/acme/widgets/pull/7",
+  "title": "[APP-1] Add confidence scoring",
+  "state": "OPEN",
+  "isDraft": true,
+  "headRefName": "f-app-1",
+  "baseRefName": "main",
+  "headRefOid": "head111",
+  "baseRefOid": "base000",
+  "body": "Existing PR summary."
+}

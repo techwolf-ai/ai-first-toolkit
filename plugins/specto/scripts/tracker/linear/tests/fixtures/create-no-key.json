@@ -1,0 +1,10 @@
+{
+  "data": {
+    "issueCreate": {
+      "success": true,
+      "issue": {
+        "id": "uuid-new"
+      }
+    }
+  }
+}

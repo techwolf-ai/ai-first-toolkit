@@ -1,0 +1,4 @@
+[
+  {"bucket": "pass", "name": "lint", "link": "https://github.com/acme/widgets/actions/runs/557/job/9001", "state": "SUCCESS"},
+  {"bucket": "pending", "name": "unit", "link": "https://github.com/acme/widgets/actions/runs/557/job/9002", "state": "IN_PROGRESS"}
+]
