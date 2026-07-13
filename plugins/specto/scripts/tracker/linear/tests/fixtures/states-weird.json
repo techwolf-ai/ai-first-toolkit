@@ -1,0 +1,21 @@
+{
+  "data": {
+    "issue": {
+      "id": "uuid-1",
+      "team": {
+        "states": {
+          "nodes": [
+            {
+              "id": "st-a",
+              "name": "Icebox"
+            },
+            {
+              "id": "st-b",
+              "name": "Shipping"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

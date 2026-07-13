@@ -1,0 +1,4 @@
+[
+  {"filename": "docs/development/specs/x/product-spec.md", "status": "modified", "patch": "@@ -10,3 +10,5 @@\n context line A\n context line B\n+added line C\n+added line D\n context line E"},
+  {"filename": "docs/development/specs/x/binary.md", "status": "modified"}
+]

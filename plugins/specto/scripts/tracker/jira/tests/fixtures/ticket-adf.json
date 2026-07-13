@@ -1,0 +1,89 @@
+{
+  "key": "APP-4242",
+  "fields": {
+    "summary": "Add confidence scoring to skill timeline",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "heading",
+          "attrs": { "level": 1 },
+          "content": [ { "type": "text", "text": "Goal" } ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "text": "Implement a " },
+            { "type": "text", "text": "confidence score", "marks": [ { "type": "strong" } ] },
+            { "type": "text", "text": " per skill, calibrated against " },
+            { "type": "text", "text": "labelled data", "marks": [ { "type": "em" } ] },
+            { "type": "text", "text": "." }
+          ]
+        },
+        {
+          "type": "heading",
+          "attrs": { "level": 2 },
+          "content": [ { "type": "text", "text": "Acceptance criteria" } ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "paragraph", "content": [ { "type": "text", "text": "Score is in [0, 1]." } ] }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "paragraph", "content": [
+                  { "type": "text", "text": "Exposed via " },
+                  { "type": "text", "text": "GET /skills", "marks": [ { "type": "code" } ] },
+                  { "type": "text", "text": "." }
+                ] }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "attrs": { "level": 2 },
+          "content": [ { "type": "text", "text": "Steps" } ]
+        },
+        {
+          "type": "orderedList",
+          "content": [
+            { "type": "listItem", "content": [ { "type": "paragraph", "content": [ { "type": "text", "text": "Train the calibrator." } ] } ] },
+            { "type": "listItem", "content": [ { "type": "paragraph", "content": [ { "type": "text", "text": "Wire it into the scorer." } ] } ] }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "text": "Spec section: " },
+            {
+              "type": "text",
+              "text": "Storage model",
+              "marks": [ { "type": "link", "attrs": { "href": "https://example.atlassian.net/wiki/spaces/X/pages/123#2-3-storage-model" } } ]
+            }
+          ]
+        },
+        {
+          "type": "codeBlock",
+          "attrs": { "language": "python" },
+          "content": [ { "type": "text", "text": "def calibrate(scores):\n    return sigmoid(a * scores + b)" } ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "text": "First line" },
+            { "type": "hardBreak" },
+            { "type": "text", "text": "second line" }
+          ]
+        }
+      ]
+    }
+  }
+}

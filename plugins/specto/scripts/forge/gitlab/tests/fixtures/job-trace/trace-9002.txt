@@ -1,0 +1,5 @@
+line A
+line B
+... lots of build output ...
+FAIL: test_confidence.py::test_calibrate
+AssertionError: 0.7 != 0.85

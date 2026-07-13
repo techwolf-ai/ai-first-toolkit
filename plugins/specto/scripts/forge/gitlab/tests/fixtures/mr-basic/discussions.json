@@ -1,0 +1,4 @@
+[
+  {"id":"d1","notes":[{"id":101,"body":"plain human comment about §1.4","resolved":false}]},
+  {"id":"d2","notes":[{"id":102,"body":"[specto:scope-review#aaaa1111] scope looks fine","resolved":false}]}
+]

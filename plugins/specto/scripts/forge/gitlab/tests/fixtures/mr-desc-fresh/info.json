@@ -1,0 +1,5 @@
+{
+  "iid": 5,
+  "web_url": "https://gitlab.example/x/-/merge_requests/5",
+  "description": "Existing MR summary.\n\nImplements [APP-1] per the spec."
+}

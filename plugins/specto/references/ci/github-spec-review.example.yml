@@ -1,0 +1,55 @@
+# Specto CI example: lint pre-pass on every PR push (GitHub Actions).
+#
+# Copy this into .github/workflows/spec-lint.yml in your repo.
+# This runs the deterministic lint pass — em-dashes, emoji codes, missing
+# metadata rows, metric count — on the product-spec.md files changed by
+# the PR. Lint failures fail the job (gating).
+#
+# Model-driven review (reviewer agents) is NOT included here — see the
+# README in this directory for guidance on wiring the model pass.
+#
+# Assumptions:
+# 1. The Specto lint scripts are available: either checked out from the
+#    plugin repo (adjust the checkout step) or copied into your repo at
+#    .specto/scripts/lint/ (set SPECTO_LINT_DIR accordingly).
+# 2. ubuntu-latest ships bash, jq, and git — no extra installs needed.
+
+name: specto-spec-lint
+
+on:
+  pull_request:
+    paths:
+      - "docs/development/specs/**/*.md"
+
+jobs:
+  spec-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lint changed product specs
+        env:
+          SPECTO_LINT_DIR: ${{ vars.SPECTO_LINT_DIR }}
+        run: |
+          changed=$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD -- 'docs/development/specs/**/product-spec.md' || true)
+          if [ -z "$changed" ]; then
+            echo "no product-spec.md changes in this PR; skipping lint."
+            exit 0
+          fi
+          echo "Linting changed product specs:"
+          echo "$changed"
+          # Resolve the lint library — adjust path if you copied scripts into your repo.
+          LINT_DIR="${SPECTO_LINT_DIR:-$GITHUB_WORKSPACE/.specto/scripts/lint}"
+          if [ ! -d "$LINT_DIR" ]; then
+            echo "Specto lint dir not found at $LINT_DIR. Set the SPECTO_LINT_DIR repo variable or copy plugins/specto/scripts/lint/ into your repo."
+            exit 1
+          fi
+          failed=0
+          for f in $changed; do
+            if ! "$LINT_DIR/product-spec-lint.sh" "$f"; then
+              failed=$((failed + 1))
+            fi
+          done
+          [ "$failed" -eq 0 ] || { echo "$failed file(s) failed lint."; exit 1; }

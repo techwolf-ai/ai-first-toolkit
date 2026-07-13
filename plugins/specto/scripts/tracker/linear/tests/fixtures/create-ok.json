@@ -1,0 +1,11 @@
+{
+  "data": {
+    "issueCreate": {
+      "success": true,
+      "issue": {
+        "identifier": "ENG-123",
+        "id": "uuid-new"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "old_path": "docs/development/specs/x/product-spec.md",
+    "new_path": "docs/development/specs/x/product-spec.md",
+    "new_file": false,
+    "renamed_file": false,
+    "deleted_file": false,
+    "diff": "@@ -10,3 +10,5 @@\n context line A\n context line B\n+added line C\n+added line D\n context line E\n"
+  },
+  {
+    "old_path": "docs/development/specs/x/binary.md",
+    "new_path": "docs/development/specs/x/binary.md",
+    "new_file": false,
+    "renamed_file": false,
+    "deleted_file": false,
+    "diff": ""
+  }
+]

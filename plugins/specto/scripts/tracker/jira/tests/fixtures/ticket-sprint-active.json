@@ -1,0 +1,9 @@
+{
+  "key": "APP-400",
+  "fields": {
+    "customfield_10020": [
+      { "id": 5270, "name": "Sprint 41", "state": "closed" },
+      { "id": 5271, "name": "Sprint 42", "state": "active" }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "iid": 6,
+  "web_url": "https://gitlab.example/x/-/merge_requests/6",
+  "description": "Existing MR summary.\n\nImplements [APP-1] per the spec.\n\n<!-- specto:walkthrough:start -->\n## Change walkthrough\n\nOLD diagram that must be replaced.\n<!-- specto:walkthrough:end -->"
+}

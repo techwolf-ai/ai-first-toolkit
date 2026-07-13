@@ -1,0 +1,26 @@
+{
+  "data": {
+    "issue": {
+      "parent": null,
+      "relations": {
+        "nodes": [
+          {
+            "type": "blocks",
+            "relatedIssue": {
+              "identifier": "ENG-9"
+            }
+          },
+          {
+            "type": "related",
+            "relatedIssue": {
+              "identifier": "ENG-2"
+            }
+          }
+        ]
+      },
+      "inverseRelations": {
+        "nodes": []
+      }
+    }
+  }
+}

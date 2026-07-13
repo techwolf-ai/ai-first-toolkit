@@ -1,0 +1,7 @@
+{
+  "key": "APP-300",
+  "fields": {
+    "parent": { "key": "APP-100" },
+    "issuelinks": []
+  }
+}

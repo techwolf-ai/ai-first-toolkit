@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.12.0] - 2026-07-13
+
+### Added
+
+- `specto` plugin (v1.0.0): spec-to-implementation workflow, specs reviewed like code. In-repo product and engineering specs approved through MR/PR review by a five-lens agent panel, plan-to-tickets against Jira, Linear, or GitHub Issues, and ticket-to-code with scope discipline and an independent Definition-of-Done gate. 22 skills, 11 agents. GitLab + GitHub forges auto-detected; git default, jj auto-detected; bring-your-own compliance-classification profile, off by default. Zero telemetry: no analytics, no tracking, no network calls beyond your own forge and tracker.
+- Claude Code-only: specto's review panels run as subagents and its guardrails as plugin hooks, so it is excluded from `install.sh` (Codex and Antigravity) and the `.agents/` marketplace manifest.
+
 ## [1.11.0] - 2026-07-10
 
 ### Added

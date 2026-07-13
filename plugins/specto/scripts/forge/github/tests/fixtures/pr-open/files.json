@@ -1,0 +1,9 @@
+[
+  {"filename": "docs/development/specs/x/product-spec.md", "status": "modified", "patch": "@@ -10,3 +10,5 @@\n context line A\n context line B\n+added line C\n+added line D\n context line E"},
+  {"filename": "src/new-module.py", "status": "added", "patch": "@@ -0,0 +1,2 @@\n+line one\n+line two"}
+]
+[
+  {"filename": "src/renamed.py", "previous_filename": "src/old-name.py", "status": "renamed", "patch": "@@ -1,2 +1,2 @@\n-old\n+new\n same"},
+  {"filename": "assets/logo.png", "status": "modified"},
+  {"filename": "src/gone.py", "status": "removed", "patch": "@@ -1,2 +0,0 @@\n-a\n-b"}
+]

@@ -1,0 +1,7 @@
+scenario: matching-employees
+source: <SPEC_FOLDER>
+files:
+  - spec/product-spec.md
+  - spec/engineering-spec.md
+  - spec/.specto-meta.yml
+  - plan.md

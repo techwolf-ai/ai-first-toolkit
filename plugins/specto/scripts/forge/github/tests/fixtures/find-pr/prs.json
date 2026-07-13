@@ -1,0 +1,22 @@
+[
+  {
+    "number": 42,
+    "url": "https://github.com/acme/widgets/pull/42",
+    "title": "[APP-1234] Add confidence scoring",
+    "state": "OPEN",
+    "isDraft": true,
+    "headRefName": "f-app-1234",
+    "baseRefName": "main",
+    "author": {"login": "alice"},
+    "labels": [{"name": "extra gh field that must not leak"}]
+  },
+  {
+    "number": 41,
+    "url": "https://github.com/acme/widgets/pull/41",
+    "title": "[APP-1234] Spike: scoring approach",
+    "state": "MERGED",
+    "isDraft": false,
+    "headRefName": "f-app-1234-spike",
+    "baseRefName": "main"
+  }
+]

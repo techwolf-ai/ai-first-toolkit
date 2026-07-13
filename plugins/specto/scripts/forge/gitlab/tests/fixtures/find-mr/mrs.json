@@ -1,0 +1,23 @@
+[
+  {
+    "iid": 42,
+    "web_url": "https://gitlab.example/x/-/merge_requests/42",
+    "title": "[APP-1234] Add confidence scoring",
+    "state": "opened",
+    "draft": true,
+    "source_branch": "f-app-1234",
+    "target_branch": "main",
+    "description": "extra glab field that must not leak into the normalized output",
+    "author": {"username": "alice"}
+  },
+  {
+    "iid": 41,
+    "web_url": "https://gitlab.example/x/-/merge_requests/41",
+    "title": "[APP-1234] Spike: scoring approach",
+    "state": "merged",
+    "draft": false,
+    "source_branch": "f-app-1234-spike",
+    "target_branch": "main",
+    "labels": ["spike"]
+  }
+]

@@ -1,0 +1,64 @@
+# Example compliance profile for Specto.
+#
+# A compliance profile is entirely OPT-IN. If your repo has no `.specto/config.yml`,
+# or that file has no `compliance:` block, the change-classification feature is OFF:
+# the change-classification agent and the DoD's classification source both print one
+# "no compliance profile configured; skipped" line and exit cleanly, `new-spec` skips
+# the epic-classification population, and the templates' classification rows can be
+# deleted.
+#
+# To turn it ON, copy the `compliance:` block below into your repo's
+# `.specto/config.yml` and adapt it: rewrite the questions to your org's change-
+# management process, and replace the `epic_field_id` placeholders with the custom-
+# field ids from your own tracker (the ids below are examples, not real fields).
+#
+# How the profile is used:
+#   - `epic_field` / `epic_field_id`: how the linked epic's answer to each question is
+#     read. The resolver tries the display name (`epic_field`) first, then falls back
+#     to the tenant field id (`epic_field_id`) if set.
+#   - `flag`: the named condition flag the question sets. The engineering-spec
+#     applicability matrix keys required sections off these flags (see
+#     references/engineering-spec-guidelines.md).
+#   - `keywords`: substrings the reviewer agent scans the diff/spec for, to catch a
+#     flag that should have been answered Yes but was left No (drift detection).
+#   - `rigor`: what a Yes answer demands in the spec. The DoD check verifies each
+#     item; the pre-MR checklist restates them.
+
+compliance:
+  # Optional link shown to authors; replace with your org's change-management guide.
+  guide: https://your-org.example/change-management-guide
+  # Label expected on epics that carry a non-standard change classification.
+  epic_label: non-standard-change
+  questions:
+    - id: Q1
+      flag: security
+      question: "Does the change affect authentication or authorization?"
+      epic_field: "Q1: Is the change affecting the authentication or authorization methods of the service?"
+      epic_field_id: customfield_10001   # example placeholder; use your tenant's field id
+      keywords: [auth, authn, authz, permission, RBAC, JWT, SSO, access control]
+      rigor:
+        - security reviewer assigned in the engineering-spec stakeholder table
+        - audit-trail content present in engineering-spec section 2
+        - permission rollback addressed in engineering-spec section 4
+
+    - id: Q2
+      flag: availability
+      question: "Does the change affect a production service's availability or SLOs?"
+      epic_field: "Q2: Does the change affect the availability or SLOs of a production service?"
+      epic_field_id: customfield_10002   # example placeholder; use your tenant's field id
+      keywords: [SLO, SLA, availability, uptime, latency, capacity, scaling, failover, canary]
+      rigor:
+        - platform reviewer assigned in the engineering-spec stakeholder table
+        - cost envelope (section 1.3) and load testing (section 3.3) completed
+        - canary and rollout plan (section 3.4) with a concrete rollback trigger
+
+    - id: Q3
+      flag: data
+      question: "Does the change store, migrate, or expose customer data?"
+      epic_field: "Q3: Does the change store, migrate, or expose customer data?"
+      epic_field_id: customfield_10003   # example placeholder; use your tenant's field id
+      keywords: [PII, customer data, migration, schema change, retention, export, GDPR]
+      rigor:
+        - data-platform reviewer assigned in the engineering-spec stakeholder table
+        - data-migration reversibility (section 4.3) addressed
+        - retention and access controls stated in engineering-spec section 2

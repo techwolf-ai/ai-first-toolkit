@@ -1,0 +1,26 @@
+{
+  "data": {
+    "teams": {
+      "nodes": [
+        {
+          "id": "team-uuid",
+          "key": "ENG",
+          "cycles": {
+            "nodes": [
+              {
+                "id": "cyc-34",
+                "name": "Sprint 7",
+                "number": 7
+              },
+              {
+                "id": "cyc-35",
+                "name": null,
+                "number": 42
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

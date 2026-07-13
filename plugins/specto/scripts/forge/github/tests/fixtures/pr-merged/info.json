@@ -1,0 +1,12 @@
+{
+  "number": 8,
+  "url": "https://github.com/acme/widgets/pull/8",
+  "title": "[APP-2] Spike",
+  "state": "MERGED",
+  "isDraft": false,
+  "headRefName": "f-app-2",
+  "baseRefName": "main",
+  "headRefOid": "head222",
+  "baseRefOid": "base111",
+  "body": ""
+}

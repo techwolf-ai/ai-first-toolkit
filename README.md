@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.11.0](https://img.shields.io/badge/version-1.11.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.12.0](https://img.shields.io/badge/version-1.12.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -14,7 +14,7 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 
 ## Plugins at a glance
 
-8 plugins, 28 skills. One install command each.
+9 plugins, 51 skills. One install command each.
 
 | Plugin | What it does | Install |
 |--------|--------------|---------|
@@ -26,11 +26,13 @@ claude plugin marketplace add techwolf-ai/ai-first-toolkit
 | **session-tools** | Session continuity: find past sessions, write handoff notes, craft /goal prompts | `claude plugin install session-tools@techwolf-ai-first` |
 | **techwolf-brand-kit** | Official TechWolf logo assets (SVG + PNG) for AI-generated outputs | `claude plugin install techwolf-brand-kit@techwolf-ai-first` |
 | **tool-build-kit** | Build an MCP server and bundle your tools into a shareable plugin, end to end | `claude plugin install tool-build-kit@techwolf-ai-first` |
+| **specto** | Specs reviewed like code: MR/PR agent panels, plan-to-tickets (Jira, Linear, GitHub Issues), DoD gate | `claude plugin install specto@techwolf-ai-first` |
 
 <a name="not-using-claude-code"></a>
 Not using Claude Code? Every skill follows the [agentskills.io](https://agentskills.io) spec and installs into Codex or Google Antigravity via [`./install.sh`](#codex). One caveat on per-platform support:
 
 - **Cross-platform (all skills except below):** ai-firstify, content-studio, knowledge-base, people-management, techwolf-brand-kit, tool-build-kit, and the `handoff` and `goal-prompt` skills in session-tools. These operate on your project files and prompts, so they work the same on Claude Code, Codex, and Antigravity.
+- **Claude Code-only (specto):** specto's review panels run as Claude Code subagents and its guardrails as plugin hooks, neither of which exist on Codex or Antigravity, so `install.sh` skips it entirely.
 - **Host-aware (ai-adoption and session-tools):** token-doctor, task-profile, and session-search read agent **session history** off disk, which is per-platform. Each script detects the host (via the `platform` field `install.sh` stamps into each installed skill; override with `AI_FIRST_PLATFORM=claude|codex|antigravity`) and routes or degrades rather than scanning the wrong path. Support today:
 
   | Skill | Plugin | Claude Code / Cowork | Codex (`~/.codex/sessions`) | Antigravity |
@@ -109,6 +111,15 @@ End-to-end guide for building an MCP server and bundling your tools into a share
 - **build-mcp**: five phases (analyze, build, deploy, scale, distribute). Establishes audience (personal / org / public) and runtime (local stdio / hosted HTTP) with `AskUserQuestion` before writing a line of code. Builds on the Anthropic `mcp-builder` skill for implementation depth and adds the scope-and-distribution decision flow it lacks. Branch table drives deploy and distribute across five targets; 6 reference files loaded on demand (transports, local deploy, marketplace distribution, scaling, Python and TypeScript quickstarts).
 - **build-plugin**: four phases (analyze, assemble, ship, maintain). Bundles many tools (skills, hooks, agents, MCP servers) into one installable plugin and ships it via a marketplace. Establishes audience and git host with `AskUserQuestion`, then a branch table maps each phase across Just-me / Team-org-GitHub / Team-org-GitLab / Public. Picks up where build-mcp's distribute phase leaves off; 4 reference files loaded on demand (assemble, marketplace, team enablement, maintain).
 
+### specto: Specs Reviewed Like Code
+
+In-repo product and engineering specs, approved through MR/PR review by an agent panel, then driven to shipped code through tickets with scope discipline and a Definition-of-Done gate. Claude Code-only (subagents + hooks). Zero telemetry.
+
+- **Spec review**: every spec ships as an MR/PR reviewed in parallel by a five-lens agent panel (product, scope, OKR-alignment, engineering, change-classification)
+- **Tracker integration**: plan-to-tickets and ticket-to-code against Jira, Linear, or GitHub Issues, with spec-section permalinks, dependency edges, and status transitions
+- **Independent validation**: a separate DoD agent grades the work against five Definition-of-Done sources; an adversarial test-critic audits edge-case coverage
+- **Your stack**: GitLab or GitHub auto-detected; git by default, jj auto-detected; bring-your-own compliance profile, off by default
+
 ## Quick start
 
 ### Claude Code
@@ -123,6 +134,7 @@ claude plugin install ai-adoption@techwolf-ai-first
 claude plugin install session-tools@techwolf-ai-first
 claude plugin install techwolf-brand-kit@techwolf-ai-first
 claude plugin install tool-build-kit@techwolf-ai-first
+claude plugin install specto@techwolf-ai-first
 ```
 
 ### Codex
@@ -140,6 +152,8 @@ Skills follow the [agentskills.io](https://agentskills.io) spec:
 ./install.sh techwolf-brand-kit
 ./install.sh tool-build-kit
 ```
+
+specto is not installable via `install.sh`: it is Claude Code-only (subagents + hooks).
 
 <details>
 <summary>More install commands</summary>
@@ -191,7 +205,8 @@ ai-first-toolkit/
 │   ├── ai-adoption/            # Claude history analytics (2 skills: token-doctor, task-profile)
 │   ├── session-tools/          # Session continuity (3 skills: session-search, handoff, goal-prompt)
 │   ├── techwolf-brand-kit/     # Brand assets (logo variants in SVG + PNG)
-│   └── tool-build-kit/         # MCP + plugin builder (2 skills: build-mcp, build-plugin)
+│   ├── tool-build-kit/         # MCP + plugin builder (2 skills: build-mcp, build-plugin)
+│   └── specto/                 # Specs reviewed like code (22 skills, 11 agents; Claude Code-only)
 ├── install.sh                  # Codex + Antigravity skill installer
 └── README.md
 ```
@@ -206,6 +221,7 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest, an Ant
 - [session-tools README](plugins/session-tools/README.md)
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 - [tool-build-kit README](plugins/tool-build-kit/README.md)
+- [specto README](plugins/specto/README.md)
 
 ## Contributing
 

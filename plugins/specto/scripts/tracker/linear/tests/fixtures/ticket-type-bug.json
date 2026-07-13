@@ -1,0 +1,19 @@
+{
+  "data": {
+    "issue": {
+      "children": {
+        "nodes": []
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "impact:high"
+          },
+          {
+            "name": "Bug"
+          }
+        ]
+      }
+    }
+  }
+}

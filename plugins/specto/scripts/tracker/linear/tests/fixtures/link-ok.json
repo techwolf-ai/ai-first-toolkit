@@ -1,0 +1,10 @@
+{
+  "data": {
+    "issueRelationCreate": {
+      "success": true,
+      "issueRelation": {
+        "id": "rel-1"
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"data":{"repository":{"pullRequest":{"reviewThreads":{"pageInfo":{"hasNextPage":false,"endCursor":null},"nodes":[{"id":"PRRT_d1","isResolved":false,"path":"docs/development/specs/x/product-spec.md","line":10,"originalLine":10,"comments":{"nodes":[{"id":"PRRC_101","body":"some other comment","createdAt":"2026-07-01T10:00:00Z","author":{"login":"alice"}}]}}]}}}}}

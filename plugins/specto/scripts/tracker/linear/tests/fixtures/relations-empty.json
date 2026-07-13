@@ -1,0 +1,12 @@
+{
+  "data": {
+    "issue": {
+      "relations": {
+        "nodes": []
+      },
+      "inverseRelations": {
+        "nodes": []
+      }
+    }
+  }
+}

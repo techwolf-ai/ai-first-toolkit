@@ -1,0 +1,6 @@
+[
+  {"bucket": "pass", "name": "lint", "link": "https://github.com/acme/widgets/actions/runs/557/job/9001", "state": "SUCCESS"},
+  {"bucket": "fail", "name": "unit", "link": "https://github.com/acme/widgets/actions/runs/557/job/9002", "state": "FAILURE"},
+  {"bucket": "fail", "name": "integration", "link": "https://github.com/acme/widgets/actions/runs/557/job/9003", "state": "FAILURE"},
+  {"bucket": "fail", "name": "sonar", "link": "https://sonarcloud.io/project/widgets", "state": "FAILURE"}
+]

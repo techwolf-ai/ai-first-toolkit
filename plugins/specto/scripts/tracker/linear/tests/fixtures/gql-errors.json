@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "message": "Entity not found: Issue"
+    },
+    {
+      "message": "Argument Validation Error"
+    }
+  ]
+}

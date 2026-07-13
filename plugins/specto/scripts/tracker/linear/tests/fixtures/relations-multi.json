@@ -1,0 +1,30 @@
+{
+  "data": {
+    "issue": {
+      "relations": {
+        "nodes": [
+          {
+            "id": "rel-1",
+            "type": "blocks"
+          },
+          {
+            "id": "rel-2",
+            "type": "related"
+          }
+        ]
+      },
+      "inverseRelations": {
+        "nodes": [
+          {
+            "id": "rel-1",
+            "type": "blocks"
+          },
+          {
+            "id": "rel-3",
+            "type": "related"
+          }
+        ]
+      }
+    }
+  }
+}

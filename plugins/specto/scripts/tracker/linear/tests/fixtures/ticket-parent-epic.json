@@ -1,0 +1,15 @@
+{
+  "data": {
+    "issue": {
+      "parent": {
+        "identifier": "ENG-1"
+      },
+      "relations": {
+        "nodes": []
+      },
+      "inverseRelations": {
+        "nodes": []
+      }
+    }
+  }
+}

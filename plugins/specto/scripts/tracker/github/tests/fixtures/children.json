@@ -1,0 +1,1 @@
+{"subIssues": [{"number": 101, "title": "Wire the scoring endpoint", "state": "OPEN", "issueType": {"name": "Task"}}, {"number": 102, "title": "Fix the flaky import", "state": "CLOSED", "issueType": {"name": "Bug"}}]}

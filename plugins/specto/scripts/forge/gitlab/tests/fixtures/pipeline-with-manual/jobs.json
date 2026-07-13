@@ -1,0 +1,5 @@
+[
+  {"id": 9101, "status": "success", "stage": "test",     "name": "unit",            "web_url": "https://gitlab.example/-/jobs/9101"},
+  {"id": 9102, "status": "manual",  "stage": "deploy",   "name": "staging-deploy",  "web_url": "https://gitlab.example/-/jobs/9102"},
+  {"id": 9103, "status": "manual",  "stage": "teardown", "name": "staging-teardown","web_url": "https://gitlab.example/-/jobs/9103"}
+]

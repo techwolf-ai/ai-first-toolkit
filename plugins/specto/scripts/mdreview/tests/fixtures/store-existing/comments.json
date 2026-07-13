@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "id": "human-1",
+      "file": "docs/spec.md",
+      "source_line": 1,
+      "line_text": "line one",
+      "commit_sha": "",
+      "body": "a human note",
+      "created_at": "2026-06-01T00:00:00Z",
+      "resolved": false,
+      "source": "",
+      "replies": []
+    }
+  ]
+}

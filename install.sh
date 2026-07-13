@@ -47,15 +47,31 @@ Examples:
 EOF
 }
 
+# Claude Code-only plugins (subagents + hooks); never installed via this script
+CLAUDE_ONLY_PLUGINS=("specto")
+
+is_claude_only() {
+  local plugin_name="$1" p
+  for p in "${CLAUDE_ONLY_PLUGINS[@]}"; do
+    [[ "$p" == "$plugin_name" ]] && return 0
+  done
+  return 1
+}
+
 list_plugins() {
   for plugin_dir in "${SCRIPT_DIR}"/plugins/*/; do
     [[ -d "${plugin_dir}/skills" ]] || continue
+    is_claude_only "$(basename "${plugin_dir}")" && continue
     basename "${plugin_dir}"
   done
 }
 
 plugin_exists() {
   local plugin_name="$1"
+  if is_claude_only "${plugin_name}"; then
+    echo "Plugin '${plugin_name}' is Claude Code-only (subagents + hooks); install it with: claude plugin install ${plugin_name}@techwolf-ai-first" >&2
+    exit 1
+  fi
   [[ -d "${SCRIPT_DIR}/plugins/${plugin_name}/skills" ]]
 }
 
@@ -438,6 +454,10 @@ run_for_selected_plugins() {
         verify_plugin "$plugin_name" || had_failures=1
         ;;
       list)
+        if ! plugin_exists "$plugin_name"; then
+          echo "Error: plugin '${plugin_name}' not found" >&2
+          exit 1
+        fi
         printf "%s v%s:" "$plugin_name" "$(plugin_version "$plugin_name")"
         for skill_name in $(skill_names_for_plugin "$plugin_name"); do
           printf " %s" "$skill_name"
