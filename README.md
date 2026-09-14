@@ -1,6 +1,6 @@
 # TechWolf AI-First Toolkit
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.11.0](https://img.shields.io/badge/version-1.11.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg) ![v1.11.0](https://img.shields.io/badge/version-1.12.0-green.svg) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet.svg) ![Codex](https://img.shields.io/badge/Codex-compatible-orange.svg) ![Antigravity](https://img.shields.io/badge/Antigravity-compatible-4285F4.svg) ![agentskills.io](https://img.shields.io/badge/agentskills.io-spec-lightgrey.svg)
 
 Open-source agent skills from [TechWolf](https://techwolf.ai)'s [AI-First Bootcamp](https://ai-first.techwolf.ai), for Claude Code, Codex, and Google Antigravity.
 
@@ -84,7 +84,7 @@ Two skills for analyzing your Claude Code + Cowork session history. Local-only, 
 
 > **Host-aware (reads session history off disk).** Both skills work on Claude Code / Cowork **and Codex** (`~/.codex/sessions`); token-doctor prices Codex usage with OpenAI rates. Antigravity session analysis is unsupported (encrypted IDE store). Each script detects the host and degrades with a clear message rather than scanning the wrong path. See [Not using Claude Code?](#not-using-claude-code).
 
-- **token-doctor**: diagnoses where your token spend goes (length distribution, marathon share, cache rebuilds, per-project health) and writes a doctor-style terminal report. Opt-in deep dive fans out parallel Haiku subagents over hotspot sessions for habit-level recommendations.
+- **token-doctor**: diagnoses where your token spend goes (length distribution, marathon share, sub-agent fan-out, model mix, cache rebuilds, per-project health) and writes a doctor-style terminal report. Sub-agent and workflow-agent transcripts are rolled into the session that spawned them, so fan-out cost is visible rather than missing. Opt-in deep dive fans out parallel Haiku subagents over hotspot sessions for habit-level recommendations.
 - **task-profile**: mines sessions into a role-level map of what you actually do with AI, ranked by frequency and friction. Emits a shareable CSV, an interactive HTML explorer, AI-first coaching cards, and up to five skill proposals.
 
 ### session-tools: Session Continuity

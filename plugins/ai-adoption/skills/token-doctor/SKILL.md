@@ -23,11 +23,26 @@ The line is: token-doctor is about cost **shape**, not task inventory or recall.
 
 ## Prerequisites
 
-- Claude Code CLI transcripts: `~/.claude/projects/*/*.jsonl`
+- Claude Code transcripts: `~/.claude/projects/*/*.jsonl` (CLI **and** desktop app)
+- Sub-agent transcripts: `~/.claude/projects/*/<sid>/subagents/**/*.jsonl`, including workflow agents under `subagents/workflows/<wf>/`
 - Claude Cowork transcripts (optional): `~/Library/Application Support/Claude/local-agent-mode-sessions/*/*/local_*/audit.jsonl`
 - Python 3, stdlib only. No external services.
 
 If neither path exists, stop and say so.
+
+### What counts as one session
+
+Sub-agent transcripts are separate files but the same piece of work, so their cost
+rolls into the parent session rather than appearing as sessions of their own. This
+matters when you read the report:
+
+- `cost_usd` is main conversation **plus** fan-out. `main_cost_usd` and `subagent_cost_usd` split it.
+- Turn counts, the timeline, cache rebuilds and the re-read ratio are **main-session figures**. They describe how that one conversation's context grew; sub-agents have their own context.
+- So a session can show 100 turns and $641. That is not a contradiction, it is fan-out. Say so rather than letting the reader trip over it.
+
+Automation excluded by default: `sdk-cli` background dispatch, paperclip, ditto-routines,
+scheduled tasks, and the automation slash commands. Desktop-app sessions are interactive
+work and **are** counted.
 
 ---
 
@@ -41,7 +56,11 @@ The goal is: the user invokes the skill, sees a clean doctor's report within 10 
 ~/.claude/skills/token-doctor/scripts/inventory.py --since YYYY-MM-DD --out out/sessions.jsonl
 ```
 
-Default window: last 90 days. Flags: `--since`, `--until`, `--all`, `--include-automation`, `--no-cowork`. Automation runs (paperclip, `/loop`, `/schedule`, ditto-routines, scheduled-tasks) excluded by default.
+Default window: last 90 days. Flags: `--since`, `--until`, `--all`, `--include-automation`, `--no-cowork`. Automation runs (`sdk-cli` background dispatch, paperclip, `/loop`, `/schedule`, ditto-routines, scheduled-tasks) excluded by default.
+
+`--until YYYY-MM-DD` means midnight at the **start** of that day, so it excludes that day's sessions. To include today, leave `--until` off.
+
+The scan prints how many sub-agent transcripts it rolled into parent sessions. If it also reports sub-agents with no parent session on disk, that cost is not in the totals; mention it only if it is material.
 
 ### Step 1.2 — Aggregate (deterministic)
 
@@ -69,10 +88,12 @@ Read `out/user-stats.json`. Then **write the report directly in your message** a
   ── Vital signs ─────────────────────────────────────────────────────────
 
   🔴/🟡/🟢 Marathon (≥300 turns)    <N> conv  ·  $<X>  ·  <Y>% of spend
+  🔴/🟡/🟢 Fan-out (≥5 sub-agents)  <N> conv  ·  $<X>  ·  <Y>% of spend
   🔴/🟡/🟢 Zombie (≥4h wall clock)  <N> conv  ·  $<X>  ·  <Y>% of spend
   🔴/🟡/🟢 Cache rebuilds            <N> events · <Z>M tokens · ~$<X>
   🔴/🟡/🟢 Re-read ratio             <X>×   (healthy ≤15×, org avg 30×)
   📈 Peak context observed       <X>k tokens
+  🌳 Sub-agent cost               $<X> of $<total>  (<Y>%) across <N> transcripts
 
   ── Spend by conversation length ────────────────────────────────────────
 
@@ -80,6 +101,12 @@ Read `out/user-stats.json`. Then **write the report directly in your message** a
        6 to 20       <bar>   <%>   (<N> conv)
        …
        1,000+        <bar>   <%>   (<N> conv)
+
+  ── Model mix ───────────────────────────────────────────────────────────
+
+    <model>        $<X>   <%>   <N> turns    main $<X>/<N>t · sub $<X>/<N>t
+    <model>        $<X>   <%>   <N> turns    main $<X>/<N>t · sub $<X>/<N>t
+    …
 
   ── Diagnosis ───────────────────────────────────────────────────────────
 
@@ -89,7 +116,7 @@ Read `out/user-stats.json`. Then **write the report directly in your message** a
 
   ── Project chart ───────────────────────────────────────────────────────
 
-  ✅ clean · 🏃 marathon · 🔄 rebuilds · 🧟 zombie · ⚠️ multiple
+  ✅ clean · 🏃 marathon · 🌳 fanout · 🔄 rebuilds · 🧟 zombie · ⚠️ multiple
 
   <emoji>  $<X>  <truncated cwd>                              <meta line>
   <emoji>  $<X>  <truncated cwd>                              <meta line>
@@ -116,6 +143,8 @@ Read `out/user-stats.json`. Then **write the report directly in your message** a
 - **Use the emojis above consistently.** Box-drawing characters (─ ┌ └ │) are fine and make the report look like a medical printout.
 - **Traffic-light dots**: 🔴 = bad, 🟡 = watch, 🟢 = healthy. Apply the bands in the rubric below.
 - **Per-project emoji** must come from `by_cwd_top[i].emoji` in the JSON. Do not re-classify.
+- **Model mix** comes from `model_mix`, already sorted by cost. Show every model down to 1% of spend, then stop. Use readable names (`claude-opus-5` → Opus 5, `claude-fable-5-1` → Fable 5.1). The `main` / `sub` split is the point of the section: a model that is cheap in the main conversation and expensive across sub-agents is the clearest lever in the whole report, because sub-agent model tier is a one-line change in an `Agent(...)` call. Call that out when you see it.
+- **Fan-out** uses `fanout_conv` / `fanout_cost` / `fanout_share` (sessions with ≥ 5 sub-agents) and `subagent_cost` / `subagent_share` (fan-out's share of total spend). If `subagent_files` is 0, drop both the fan-out vital and the sub-agent line rather than printing zeroes.
 - **Bars** for the length distribution: build them with `█` characters proportional to the share. Use a fixed width like 36 chars.
 - **The diagnosis paragraph is yours to write** — it is the doctor's read on the data. Be specific. Don't restate the numbers; conclude from them. Aim for 3-5 sentences max. Examples of good diagnostic sentences:
   - "Your spend is concentrated in a small number of very long sessions: 22 conversations carry 70% of your bill."
@@ -134,6 +163,7 @@ Read `out/user-stats.json`. Then **write the report directly in your message** a
 | Metric | 🟢 | 🟡 | 🔴 |
 |---|---|---|---|
 | Marathon share | < 20% | 20-50% | ≥ 50% |
+| Fan-out share | < 20% | 20-50% | ≥ 50% |
 | Zombie share | < 20% | 20-50% | ≥ 50% |
 | Cache rebuild $ | < $50 | $50-$200 | ≥ $200 |
 | Re-read ratio | ≤ 15× | 15-35× | ≥ 35× |

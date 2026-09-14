@@ -42,6 +42,11 @@ COWORK_ROOT = _cowork_root()
 TASK_NOTIF_RE = re.compile(r"<task-notification>.*?</task-notification>", re.DOTALL)
 COMMAND_WRAPPER_RE = re.compile(r"<command-(?:name|message|args)>.*?</command-\w+>", re.DOTALL)
 LOCAL_COMMAND_CAVEAT_RE = re.compile(r"<local-command-caveat>.*?</local-command-caveat>", re.DOTALL)
+# Entrypoints that are background dispatch rather than a person at a keyboard.
+# Deny-list on purpose: `cli`, `claude-desktop` and any future interactive surface
+# count as real work. An unknown entrypoint is treated as interactive, because
+# silently dropping a person's sessions is the worse failure here.
+AUTOMATION_ENTRYPOINTS = {"sdk-cli", "sdk"}
 AUTOMATION_SLASH_CMDS = {
     "/loop",
     "/schedule",
@@ -222,7 +227,7 @@ def detect_automation(path: Path, first_entry_meta: dict, turns: list[dict], sum
     p = str(path)
     entrypoint = first_entry_meta.get("entrypoint") or ""
 
-    if entrypoint and entrypoint != "cli":
+    if entrypoint in AUTOMATION_ENTRYPOINTS:
         return True, f"entrypoint:{entrypoint}"
     if "/agent/local_ditto_" in p or "/agent/local_routine_" in p:
         return True, "ditto-routine"
@@ -383,6 +388,40 @@ def aggregate_tokens(turns: list[dict]) -> dict:
     return {**total, "by_model": by_model}
 
 
+def _subagent_tokens(paths: list[Path]) -> tuple[dict, int, int]:
+    """Token totals across one session's sub-agent transcripts. Usage only, no text."""
+    total = {"input": 0, "output": 0, "cache_read": 0, "cache_creation": 0}
+    by_model: dict[str, dict] = {}
+    turns = files = 0
+    for p in paths:
+        seen = False
+        try:
+            fh = p.open(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        with fh:
+            for line in fh:
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if e.get("type") != "assistant":
+                    continue
+                u = _usage_of(e)
+                if not u:
+                    continue
+                model, usage = u
+                bm = by_model.setdefault(model, {"input": 0, "output": 0, "cache_read": 0, "cache_creation": 0})
+                for k, v in usage.items():
+                    total[k] += v
+                    bm[k] += v
+                turns += 1
+                seen = True
+        if seen:
+            files += 1
+    return {**total, "by_model": by_model}, turns, files
+
+
 # ---------- session walking ----------
 
 def _first_meta(path: Path) -> dict:
@@ -420,12 +459,34 @@ def _cowork_title(audit: Path) -> str:
     return (meta.get("title") or meta.get("name") or (meta.get("initialMessage") or "")[:120] or "").strip()
 
 
-def _candidates(since_ts: float | None, until_ts: float | None) -> Iterator[tuple[Path, str]]:
+def _split_project(project_dir: Path) -> tuple[list[Path], dict[str, list[Path]]]:
+    """Split a project dir into main session files and sub-agent files by parent sid.
+
+    Main sessions are <project>/<sid>.jsonl. Sub-agents live at
+    <project>/<sid>/subagents/agent-*.jsonl, and workflow agents one level deeper at
+    <project>/<sid>/subagents/workflows/<wf>/agent-*.jsonl. Both shapes carry the
+    parent session id as the first path component, so one rule covers them.
+    """
+    mains: list[Path] = []
+    subs: dict[str, list[Path]] = {}
+    for p in sorted(project_dir.rglob("*.jsonl")):
+        parts = p.relative_to(project_dir).parts
+        if len(parts) == 1:
+            mains.append(p)
+        elif "subagents" in parts:
+            subs.setdefault(parts[0], []).append(p)
+    return mains, subs
+
+
+def _candidates(since_ts: float | None, until_ts: float | None) -> Iterator[tuple[Path, str, list[Path]]]:
+    # Sub-agent transcripts ride along with their parent session rather than
+    # becoming sessions of their own: they are the same unit of work.
     if CODE_ROOT.is_dir():
         for project_dir in CODE_ROOT.iterdir():
-            if not project_dir.is_dir():
+            if not project_dir.is_dir() or project_dir.name.startswith("_archive"):
                 continue
-            for jsonl in project_dir.glob("*.jsonl"):
+            mains, subs = _split_project(project_dir)
+            for jsonl in mains:
                 try:
                     mtime = jsonl.stat().st_mtime
                 except OSError:
@@ -434,7 +495,7 @@ def _candidates(since_ts: float | None, until_ts: float | None) -> Iterator[tupl
                     continue
                 if until_ts is not None and mtime > until_ts:
                     continue
-                yield jsonl, "code"
+                yield jsonl, "code", subs.get(jsonl.stem) or []
     if COWORK_ROOT.is_dir():
         for audit in COWORK_ROOT.rglob("local_*/audit.jsonl"):
             if "skills-plugin" in audit.parts:
@@ -447,10 +508,10 @@ def _candidates(since_ts: float | None, until_ts: float | None) -> Iterator[tupl
                 continue
             if until_ts is not None and mtime > until_ts:
                 continue
-            yield audit, "cowork"
+            yield audit, "cowork", []
 
 
-def process(path: Path, kind: str) -> dict | None:
+def process(path: Path, kind: str, subagent_paths: list[Path] | None = None) -> dict | None:
     try:
         st = path.stat()
     except OSError:
@@ -475,7 +536,18 @@ def process(path: Path, kind: str) -> dict | None:
 
     is_auto, reason = detect_automation(path, meta, turns, summary)
 
+    # Sub-agent tokens fold into the parent's totals. `turns` stays main-session-only,
+    # so per-session turn counts keep meaning one conversation.
     tokens = aggregate_tokens(turns)
+    sub_tokens, sub_turns, sub_files = _subagent_tokens(subagent_paths or [])
+    if sub_files:
+        for k in ("input", "output", "cache_read", "cache_creation"):
+            tokens[k] += sub_tokens[k]
+        for model, bm in sub_tokens["by_model"].items():
+            tgt = tokens["by_model"].setdefault(
+                model, {"input": 0, "output": 0, "cache_read": 0, "cache_creation": 0})
+            for k, v in bm.items():
+                tgt[k] += v
     cond = build_condensate(turns) if not is_auto else {"picks": [], "correction_count": 0, "tool_flail_events": 0}
 
     return {
@@ -493,6 +565,8 @@ def process(path: Path, kind: str) -> dict | None:
         "is_automation": is_auto,
         "automation_reason": reason,
         "tokens": tokens,
+        "subagent_files": sub_files,
+        "subagent_turns": sub_turns,
         "condensate": cond,
     }
 
@@ -534,6 +608,8 @@ def process_codex(path: Path) -> dict | None:
         "is_automation": False,
         "automation_reason": "",
         "tokens": aggregate_tokens(turns),
+        "subagent_files": 0,
+        "subagent_turns": 0,
         "condensate": cond,
     }
 
@@ -622,9 +698,9 @@ def main() -> int:
             if row is not None:
                 rows.append(row)
     else:
-        for path, kind in _candidates(since_ts, until_ts):
+        for path, kind, sub_paths in _candidates(since_ts, until_ts):
             scanned += 1
-            row = process(path, kind)
+            row = process(path, kind, sub_paths)
             if row is not None:
                 rows.append(row)
     apply_recurrence_automation(rows)
@@ -644,6 +720,7 @@ def main() -> int:
             "code": sum(1 for r in rows if r["kind"] == "code"),
             "cowork": sum(1 for r in rows if r["kind"] == "cowork"),
             "codex": sum(1 for r in rows if r["kind"] == "codex"),
+            "subagent_files": sum(r.get("subagent_files", 0) for r in rows),
         },
         "sessions": rows,
     }

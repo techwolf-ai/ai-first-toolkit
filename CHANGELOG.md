@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.12.0] - 2026-09-14
+
+### Fixed
+
+- `token-doctor` and `task-profile` reported roughly 6x too low for anyone working in the Claude desktop app. Two independent defects in each skill's `inventory.py`:
+  - **Desktop sessions were classified as automation.** The automation check was `entrypoint != "cli"`, an allow-list of one, so every transcript stamped `claude-desktop` was dropped by default. Replaced with an explicit `AUTOMATION_ENTRYPOINTS` deny-list (`sdk-cli`, `sdk`). An unknown entrypoint now counts as interactive, because silently dropping real work is the worse failure for a cost tool. `sdk-cli` background dispatch, paperclip, ditto-routines, scheduled tasks and the automation slash commands are still excluded by default.
+  - **Sub-agent transcripts were invisible.** The scan globbed `*/*.jsonl`, which only matches top-level session files. Sub-agent transcripts live at `<project>/<sid>/subagents/**`, and workflow agents at `<project>/<sid>/subagents/workflows/<wf>/**`. On the reference machine that was 796 of 1,089 files, carrying 28% of real spend. The scan now walks each project directory and rolls every sub-agent transcript into its parent session. Project directories starting with `_archive` are skipped.
+- Measured against real transcripts for 31-08-2026 to 14-09-2026: token-doctor went from $409 to $9,728 across the same window, 33 to 113 sessions. `task-profile` went from 11 to 97 interactive sessions.
+- `token-doctor` now takes the session id from the transcript filename. A resumed or forked transcript can still carry its originating `sessionId` on an early line, and two sessions sharing an id collided on `out/payloads/<sid>.json` in stage 2.
+- `ai-adoption`'s two plugin manifests had drifted apart: `.claude-plugin/plugin.json` was still on 2.0.0's predecessor 1.1.0 and still described `session-search` as part of the plugin. Both markers are now back in sync. Note that `preflight.py` checks that both markers exist but not that their versions match, which is how this drifted unnoticed.
+
+### Added
+
+- `token-doctor` surfaces fan-out and model tier, the two levers the old report could not see:
+  - **Fan-out vital sign.** Sessions with >= 5 sub-agent transcripts, their cost and share, plus total sub-agent spend as a share of the bill. New `fanout_*` and `subagent_*` fields in `user-stats.json`, a `--fanout-threshold` flag, and a 🌳 `fanout` health class in the per-project chart.
+  - **Model mix section.** Cost, share and turns per model, split main conversation vs sub-agent. This is the actionable half: a model that is cheap in the main conversation and expensive across sub-agents is a one-line change in an `Agent(...)` call. On the reference data Opus was 84% of spend and 8,453 of its turns were sub-agent turns worth $2,385.
+- Per-session `main_cost_usd`, `subagent_cost_usd`, `subagent_files`, `subagent_turns` and `subagent_by_model` in `sessions.jsonl`; `subagent_files` / `subagent_turns` in task-profile's inventory rows. Turn counts, timelines and cache metrics stay main-session figures so the length buckets keep meaning one conversation.
+
+### Changed
+
+- `ai-adoption` plugin bumped to v2.1.0; description updated in both `plugin.json` markers and both marketplace manifests.
+
 ## [1.11.0] - 2026-07-10
 
 ### Added

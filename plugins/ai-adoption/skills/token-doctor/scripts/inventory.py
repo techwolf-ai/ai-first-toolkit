@@ -35,6 +35,11 @@ def _cowork_root() -> Path:
 COWORK_ROOT = _cowork_root()
 
 # Automation markers we exclude by default (long-running automated processes inflate cost)
+# Entrypoints that are background dispatch rather than a person at a keyboard.
+# Deny-list on purpose: `cli`, `claude-desktop` and any future interactive surface
+# count as spend. An unknown entrypoint is treated as interactive, because silently
+# dropping real work is the worse failure for a cost tool.
+AUTOMATION_ENTRYPOINTS = {"sdk-cli", "sdk"}
 AUTOMATION_SLASH_CMDS = {
     "/loop", "/schedule", "/babysit-prs", "/ultrareview", "/autonomous-loop",
     "/productivity:update", "/productivity:start",
@@ -94,7 +99,7 @@ def _first_user_text(turns: list[dict]) -> str:
 def _is_automation(path: Path, turns: list[dict], first_meta: dict) -> str | None:
     p = str(path)
     ep = first_meta.get("entrypoint") or ""
-    if ep and ep != "cli": return f"entrypoint:{ep}"
+    if ep in AUTOMATION_ENTRYPOINTS: return f"entrypoint:{ep}"
     if "/agent/local_ditto_" in p or "/agent/local_routine_" in p: return "ditto-routine"
     if "--paperclip-instances-" in p: return "paperclip"
     if turns:
@@ -107,7 +112,67 @@ def _is_automation(path: Path, turns: list[dict], first_meta: dict) -> str | Non
                 return f"slash-command:{m.group(1)}"
     return None
 
-def _process_code_transcript(path: Path) -> dict | None:
+def _subagent_usage(path: Path) -> dict:
+    """Cost and turns for one sub-agent transcript. Usage only: no text, no timeline."""
+    agg = {"cost": 0.0, "turns": 0, "by_model": {}}
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return agg
+    for line in lines:
+        try:
+            e = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if e.get("type") != "assistant":
+            continue
+        u = _usage(e)
+        if not u:
+            continue
+        model, usage = u
+        cost = cost_for_usage(model, usage)
+        agg["cost"] += cost
+        agg["turns"] += 1
+        bm = agg["by_model"].setdefault(model, {"turns": 0, "cost": 0.0})
+        bm["turns"] += 1
+        bm["cost"] += cost
+    return agg
+
+def _rollup_subagents(paths: list[Path]) -> dict:
+    """Merge every sub-agent transcript belonging to one parent session."""
+    agg = {"cost": 0.0, "turns": 0, "files": 0, "by_model": {}}
+    for p in paths:
+        u = _subagent_usage(p)
+        if not u["turns"]:
+            continue
+        agg["files"] += 1
+        agg["cost"] += u["cost"]
+        agg["turns"] += u["turns"]
+        for model, bm in u["by_model"].items():
+            tgt = agg["by_model"].setdefault(model, {"turns": 0, "cost": 0.0})
+            tgt["turns"] += bm["turns"]
+            tgt["cost"] += bm["cost"]
+    return agg
+
+def _split_project(project_dir: Path) -> tuple[list[Path], dict[str, list[Path]]]:
+    """Split a project dir into main session files and sub-agent files by parent sid.
+
+    Main sessions are <project>/<sid>.jsonl. Sub-agents live at
+    <project>/<sid>/subagents/agent-*.jsonl, and workflow agents one level deeper at
+    <project>/<sid>/subagents/workflows/<wf>/agent-*.jsonl. Both shapes carry the
+    parent session id as the first path component, so one rule covers them.
+    """
+    mains: list[Path] = []
+    subs: dict[str, list[Path]] = {}
+    for p in sorted(project_dir.rglob("*.jsonl")):
+        parts = p.relative_to(project_dir).parts
+        if len(parts) == 1:
+            mains.append(p)
+        elif "subagents" in parts:
+            subs.setdefault(parts[0], []).append(p)
+    return mains, subs
+
+def _process_code_transcript(path: Path, subagents: dict | None = None) -> dict | None:
     """Parse a Claude Code .jsonl transcript."""
     try:
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
@@ -132,8 +197,10 @@ def _process_code_transcript(path: Path) -> dict | None:
             cwd = e.get("cwd") or (e.get("metadata") or {}).get("cwd")
             if cwd:
                 first_meta["cwd"] = cwd
+        if "entrypoint" not in first_meta:
+            # Independent of cwd: an early entry can carry one without the other.
             ep = e.get("entryPointType") or e.get("entrypoint")
-            if ep and "entrypoint" not in first_meta:
+            if ep:
                 first_meta["entrypoint"] = ep
         if t not in ("user", "assistant"):
             continue
@@ -152,9 +219,13 @@ def _process_code_transcript(path: Path) -> dict | None:
     if not turns:
         return None
 
-    sid = sid or path.stem
+    # The filename is the canonical session id. A resumed or forked transcript can
+    # still carry the originating sessionId on an early line, and two files sharing
+    # a sid would collide on out/payloads/<sid>.json in stage 2.
+    sid = path.stem or sid
     autom = _is_automation(path, turns, first_meta)
-    return _summarize_session(sid=sid, surface="code", path=path, cwd=cwd, turns=turns, automation=autom)
+    return _summarize_session(sid=sid, surface="code", path=path, cwd=cwd, turns=turns,
+                              automation=autom, subagents=subagents)
 
 def _process_codex_transcript(path: Path) -> dict | None:
     """Parse a Codex rollout (~/.codex/sessions/.../rollout-*.jsonl)."""
@@ -212,7 +283,8 @@ def _process_cowork_transcript(audit_path: Path) -> dict | None:
 
 def _summarize_session(sid: str, surface: str, path: Path, cwd: str | None,
                        turns: list[dict], automation: str | None,
-                       title_override: str | None = None) -> dict:
+                       title_override: str | None = None,
+                       subagents: dict | None = None) -> dict:
     # Filter to model turns (have usage) for cost; but keep all for turn count? Definition choice:
     # We count one model turn = one assistant turn with usage.
     model_turns = [t for t in turns if t.get("usage")]
@@ -248,10 +320,17 @@ def _summarize_session(sid: str, surface: str, path: Path, cwd: str | None,
         bm["cost"]           += cost
         bm["turns"]          += 1
 
-    # Total cost
+    # Total cost. Sub-agent transcripts are separate files but the same piece of work,
+    # so their cost rolls into the parent session. Turn counts, the timeline and the
+    # cache metrics stay main-session-only: they describe this conversation's own
+    # context growth, and the length buckets downstream are main-turn buckets.
     total_cost = sum(b["cost"] for b in by_model.values())
     for bm in by_model.values():
         bm["cost"] = round(bm["cost"], 6)
+    sub = subagents or {}
+    sub_cost = sub.get("cost", 0.0)
+    sub_by_model = {m: {"turns": v["turns"], "cost": round(v["cost"], 6)}
+                    for m, v in (sub.get("by_model") or {}).items()}
 
     # Duration
     first_ts = parse_ts(turns[0].get("ts"))
@@ -288,7 +367,12 @@ def _summarize_session(sid: str, surface: str, path: Path, cwd: str | None,
         "late_create_count": len(late_events),
         "late_create_tokens": sum(e["tokens"] for e in late_events),
         "rc_ratio": round(read_tot / max(cre_tot, 1), 2),
-        "cost_usd": round(total_cost, 4),
+        "cost_usd": round(total_cost + sub_cost, 4),
+        "main_cost_usd": round(total_cost, 4),
+        "subagent_cost_usd": round(sub_cost, 4),
+        "subagent_files": sub.get("files", 0),
+        "subagent_turns": sub.get("turns", 0),
+        "subagent_by_model": sub_by_model,
         "by_model": by_model,
         "tool_counts": tool_counts,
         "timeline": timeline,
@@ -329,7 +413,8 @@ def main():
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    n_in = n_out = n_autom = 0
+    n_in = n_out = n_autom = n_sub = n_orphan = 0
+    orphan_cost = 0.0
     with out_path.open("w", encoding="utf-8") as f_out:
         if platform == CODEX:
             # Codex rollouts (~/.codex/sessions). Token usage comes from Codex's
@@ -342,18 +427,33 @@ def main():
                 f_out.write(json.dumps(sess, default=str) + "\n")
                 n_out += 1
         else:
-            # Code transcripts
+            # Code transcripts. Sub-agent transcripts are rolled into their parent
+            # session rather than emitted as sessions of their own: they are the same
+            # unit of work, and counting them separately would double the session count
+            # and corrupt the turn-count length buckets.
             if CODE_ROOT.exists():
-                for p in sorted(CODE_ROOT.glob("*/*.jsonl")):
-                    n_in += 1
-                    sess = _process_code_transcript(p)
-                    if not sess: continue
-                    if not _within_window(sess, since, until): continue
-                    if sess.get("automation") and not args.include_automation:
-                        n_autom += 1
+                for project_dir in sorted(CODE_ROOT.iterdir()):
+                    if not project_dir.is_dir() or project_dir.name.startswith("_archive"):
                         continue
-                    f_out.write(json.dumps(sess, default=str) + "\n")
-                    n_out += 1
+                    mains, subs = _split_project(project_dir)
+                    rollups = {sid: _rollup_subagents(paths) for sid, paths in subs.items()}
+                    for p in mains:
+                        n_in += 1
+                        roll = rollups.pop(p.stem, None)
+                        if roll:
+                            n_sub += roll["files"]
+                        sess = _process_code_transcript(p, roll)
+                        if not sess: continue
+                        if not _within_window(sess, since, until): continue
+                        if sess.get("automation") and not args.include_automation:
+                            n_autom += 1
+                            continue
+                        f_out.write(json.dumps(sess, default=str) + "\n")
+                        n_out += 1
+                    # Sub-agents whose parent transcript is gone have nothing to roll into.
+                    for roll in rollups.values():
+                        n_orphan += roll["files"]
+                        orphan_cost += roll["cost"]
             # Cowork transcripts
             if args.include_cowork and COWORK_ROOT.exists():
                 for p in sorted(COWORK_ROOT.glob("*/*/local_*/audit.jsonl")):
@@ -368,6 +468,10 @@ def main():
                     n_out += 1
 
     print(f"Scanned {n_in} transcripts, wrote {n_out} sessions to {out_path}, excluded {n_autom} automation runs.")
+    if n_sub:
+        print(f"Rolled {n_sub} sub-agent transcripts into their parent sessions.")
+    if n_orphan:
+        print(f"Skipped {n_orphan} sub-agent transcripts (~${orphan_cost:,.0f}) with no parent session on disk.")
     print(f"Window: {since.date() if since else 'all'} to {until.date() if until else 'now'}")
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@
     {
       "name": "ai-adoption",
       "source": "./plugins/ai-adoption",
-      "description": "Two skills for analyzing your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes. task-profile mines sessions into a role-level task map with friction and tokens. (session-search moved to session-tools.)"
+      "description": "Two skills for analyzing your Claude history. token-doctor diagnoses where your Claude Code + Cowork spend goes, including sub-agent fan-out and model mix. task-profile mines sessions into a role-level task map with friction and tokens. (session-search moved to session-tools.)"
     },
     {
       "name": "session-tools",
