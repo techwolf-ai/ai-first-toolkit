@@ -4,19 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
-## [1.12.0] - 2026-09-14
+## [1.12.0] - 2026-09-16
 
 ### Fixed
 
 - `token-doctor` and `task-profile` reported roughly 6x too low for anyone working in the Claude desktop app. Two independent defects in each skill's `inventory.py`:
   - **Desktop sessions were classified as automation.** The automation check was `entrypoint != "cli"`, an allow-list of one, so every transcript stamped `claude-desktop` was dropped by default. Replaced with an explicit `AUTOMATION_ENTRYPOINTS` deny-list (`sdk-cli`, `sdk`). An unknown entrypoint now counts as interactive, because silently dropping real work is the worse failure for a cost tool. `sdk-cli` background dispatch, paperclip, ditto-routines, scheduled tasks and the automation slash commands are still excluded by default.
   - **Sub-agent transcripts were invisible.** The scan globbed `*/*.jsonl`, which only matches top-level session files. Sub-agent transcripts live at `<project>/<sid>/subagents/**`, and workflow agents at `<project>/<sid>/subagents/workflows/<wf>/**`. On the reference machine that was 796 of 1,089 files, carrying 28% of real spend. The scan now walks each project directory and rolls every sub-agent transcript into its parent session. Project directories starting with `_archive` are skipped.
-- Measured against real transcripts for 31-08-2026 to 14-09-2026: token-doctor went from $409 to $9,728 across the same window, 33 to 113 sessions. `task-profile` went from 11 to 97 interactive sessions.
+- Measured against real transcripts for 31-08-2026 to 14-09-2026: token-doctor went from $409 to $9,728 across the same window, 33 to 113 sessions. `task-profile` went from 11 to 97 interactive sessions. Re-measured independently on 08-09-2026 to 16-09-2026: $331 to $8,214, 28 to 84 sessions, 32% of it sub-agent fan-out.
 - `token-doctor` now takes the session id from the transcript filename. A resumed or forked transcript can still carry its originating `sessionId` on an early line, and two sessions sharing an id collided on `out/payloads/<sid>.json` in stage 2.
-- `ai-adoption`'s two plugin manifests had drifted apart: `.claude-plugin/plugin.json` was still on 2.0.0's predecessor 1.1.0 and still described `session-search` as part of the plugin. Both markers are now back in sync. Note that `preflight.py` checks that both markers exist but not that their versions match, which is how this drifted unnoticed.
+- `ai-adoption`'s two plugin manifests had drifted apart: `.claude-plugin/plugin.json` was still on 2.0.0's predecessor 1.1.0 and still described `session-search` as part of the plugin. Both markers are now back in sync at 2.1.0, and `scripts/preflight.py` gained the version-parity check that would have caught it (see Added).
+- `AGENTS.md` still described `session-tools` as a two-skill plugin. It has had three since v1.11.0; the entry now covers `session-search`, `handoff` and `goal-prompt`.
+- README's "plugins at a glance" count was stale at 28 skills. The tree has 29.
+- README's version badge alt text was pinned to `v1.11.0` while the badge image itself moved with each release, so it read as the wrong version whenever images were blocked.
 
 ### Added
 
+- **`scripts/preflight.py`**, the release gate, is now a tracked file in the repo. It previously existed only as an untracked script under `.claude/`, which is git-excluded and copied per worktree, so fixes to it could not survive or propagate. That is the mechanism behind two of the drift bugs in this release. Three new checks, on top of the existing marker/manifest/version-sync ones:
+  - a plugin's two markers must agree on `name` and `version` (`description` is deliberately not compared: the Claude Code marker carries a longer blurb by design). This is the check the ai-adoption drift needed.
+  - the README "N plugins, M skills" headline must match what is on disk.
+  - the README version badge's alt text must match the badge URL.
+- `AGENTS.md` names running the gate as a required step before any release, manifest edit, or plugin/skill addition, so the invariant list is executable rather than prose.
+- `.gitignore` now covers `__pycache__/` and `*.py[cod]`. The `ai-adoption` skills ship runnable Python, so running them in a checkout left untracked bytecode behind.
 - `token-doctor` surfaces fan-out and model tier, the two levers the old report could not see:
   - **Fan-out vital sign.** Sessions with >= 5 sub-agent transcripts, their cost and share, plus total sub-agent spend as a share of the bill. New `fanout_*` and `subagent_*` fields in `user-stats.json`, a `--fanout-threshold` flag, and a 🌳 `fanout` health class in the per-project chart.
   - **Model mix section.** Cost, share and turns per model, split main conversation vs sub-agent. This is the actionable half: a model that is cheap in the main conversation and expensive across sub-agents is a one-line change in an `Agent(...)` call. On the reference data Opus was 84% of spend and 8,453 of its turns were sub-agent turns worth $2,385.

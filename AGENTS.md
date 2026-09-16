@@ -18,6 +18,7 @@ This repository publishes TechWolf AI-first plugins and skills for Claude Code, 
 - When changing a plugin, update Claude-, Codex-, and Antigravity-facing docs if behavior changes.
 - If install behavior changes, update `README.md`, plugin READMEs, and `CHANGELOG.md`.
 - Prefer adding plugin-specific agent guidance under `plugins/<plugin>/codex/AGENTS.md` (the installer copies it into the install state dir for both Codex and Antigravity targets).
+- Run `python3 scripts/preflight.py` before any release, manifest edit, or plugin/skill addition, and never push past a failure. It is the executable form of the invariants above: both markers present and name-matched, the two markers agreeing on name and version, both marketplace manifests listing the same plugin set, the README badge matching the CHANGELOG top entry, and the README "N plugins, M skills" line matching the tree. Prose invariants drift; this script is the one that gets checked.
 
 ## Codex Install Notes
 
@@ -26,5 +27,5 @@ This repository publishes TechWolf AI-first plugins and skills for Claude Code, 
 - `content-studio` has a plugin-level Codex entry skill in addition to its specialized skills.
 - `people-management` has 8 skills that require `/setup` to be run first to configure org-specific frameworks and context.
 - `knowledge-base` ships three Python helper scripts (`kb-index.py`, `kb-verify.py`, `kb-validate.py`) that are copied into the user's project by `/setup-knowledge-base`. The plugin's `/kb-answer` workflow depends on `kb-verify.py` existing in the project's `scripts/` directory.
-- `session-tools` has two skills: `session-search` (moved from `ai-adoption` in v1.9.0; host-aware, reads disk transcripts) and `handoff` (writes `HANDOFF.md` resume notes; no platform dependency). `ai-adoption` no longer includes `session-search`.
+- `session-tools` has three skills: `session-search` (moved from `ai-adoption` in v1.9.0; host-aware, reads disk transcripts; finds past Claude Code and Cowork sessions by title, cwd, time range, or full-text content), `handoff` (writes a tight `HANDOFF.md` resume note so a fresh session picks up exactly where the last one stopped; no platform dependency), and `goal-prompt` (added in v1.11.0; turns a task into a ready-to-paste `/goal` command with a measurable end state, proof, and constraints; no platform dependency). `ai-adoption` no longer includes `session-search`.
 - `ai-adoption` now covers two skills only: `token-doctor` and `task-profile`.
