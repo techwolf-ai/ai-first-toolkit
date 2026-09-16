@@ -32,5 +32,9 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 
+# Python (the ai-adoption skills ship runnable scripts)
+__pycache__/
+*.py[cod]
+
 # Internal planning docs
 Plan.md

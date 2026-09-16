@@ -12,6 +12,7 @@ from collections import defaultdict
 from pathlib import Path
 
 MARATHON_THRESHOLD = 300  # p95 of org turn distribution
+FANOUT_THRESHOLD = 5      # sub-agent transcripts before a session counts as fan-out
 
 def length_bucket(n: int) -> str:
     if n <= 5:    return "b1_1_5"
@@ -26,8 +27,10 @@ def classify_cwd(c: dict) -> tuple[str, str]:
     """Return (emoji, one-word health) for a cwd given its rollup stats."""
     mara_share = c["mara_cost"] / c["cost"] if c["cost"] else 0
     rebuild_share = (c["late_tok"]/1e6 * 3) / c["cost"] if c["cost"] else 0
+    fanout_share = c["sub_cost"] / c["cost"] if c["cost"] else 0
     issues = []
     if mara_share >= 0.5: issues.append("marathon")
+    if fanout_share >= 0.5: issues.append("fanout")
     if rebuild_share >= 0.05: issues.append("rebuilds")
     if c["zomb"] >= max(2, c["conv"] // 3): issues.append("zombie")
     if not issues:
@@ -35,6 +38,7 @@ def classify_cwd(c: dict) -> tuple[str, str]:
     if len(issues) >= 2:
         return ("⚠️ ", f"{','.join(issues)}")
     if "marathon" in issues:  return ("🏃", "marathon")
+    if "fanout" in issues:    return ("🌳", "fanout")
     if "rebuilds" in issues:  return ("🔄", "rebuilds")
     return ("🧟", "zombie")
 
@@ -43,6 +47,7 @@ def main():
     ap.add_argument("--in", dest="inp", default="out/sessions.jsonl")
     ap.add_argument("--out", default="out/user-stats.json")
     ap.add_argument("--marathon-threshold", type=int, default=MARATHON_THRESHOLD)
+    ap.add_argument("--fanout-threshold", type=int, default=FANOUT_THRESHOLD)
     args = ap.parse_args()
 
     sessions = []
@@ -67,8 +72,13 @@ def main():
     late_tokens = 0; late_evt = 0
     read_total = 0; cre_total = 0
     peak_max = 0
-    by_cwd = defaultdict(lambda: {"cost":0.0,"conv":0,"mara_cost":0.0,"mara":0,"zomb":0,"late_tok":0})
+    by_cwd = defaultdict(lambda: {"cost":0.0,"conv":0,"mara_cost":0.0,"mara":0,"zomb":0,
+                                  "late_tok":0,"sub_cost":0.0,"fan":0})
     by_surface = defaultdict(lambda: {"cost":0.0,"conv":0})
+    sub_cost = 0.0; sub_files = 0; sub_turns = 0
+    fan_cost = 0.0; fan_conv = 0
+    model_mix = defaultdict(lambda: {"cost":0.0,"turns":0,"main_cost":0.0,"main_turns":0,
+                                     "sub_cost":0.0,"sub_turns":0})
 
     for s in sessions:
         n = s["turn_count"]
@@ -84,11 +94,26 @@ def main():
         read_total  += s.get("cache_read", 0)
         cre_total   += s.get("cache_creation", 0)
         peak_max     = max(peak_max, s.get("peak_cache_read", 0))
+        # Sub-agent cost is already inside cost_usd; these break out how much of it
+        # came from fan-out rather than the main conversation.
+        s_sub = s.get("subagent_cost_usd", 0.0)
+        s_files = s.get("subagent_files", 0)
+        sub_cost += s_sub; sub_files += s_files; sub_turns += s.get("subagent_turns", 0)
+        is_fan = s_files >= args.fanout_threshold
+        if is_fan: fan_cost += s["cost_usd"]; fan_conv += 1
+        for m, v in (s.get("by_model") or {}).items():
+            e = model_mix[m]
+            e["main_cost"] += v["cost"]; e["main_turns"] += v["turns"]
+        for m, v in (s.get("subagent_by_model") or {}).items():
+            e = model_mix[m]
+            e["sub_cost"] += v["cost"]; e["sub_turns"] += v["turns"]
         cwd = s.get("cwd") or "(no cwd / Cowork)"
         c = by_cwd[cwd]
         c["cost"] += s["cost_usd"]; c["conv"] += 1
         if is_mara: c["mara"] += 1; c["mara_cost"] += s["cost_usd"]
         if is_zomb: c["zomb"] += 1
+        if is_fan: c["fan"] += 1
+        c["sub_cost"] += s_sub
         c["late_tok"] += s.get("late_create_tokens", 0)
         bs = by_surface[s.get("surface","unknown")]
         bs["cost"] += s["cost_usd"]; bs["conv"] += 1
@@ -105,6 +130,8 @@ def main():
             "cwd": k,
             "cost": round(v["cost"], 2),
             "conv": v["conv"],
+            "subagent_cost": round(v["sub_cost"], 2),
+            "fanout_conv": v["fan"],
             "marathon_conv": v["mara"],
             "marathon_share": round(v["mara_cost"]/v["cost"], 3) if v["cost"] else 0,
             "zombie_conv": v["zomb"],
@@ -130,8 +157,17 @@ def main():
     deeper_clean.sort(key=lambda x: -x["cost"])
     deeper_clean = deeper_clean[:5]
 
+    for e in model_mix.values():
+        e["cost"] = round(e["main_cost"] + e["sub_cost"], 2)
+        e["turns"] = e["main_turns"] + e["sub_turns"]
+        e["main_cost"] = round(e["main_cost"], 2)
+        e["sub_cost"] = round(e["sub_cost"], 2)
+        e["share"] = round(e["cost"] / total_cost, 4) if total_cost else 0
+    model_mix = dict(sorted(model_mix.items(), key=lambda kv: -kv[1]["cost"]))
+
     stats = {
         "marathon_threshold": args.marathon_threshold,
+        "fanout_threshold": args.fanout_threshold,
         "total_cost": round(total_cost, 2),
         "total_conv": total_conv,
         "by_surface": {k: {"cost": round(v["cost"], 2), "conv": v["conv"]} for k, v in by_surface.items()},
@@ -148,6 +184,14 @@ def main():
         "marathon_cost": round(mara_cost, 2),
         "marathon_share": round(mara_cost / total_cost, 4) if total_cost else 0,
         "marathon_conv": mara_conv,
+        "fanout_cost": round(fan_cost, 2),
+        "fanout_share": round(fan_cost / total_cost, 4) if total_cost else 0,
+        "fanout_conv": fan_conv,
+        "subagent_cost": round(sub_cost, 2),
+        "subagent_share": round(sub_cost / total_cost, 4) if total_cost else 0,
+        "subagent_files": sub_files,
+        "subagent_turns": sub_turns,
+        "model_mix": model_mix,
         "zombie_cost": round(zomb_cost, 2),
         "zombie_share": round(zomb_cost / total_cost, 4) if total_cost else 0,
         "zombie_conv": zomb_conv,
@@ -173,6 +217,9 @@ def main():
     def money(v): return f"${v:,.0f}" if v >= 100 else f"${v:.2f}"
     print(f"🩺  Stats ready: {money(stats['total_cost'])} across {stats['total_conv']:,} conversations, "
           f"{len(stats['by_cwd_top'])} top projects · saved to {args.out}")
+    if stats["subagent_files"]:
+        print(f"    including {money(stats['subagent_cost'])} of sub-agent fan-out "
+              f"({stats['subagent_share']*100:.0f}%) across {stats['subagent_files']:,} sub-agent transcripts")
 
 if __name__ == "__main__":
     main()

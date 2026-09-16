@@ -4,7 +4,9 @@ Sessions matching any of these get `is_automation: true` in the inventory and ar
 
 ## Strong signals (any one triggers the flag)
 
-1. **Non-cli entrypoint.** Any session with `entrypoint` set to `sdk-cli`, `api`, `cron`, or anything other than `cli`. These are programmatic invocations, not a human typing.
+1. **Automation entrypoint.** A session whose `entrypoint` is in the deny-list `AUTOMATION_ENTRYPOINTS` (`sdk-cli`, `sdk`): background dispatch rather than a person at a keyboard.
+
+   This is a **deny-list, not an allow-list**. `cli`, `claude-desktop`, and any entrypoint not named above count as interactive spend. The earlier rule was `entrypoint != "cli"`, which silently dropped every desktop-app session and made the skill see about a sixth of real activity. An unknown future entrypoint is treated as interactive on purpose: for a cost and behaviour tool, dropping real work is the worse failure. The trade-off is explicit, and it means an `api` or `cron` entrypoint (if either ever appears) would count as interactive until added to the deny-list.
 
 2. **Cowork scheduled routine path.** The session `path` contains `/agent/local_ditto_` or `/agent/local_routine_`.
 
