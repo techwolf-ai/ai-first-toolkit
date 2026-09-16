@@ -16,7 +16,7 @@ When the user asks to understand their own Claude usage patterns: what tasks the
 ## Prerequisites
 
 - Session history on this machine:
-  - Claude Code: `~/.claude/projects/*/\*.jsonl`
+  - Claude Code: `~/.claude/projects/*/\*.jsonl`, plus each session's sub-agent transcripts at `<project>/<sid>/subagents/**` (workflow agents one level deeper)
   - Claude Cowork: `~/Library/Application Support/Claude/local-agent-mode-sessions/*/*/local_*/audit.jsonl`
 - The `session-search` skill is already installed at `~/.claude/skills/session-search/` (optional but recommended; this skill does its own inventory pass).
 - None beyond Python 3, the HTML generator ships with its own light theme baked in. No external design or logo skill required.
@@ -34,6 +34,11 @@ Run from any working directory, outputs land under `./out/` in that directory.
 Flags: `--since YYYY-MM-DD`, `--until YYYY-MM-DD`, `--all` (default window: last 6 months).
 
 Writes per-session rows with: summary, token totals (per model, from `message.usage`), automation flag + reason, and a structured condensate (intent turns + correction turns + tool-flail episodes + outcome turns). Automated sessions (paperclip, scheduled-task, sdk-cli, ditto-routine) are flagged and excluded from downstream analysis but kept for transparency.
+
+**Two things about the token totals, because they are measured over different scopes.**
+
+1. A session's `tokens` include its sub-agents. Sub-agent and workflow-agent transcripts are separate files but the same unit of work, so they roll into the session that spawned them. `turns` stays main-session-only, so a session can show few turns and a very large token total. That is fan-out, not a contradiction; say so rather than letting the reader trip over it. `subagent_files` and `subagent_turns` give the size of the fan-out, and `tokens.main_by_model` / `tokens.subagent_by_model` split the model mix so a model the user chose for the conversation is never confused with one a sub-agent ran.
+2. One turn = one assistant **message**. Claude Code writes one JSONL line per content block (thinking, text, each tool_use) and repeats the same `usage` object on every line, so counting lines would inflate both turns and tokens by roughly 2-3x. The inventory dedupes by `message.id`.
 
 ### Phase B, Cluster (main agent reads + judges)
 
@@ -190,7 +195,7 @@ Before considering the run done, scan `out/profile.csv` and the explorer for the
 
 | File | Audience | Shape |
 |---|---|---|
-| `out/inventory.json` | Internal | Full per-session rows with condensates |
+| `out/inventory.json` | Internal | Full per-session rows with condensates, `subagent_files` / `subagent_turns`, and `tokens.main_by_model` / `tokens.subagent_by_model` |
 | `out/clusters.json` | Internal | `[{cluster_id, label, session_paths}]` |
 | `out/payloads/*.json` | Haiku subagents | Sampled condensates per cluster |
 | `out/analyses/*.json` | Internal | Haiku output, 1–3 tasks per cluster |

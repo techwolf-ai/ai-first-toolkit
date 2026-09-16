@@ -121,7 +121,15 @@ def main():
             "reasons_picked": h["reasons"],
             "header": {
                 "turn_count": s["turn_count"],
+                # cost_usd is main + fan-out, while turn_count, by_model and the
+                # timeline below are main-session only. Without the split the
+                # subagent attributes fan-out cost to the main conversation's
+                # habits and recommends the wrong fix.
                 "cost_usd": s["cost_usd"],
+                "main_cost_usd": s.get("main_cost_usd"),
+                "subagent_cost_usd": s.get("subagent_cost_usd"),
+                "subagent_files": s.get("subagent_files"),
+                "subagent_turns": s.get("subagent_turns"),
                 "duration_min": s.get("duration_min"),
                 "resume_count": resume_count,
                 "peak_cache_read": s.get("peak_cache_read"),
@@ -134,6 +142,7 @@ def main():
             },
             "late_create_events": late,
             "by_model": s.get("by_model"),
+            "subagent_by_model": s.get("subagent_by_model"),
             "sample_timeline": sample_timeline,
         }
         out_path = outdir / f"{sid}.json"

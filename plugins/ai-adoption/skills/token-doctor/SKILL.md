@@ -39,6 +39,7 @@ matters when you read the report:
 - `cost_usd` is main conversation **plus** fan-out. `main_cost_usd` and `subagent_cost_usd` split it.
 - Turn counts, the timeline, cache rebuilds and the re-read ratio are **main-session figures**. They describe how that one conversation's context grew; sub-agents have their own context.
 - So a session can show 100 turns and $641. That is not a contradiction, it is fan-out. Say so rather than letting the reader trip over it.
+- One turn = one assistant **message**, not one transcript line. Claude Code writes a line per content block (thinking, text, each tool_use) and repeats the same `usage` object on every one, so counting lines inflates turns and cost by roughly 2-3x. The inventory dedupes by `message.id`. Turn counts from an older run of this skill are not comparable with these.
 
 Automation excluded by default: `sdk-cli` background dispatch, paperclip, ditto-routines,
 scheduled tasks, and the automation slash commands. Desktop-app sessions are interactive

@@ -113,12 +113,17 @@ def _is_automation(path: Path, turns: list[dict], first_meta: dict) -> str | Non
     return None
 
 def _subagent_usage(path: Path) -> dict:
-    """Cost and turns for one sub-agent transcript. Usage only: no text, no timeline."""
+    """Cost and turns for one sub-agent transcript. Usage only: no text, no timeline.
+
+    One turn = one assistant message, deduped by message id, matching how the main
+    transcript is counted.
+    """
     agg = {"cost": 0.0, "turns": 0, "by_model": {}}
     try:
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError:
         return agg
+    seen_msgs: set[str] = set()
     for line in lines:
         try:
             e = json.loads(line)
@@ -126,6 +131,13 @@ def _subagent_usage(path: Path) -> dict:
             continue
         if e.get("type") != "assistant":
             continue
+        # Same per-content-block duplication as the main transcript: count each
+        # assistant message once, so a sub-agent turn is the same unit as a main turn.
+        mid = (e.get("message") or {}).get("id")
+        if mid:
+            if mid in seen_msgs:
+                continue
+            seen_msgs.add(mid)
         u = _usage(e)
         if not u:
             continue
@@ -184,6 +196,15 @@ def _process_code_transcript(path: Path, subagents: dict | None = None) -> dict 
     cwd = None
     first_meta: dict = {}
     turns: list[dict] = []
+    # Claude Code writes ONE JSONL LINE PER CONTENT BLOCK of an assistant message
+    # (thinking, text, and each tool_use), and every one of those lines repeats the
+    # SAME message.usage object. Treating each line as a turn therefore counts the
+    # same tokens once per block: measured ~2.4x on line counts and up to ~3x on
+    # token totals. Lines sharing a message id are merged into one turn here, so
+    # cost, token totals, the timeline, the cache metrics and turn_count are all
+    # per-message. Keyed by message id rather than requestId: a retried request
+    # reuses the id, and counting a retry twice would be the same bug again.
+    by_msg_id: dict[str, dict] = {}
 
     for line in lines:
         try:
@@ -205,16 +226,31 @@ def _process_code_transcript(path: Path, subagents: dict | None = None) -> dict 
         if t not in ("user", "assistant"):
             continue
         text = _strip_noise(_text_of(e))
+        tools = _tool_calls(e)
+        u = _usage(e)
+        mid = (e.get("message") or {}).get("id") if t == "assistant" else None
+        prev = by_msg_id.get(mid) if mid else None
+        if prev is not None:
+            # Another content block of a message already seen: fold it in, do not
+            # re-count its usage.
+            if text:
+                prev["text"] = f"{prev['text']}\n{text}".strip() if prev["text"] else text
+            if tools:
+                prev["tool_calls"].extend(tools)
+            if u and "usage" not in prev:
+                prev["model"], prev["usage"] = u
+            continue
         ent: dict = {
             "role": t,
             "ts": e.get("timestamp"),
             "text": text,
-            "tool_calls": _tool_calls(e),
+            "tool_calls": tools,
         }
-        u = _usage(e)
         if u:
             ent["model"], ent["usage"] = u
         turns.append(ent)
+        if mid:
+            by_msg_id[mid] = ent
 
     if not turns:
         return None
@@ -285,8 +321,9 @@ def _summarize_session(sid: str, surface: str, path: Path, cwd: str | None,
                        turns: list[dict], automation: str | None,
                        title_override: str | None = None,
                        subagents: dict | None = None) -> dict:
-    # Filter to model turns (have usage) for cost; but keep all for turn count? Definition choice:
-    # We count one model turn = one assistant turn with usage.
+    # One model turn = one assistant MESSAGE carrying usage. The caller has already
+    # merged the per-content-block lines of a message into a single turn, so this is
+    # a message count, not a JSONL line count.
     model_turns = [t for t in turns if t.get("usage")]
     turn_count = len(model_turns)
     # Per-turn timeline (compact)

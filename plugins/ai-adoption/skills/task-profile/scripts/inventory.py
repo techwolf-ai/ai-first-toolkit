@@ -188,8 +188,17 @@ def _extract_slash_cmd(text: str) -> str | None:
 
 
 def _load_turns(path: Path) -> list[dict]:
-    """Return ordered list of text turns + tool calls + usage records."""
+    """Return ordered list of text turns + tool calls + usage records.
+
+    Claude Code writes ONE JSONL LINE PER CONTENT BLOCK of an assistant message
+    (thinking, text, and each tool_use), and every one of those lines repeats the
+    SAME message.usage object. Lines sharing a message id are merged into one turn,
+    so token totals are per-message rather than per-block. Without this, the same
+    tokens are counted once per content block: measured ~2.4x on turn counts and up
+    to ~3x on token totals.
+    """
     turns: list[dict] = []
+    by_msg_id: dict[str, dict] = {}
     try:
         with path.open(encoding="utf-8", errors="replace") as f:
             for line in f:
@@ -203,19 +212,39 @@ def _load_turns(path: Path) -> list[dict]:
                     continue
                 raw_text = _text_of(e)
                 stripped = _strip_system_noise(raw_text)
+                tools = _tool_calls(e)
+                usage = _usage_of(e)
+                mid = (e.get("message") or {}).get("id") if t == "assistant" else None
+                prev = by_msg_id.get(mid) if mid else None
+                if prev is not None:
+                    # Another content block of a message already seen: fold it in,
+                    # do not re-count its usage.
+                    if stripped:
+                        prev["text"] = (f"{prev['text']}\n{stripped}".strip()
+                                        if prev["text"] else stripped)
+                    if raw_text:
+                        prev["raw_has_content"] = True
+                        if not _is_only_wrappers(raw_text):
+                            prev["is_only_wrappers"] = False
+                    if tools:
+                        prev["tool_calls"].extend(tools)
+                    if usage and "usage" not in prev:
+                        prev["model"], prev["usage"] = usage
+                    continue
                 entry: dict = {
                     "role": t,
                     "ts": ts,
                     "text": stripped,
                     "raw_has_content": bool(raw_text),
                     "is_only_wrappers": _is_only_wrappers(raw_text) if raw_text else True,
-                    "tool_calls": _tool_calls(e),
+                    "tool_calls": tools,
                 }
-                usage = _usage_of(e)
                 if usage:
                     entry["model"] = usage[0]
                     entry["usage"] = usage[1]
                 turns.append(entry)
+                if mid:
+                    by_msg_id[mid] = entry
     except OSError:
         pass
     return turns
@@ -389,12 +418,17 @@ def aggregate_tokens(turns: list[dict]) -> dict:
 
 
 def _subagent_tokens(paths: list[Path]) -> tuple[dict, int, int]:
-    """Token totals across one session's sub-agent transcripts. Usage only, no text."""
+    """Token totals across one session's sub-agent transcripts. Usage only, no text.
+
+    One turn = one assistant message, deduped by message id, so a sub-agent turn is
+    the same unit as a main-session turn.
+    """
     total = {"input": 0, "output": 0, "cache_read": 0, "cache_creation": 0}
     by_model: dict[str, dict] = {}
     turns = files = 0
     for p in paths:
         seen = False
+        seen_msgs: set[str] = set()
         try:
             fh = p.open(encoding="utf-8", errors="replace")
         except OSError:
@@ -407,6 +441,12 @@ def _subagent_tokens(paths: list[Path]) -> tuple[dict, int, int]:
                     continue
                 if e.get("type") != "assistant":
                     continue
+                # Same per-content-block duplication as the main transcript.
+                mid = (e.get("message") or {}).get("id")
+                if mid:
+                    if mid in seen_msgs:
+                        continue
+                    seen_msgs.add(mid)
                 u = _usage_of(e)
                 if not u:
                     continue
@@ -540,6 +580,7 @@ def process(path: Path, kind: str, subagent_paths: list[Path] | None = None) -> 
     # so per-session turn counts keep meaning one conversation.
     tokens = aggregate_tokens(turns)
     sub_tokens, sub_turns, sub_files = _subagent_tokens(subagent_paths or [])
+    main_by_model = {m: dict(v) for m, v in tokens["by_model"].items()}
     if sub_files:
         for k in ("input", "output", "cache_read", "cache_creation"):
             tokens[k] += sub_tokens[k]
@@ -548,6 +589,11 @@ def process(path: Path, kind: str, subagent_paths: list[Path] | None = None) -> 
                 model, {"input": 0, "output": 0, "cache_read": 0, "cache_creation": 0})
             for k, v in bm.items():
                 tgt[k] += v
+    # `tokens.by_model` is main + sub-agent, so on its own it cannot distinguish a
+    # model the user chose for this conversation from one a sub-agent ran. Downstream
+    # features read model shares to pick a persona; keep both halves addressable.
+    tokens["main_by_model"] = main_by_model
+    tokens["subagent_by_model"] = sub_tokens["by_model"] if sub_files else {}
     cond = build_condensate(turns) if not is_auto else {"picks": [], "correction_count": 0, "tool_flail_events": 0}
 
     return {
@@ -593,6 +639,11 @@ def process_codex(path: Path) -> dict | None:
             break
     summary = first_user_msg.splitlines()[0][:120] if first_user_msg else ""
     cond = build_condensate(turns)
+    # Codex has no sub-agent transcripts, but the row shape must match the Claude
+    # Code one so consumers can read the model split unconditionally.
+    codex_tokens = aggregate_tokens(turns)
+    codex_tokens["main_by_model"] = {m: dict(v) for m, v in codex_tokens["by_model"].items()}
+    codex_tokens["subagent_by_model"] = {}
     return {
         "path": str(path),
         "kind": "codex",
@@ -607,7 +658,7 @@ def process_codex(path: Path) -> dict | None:
         "duration_s": _duration(turns),
         "is_automation": False,
         "automation_reason": "",
-        "tokens": aggregate_tokens(turns),
+        "tokens": codex_tokens,
         "subagent_files": 0,
         "subagent_turns": 0,
         "condensate": cond,
