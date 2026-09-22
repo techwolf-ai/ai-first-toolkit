@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.12.2] - 2026-09-22
+
+### Added
+
+- `scripts/preflight.py` checks every `SKILL.md` frontmatter: the block must be closed, carry `name` and `description`, and no unquoted value may contain `: ` or ` #`. That last rule is the v1.12.0 `handoff` bug, which the gate passed. It is a targeted check, not a full YAML parse, so the script stays stdlib-only.
+
 ## [1.12.1] - 2026-09-22
 
 ### Fixed

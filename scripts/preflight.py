@@ -9,6 +9,7 @@ Catches the class of packaging bug that skips plugins during marketplace sync:
 - unparseable JSON
 - README version badge out of sync with the CHANGELOG top entry
 - the README "N plugins, M skills" line out of sync with what is on disk
+- SKILL.md frontmatter that fails to parse or lacks name/description
 
 Run from the repo root. Exit 0 = clean, 1 = problems found.
 """
@@ -157,11 +158,51 @@ def check_counts():
             f"disk has {n_plugins} plugins, {n_skills} skills")
 
 
+def check_skill_frontmatter():
+    """Every SKILL.md needs a closed frontmatter block with name and description.
+
+    The script stays stdlib-only, so this is not a full YAML parse. It catches the
+    failure that shipped in v1.12.0: an unquoted value containing ': ' or ' #',
+    which YAML reads as a nested mapping or a comment, so the skill fails to load.
+    """
+    for p in plugin_dirs():
+        for s in skill_dirs(p):
+            path = s / "SKILL.md"
+            rel = path.relative_to(ROOT)
+            if not path.exists():
+                errors.append(f"{rel}: missing")
+                continue
+            lines = path.read_text().splitlines()
+            if not lines or lines[0] != "---" or "---" not in lines[1:]:
+                errors.append(f"{rel}: no closed frontmatter block")
+                continue
+            keys, plain = set(), False
+            for n, line in enumerate(lines[1:lines.index("---", 1)], start=2):
+                m = re.match(r"([\w-]+):(.*)$", line)
+                if m:
+                    keys.add(m.group(1))
+                    value = m.group(2).strip()
+                    plain = bool(value) and value[0] not in "\"'|>"
+                elif line[:1] in (" ", "\t"):
+                    value = line.strip()
+                else:
+                    errors.append(f"{rel}:{n}: frontmatter line is not 'key: value'")
+                    continue
+                if plain and (": " in value or value.endswith(":") or " #" in value):
+                    errors.append(
+                        f"{rel}:{n}: unquoted value contains ': ' or ' #', "
+                        "which breaks YAML; quote it or rephrase")
+            for key in ("name", "description"):
+                if key not in keys:
+                    errors.append(f"{rel}: frontmatter missing '{key}'")
+
+
 def main():
     check_markers()
     check_marketplaces()
     check_version_sync()
     check_counts()
+    check_skill_frontmatter()
     for w in warnings:
         print(f"warn: {w}")
     if errors:
@@ -172,7 +213,7 @@ def main():
     plugins = plugin_dirs()
     n_skills = sum(len(skill_dirs(p)) for p in plugins)
     print(f"preflight clean: {len(plugins)} plugins, {n_skills} skills, "
-          "both manifests agree, versions and counts in sync.")
+          "both manifests agree, versions and counts in sync, frontmatter valid.")
     return 0
 
 
