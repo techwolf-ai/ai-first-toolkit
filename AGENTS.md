@@ -18,7 +18,7 @@ This repository publishes TechWolf AI-first plugins and skills for Claude Code, 
 - When changing a plugin, update Claude-, Codex-, and Antigravity-facing docs if behavior changes.
 - If install behavior changes, update `README.md`, plugin READMEs, and `CHANGELOG.md`.
 - Prefer adding plugin-specific agent guidance under `plugins/<plugin>/codex/AGENTS.md` (the installer copies it into the install state dir for both Codex and Antigravity targets).
-- Run `python3 scripts/preflight.py` before any release, manifest edit, or plugin/skill addition, and never push past a failure. It is the executable form of the invariants above: both markers present and name-matched, the two markers agreeing on name and version, both marketplace manifests listing the same plugin set, the README badge matching the CHANGELOG top entry, and the README "N plugins, M skills" line matching the tree. Prose invariants drift; this script is the one that gets checked.
+- Run `python3 scripts/preflight.py` before any release, manifest edit, or plugin/skill addition, and never push past a failure. It is the executable form of the invariants above: both markers present and name-matched, the two markers agreeing on name and version, both marketplace manifests listing the same plugin set, the README badge matching the CHANGELOG top entry, the README "N plugins, M skills" line matching the tree, and every SKILL.md carrying a name and description in frontmatter that YAML can parse. Prose invariants drift; this script is the one that gets checked.
 
 ## Codex Install Notes
 
