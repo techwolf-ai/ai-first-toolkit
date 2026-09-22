@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: Write a session handoff at the end of a session so the next session can start from where this one stopped without rereading the whole conversation. Use when user says "handoff", "wrap up", "write a handoff", "end of session", "park this session", "save where we are", or to RESUME with "/handoff read", "pick up the handoff", "read the handoff". Writes a tight resume note (HANDOFF.md) into the working directory, not a full transcript. Scope is the current project's resume note only: not searching or summarizing past sessions, and not any project-specific "resume" command the environment may have.
+description: Write a session handoff at the end of a session so the next session can start from where this one stopped without rereading the whole conversation. Use when user says "handoff", "wrap up", "write a handoff", "end of session", "park this session", "save where we are", or to RESUME with "/handoff read", "pick up the handoff", "read the handoff". Writes a tight resume note (HANDOFF.md) into the working directory, not a full transcript. Scope is the current project's resume note only, not searching or summarizing past sessions, and not any project-specific "resume" command the environment may have.
 ---
 
 # Handoff
