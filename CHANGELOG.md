@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.12.1] - 2026-09-22
+
+### Fixed
+
+- `session-tools`'s `handoff` skill had invalid YAML frontmatter: the unquoted `description` contained `only: not searching`, and a `: ` inside a plain scalar reads as a mapping, so the skill failed to load. Replaced the colon with a comma. `session-tools` bumped to 1.1.1.
+
 ## [1.12.0] - 2026-09-16
 
 ### Fixed
