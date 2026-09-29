@@ -207,6 +207,16 @@ Each plugin lives in `plugins/<name>/` with a `.claude-plugin/` manifest, an Ant
 - [techwolf-brand-kit README](plugins/techwolf-brand-kit/README.md)
 - [tool-build-kit README](plugins/tool-build-kit/README.md)
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=techwolf-ai%2Fai-first-toolkit&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=techwolf-ai/ai-first-toolkit&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=techwolf-ai/ai-first-toolkit&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=techwolf-ai/ai-first-toolkit&type=date&legend=top-left" />
+ </picture>
+</a>
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
